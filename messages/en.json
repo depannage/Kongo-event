@@ -1,0 +1,321 @@
+{
+  "nav": {
+    "home": "Home",
+    "events": "Events",
+    "about": "About",
+    "contact": "Contact",
+    "login": "Login"
+  },
+  "home": {
+    "hero": {
+      "badge": "Ticketing, POS and access control",
+      "title": "The modern event platform for the DRC",
+      "description": "Discover, organize, sell and control your events with a simple, professional and secure web and mobile solution.",
+      "primaryAction": "View events",
+      "secondaryAction": "Contact us",
+      "stats": {
+        "events": "Events",
+        "ticketing": "Tickets",
+        "rdc": "DRC"
+      }
+    },
+    "features": {
+      "eyebrow": "Features",
+      "title": "Everything to manage your events",
+      "ticketing": {
+        "title": "Ticketing",
+        "description": "Create and sell online tickets with a simple experience."
+      },
+      "checkin": {
+        "title": "QR Check-in",
+        "description": "Control entries with fast and secure QR scanning."
+      },
+      "mobile": {
+        "title": "Mobile app",
+        "description": "Let the public discover and follow events."
+      },
+      "organizers": {
+        "title": "Organizers",
+        "description": "Manage sales, participants and reports."
+      }
+    },
+    "events": {
+      "eyebrow": "Featured",
+      "title": "Popular events",
+      "viewAll": "View all",
+      "festival": {
+        "title": "Kongo Live Festival",
+        "date": "June 15, 2026",
+        "location": "Kinshasa"
+      },
+      "conference": {
+        "title": "Tech Business Forum",
+        "date": "June 22, 2026",
+        "location": "Gombe"
+      },
+      "concert": {
+        "title": "Urban Music Night",
+        "date": "June 28, 2026",
+        "location": "Lingwala"
+      }
+    }
+  },
+  "eventsPage": {
+    "title": "Events",
+    "description": "Browse available events and buy your tickets easily.",
+    "items": {
+      "festival": {
+        "title": "Kongo Live Festival",
+        "date": "June 15, 2026",
+        "location": "Kinshasa"
+      },
+      "conference": {
+        "title": "Tech Business Forum",
+        "date": "June 22, 2026",
+        "location": "Gombe"
+      },
+      "concert": {
+        "title": "Urban Music Night",
+        "date": "June 28, 2026",
+        "location": "Lingwala"
+      },
+      "expo": {
+        "title": "Creative Expo",
+        "date": "July 5, 2026",
+        "location": "Limete"
+      },
+      "gala": {
+        "title": "Prestige Gala",
+        "date": "July 12, 2026",
+        "location": "Gombe"
+      },
+      "workshop": {
+        "title": "Digital Workshop",
+        "date": "July 19, 2026",
+        "location": "Kinshasa"
+      }
+    }
+  },
+  "aboutPage": {
+    "title": "About Kongo Event",
+    "description": "Kongo Event helps organizers digitize event management: creation, ticketing, sales, access control, statistics and mobile experience for the public."
+  },
+  "contactPage": {
+    "title": "Contact us",
+    "description": "Are you organizing an event or looking to become a partner? Send us a message.",
+    "name": "Full name",
+    "email": "Email address",
+    "message": "Your message",
+    "send": "Send"
+  },
+  "loginPage": {
+    "title": "Login",
+    "description": "Access your Kongo Event space.",
+    "email": "Email address",
+    "password": "Password",
+    "submit": "Sign in"
+  },
+  "footer": {
+    "description": "Ticketing, event management, access control, streaming and POS solutions.",
+    "contactTitle": "Contact"
+  },
+  "auth": {
+    "login": {
+      "title": "Welcome Back",
+      "description": "Glad to see you again. Log in to your account.",
+      "email": "Email Address",
+      "emailPlaceholder": "Enter your email",
+      "emailError": "The email address you entered is wrong.",
+      "password": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "remember": "Keep me login",
+      "forgot": "Forgot Password?",
+      "submit": "Login",
+      "noAccount": "Don’t have an account?",
+      "register": "Register"
+    },
+    "register": {
+      "title": "Create New Account",
+      "description": "Enter your details to sign up",
+      "fullName": "Full Name",
+      "fullNamePlaceholder": "Enter your full name",
+      "email": "Email Address",
+      "emailPlaceholder": "Enter your email",
+      "password": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "submit": "Register",
+      "hasAccount": "Already have an account?",
+      "login": "Login"
+    },
+    "forgot": {
+      "title": "Forgot Password",
+      "description": "Enter your email address and we’ll send you password reset instructions.",
+      "email": "Email Address",
+      "submit": "Forgot Password",
+      "noAccess": "Don’t have access anymore?",
+      "tryAnother": "Try another method"
+    },
+    "otp": {
+      "title": "OTP Verification",
+      "description": "We have sent a verification code to email address",
+      "submit": "Verify",
+      "resend": "Resend code in"
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "breadcrumbHome": "Home",
+    "generateReport": "Generate Report",
+    "createEvent": "Create Event",
+    "search": "Search",
+    "roleOrganizer": "Organizer",
+    "home": "Home",
+    "management": "Management",
+    "other": "Other",
+    "menu": {
+      "dashboard": "Dashboard",
+      "calendars": "Calendars",
+      "promotions": "Promotions",
+      "payouts": "Payouts",
+      "users": "Users",
+      "events": "Events",
+      "tickets": "Tickets",
+      "earnings": "Earnings",
+      "reviews": "Reviews",
+      "reports": "Reports",
+      "settings": "Settings"
+    },
+    "metrics": {
+      "totalTicketsSold": "Total Tickets Sold",
+      "totalRevenue": "Total Revenue",
+      "upcomingEvents": "Upcoming Events",
+      "checkinsCompleted": "Check-ins Completed"
+    },
+    "analytics": "Sales Analytics",
+    "deadlineCalendar": "Deadline & Calendar",
+    "upcomingEvents": "Upcoming Events",
+    "eventName": "Event Name",
+    "dateTime": "Date & Time",
+    "status": "Status",
+    "ticketsSold": "Tickets Sold",
+    "active": "Active",
+    "upcoming": "Upcoming",
+    "helpTitle": "Help & Center",
+    "helpDescription": "Having difficulty in ticketing? Please contact us for further inquiries."
+  },
+  "settings": {
+    "title": "Settings",
+    "breadcrumbOther": "Other",
+    "cancel": "Cancel",
+    "save": "Save Change",
+    "tabs": {
+      "general": "General",
+      "plan": "Plan & Pricing",
+      "account": "My Account",
+      "billing": "Payment & Billing",
+      "tax": "Tax & Duties",
+      "link": "Link Account",
+      "language": "Time & Language",
+      "password": "Password",
+      "notifications": "Notifications"
+    },
+    "general": {
+      "title": "General",
+      "description": "Manage your organization main information.",
+      "accountDetails": "Account Details",
+      "accountDetailsDescription": "Your customers will use this information to contact you.",
+      "companyName": "Company Name",
+      "industry": "Industry",
+      "currency": "Currency",
+      "address": "Address",
+      "addressDescription": "This address will appear on your invoice.",
+      "addressName": "Address Name",
+      "country": "Country or Region",
+      "city": "City",
+      "addressLine": "Address",
+      "postalCode": "Postal Code"
+    },
+    "plan": {
+      "title": "Plan & Pricing",
+      "description": "Manage your subscription plans and choose a plan that suits your needs."
+    },
+    "account": {
+      "title": "My Account",
+      "description": "Update your personal information.",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email Address",
+      "phone": "Phone Number"
+    },
+    "billing": {
+      "title": "Payment & Billing",
+      "description": "Manage your payment and billing information.",
+      "cardName": "Cardholder Name",
+      "cardNumber": "Card Number",
+      "expiry": "Expiry Date",
+      "cvc": "CVC"
+    },
+    "tax": {
+      "title": "Tax & Duties",
+      "description": "Review the taxes and duties associated with your purchases and subscriptions.",
+      "country": "Country or Region",
+      "collecting": "Collecting",
+      "percentage": "Percentage",
+      "fullName": "Full Name",
+      "countryTreaty": "Treaty Country",
+      "residence": "Permanent Residence",
+      "mailingAddress": "Mailing Address"
+    },
+    "link": {
+      "title": "Link Account",
+      "description": "Your customers will use this information to contact you."
+    },
+    "language": {
+      "title": "Time & Language",
+      "description": "Set your time zone and language preferences.",
+      "timeTitle": "Time",
+      "timeDescription": "Set your preferred time zone to ensure that all activities align with your local time.",
+      "timeZone": "Time Zone",
+      "languageTitle": "Set your language",
+      "languageDescription": "Choose the language. All text and communication will be displayed in the language you select.",
+      "language": "Language"
+    },
+    "password": {
+      "title": "Password",
+      "description": "Change or view your password.",
+      "currentPassword": "Current Password",
+      "newPassword": "New Password",
+      "hint": "Must be at least 8 characters"
+    },
+    "notifications": {
+      "title": "Push Notifications",
+      "description": "Get alerts for new orders, order processing updates, and when orders are completed or canceled.",
+      "items": {
+        "transactionConfirmation": {
+          "title": "Transaction Confirmation",
+          "description": "Sent automatically to the customer after they place their order."
+        },
+        "transactionEdited": {
+          "title": "Transaction Edited",
+          "description": "Sent to the customer after their order is edited."
+        },
+        "transactionInvoice": {
+          "title": "Transaction Invoice",
+          "description": "Sent to the customer when the order has an outstanding balance."
+        },
+        "transactionCancelled": {
+          "title": "Transaction Cancelled",
+          "description": "Sent automatically to the customer if their order is cancelled."
+        },
+        "transactionRefund": {
+          "title": "Transaction Refund",
+          "description": "Sent automatically to the customer if their order is refunded."
+        },
+        "paymentError": {
+          "title": "Payment Error",
+          "description": "Sent automatically to the customer if their payment can’t be processed."
+        }
+      }
+    }
+  }
+}

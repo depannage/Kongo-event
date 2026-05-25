@@ -1,0 +1,321 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "events": "Événements",
+    "about": "À propos",
+    "contact": "Contact",
+    "login": "Connexion"
+  },
+  "home": {
+    "hero": {
+      "badge": "Billetterie, POS et contrôle d’accès",
+      "title": "La plateforme événementielle moderne pour la RDC",
+      "description": "Découvrez, organisez, vendez et contrôlez vos événements avec une solution web et mobile simple, professionnelle et sécurisée.",
+      "primaryAction": "Voir les événements",
+      "secondaryAction": "Nous contacter",
+      "stats": {
+        "events": "Événements",
+        "ticketing": "Tickets",
+        "rdc": "RDC"
+      }
+    },
+    "features": {
+      "eyebrow": "Fonctionnalités",
+      "title": "Tout pour gérer vos événements",
+      "ticketing": {
+        "title": "Billetterie",
+        "description": "Créez et vendez des tickets en ligne avec une expérience simple."
+      },
+      "checkin": {
+        "title": "Check-in QR",
+        "description": "Contrôlez les entrées avec scan QR rapide et sécurisé."
+      },
+      "mobile": {
+        "title": "Application mobile",
+        "description": "Permettez au public de découvrir et suivre les événements."
+      },
+      "organizers": {
+        "title": "Organisateurs",
+        "description": "Gérez les ventes, les participants et les rapports."
+      }
+    },
+    "events": {
+      "eyebrow": "À la une",
+      "title": "Événements populaires",
+      "viewAll": "Tout voir",
+      "festival": {
+        "title": "Festival Kongo Live",
+        "date": "15 Juin 2026",
+        "location": "Kinshasa"
+      },
+      "conference": {
+        "title": "Tech Business Forum",
+        "date": "22 Juin 2026",
+        "location": "Gombe"
+      },
+      "concert": {
+        "title": "Urban Music Night",
+        "date": "28 Juin 2026",
+        "location": "Lingwala"
+      }
+    }
+  },
+  "eventsPage": {
+    "title": "Événements",
+    "description": "Parcourez les événements disponibles et achetez vos tickets facilement.",
+    "items": {
+      "festival": {
+        "title": "Festival Kongo Live",
+        "date": "15 Juin 2026",
+        "location": "Kinshasa"
+      },
+      "conference": {
+        "title": "Tech Business Forum",
+        "date": "22 Juin 2026",
+        "location": "Gombe"
+      },
+      "concert": {
+        "title": "Urban Music Night",
+        "date": "28 Juin 2026",
+        "location": "Lingwala"
+      },
+      "expo": {
+        "title": "Expo Créative",
+        "date": "5 Juillet 2026",
+        "location": "Limete"
+      },
+      "gala": {
+        "title": "Gala Prestige",
+        "date": "12 Juillet 2026",
+        "location": "Gombe"
+      },
+      "workshop": {
+        "title": "Workshop Digital",
+        "date": "19 Juillet 2026",
+        "location": "Kinshasa"
+      }
+    }
+  },
+  "aboutPage": {
+    "title": "À propos de Kongo Event",
+    "description": "Kongo Event aide les organisateurs à digitaliser la gestion des événements : création, billetterie, vente, contrôle d’accès, statistiques et expérience mobile pour le public."
+  },
+  "contactPage": {
+    "title": "Contactez-nous",
+    "description": "Vous organisez un événement ou vous souhaitez devenir partenaire ? Envoyez-nous un message.",
+    "name": "Nom complet",
+    "email": "Adresse email",
+    "message": "Votre message",
+    "send": "Envoyer"
+  },
+  "loginPage": {
+    "title": "Connexion",
+    "description": "Accédez à votre espace Kongo Event.",
+    "email": "Adresse email",
+    "password": "Mot de passe",
+    "submit": "Se connecter"
+  },
+  "footer": {
+    "description": "Billetterie, gestion d’événements, contrôle d’accès, streaming et solutions POS.",
+    "contactTitle": "Contact"
+  },
+  "auth": {
+    "login": {
+      "title": "Bon retour",
+      "description": "Connectez-vous à votre compte.",
+      "email": "Adresse email",
+      "emailPlaceholder": "Entrez votre email",
+      "emailError": "L’adresse email saisie est incorrecte.",
+      "password": "Mot de passe",
+      "passwordPlaceholder": "Entrez votre mot de passe",
+      "remember": "Se souvenir de moi",
+      "forgot": "Mot de passe oublié ?",
+      "submit": "Connexion",
+      "noAccount": "Vous n’avez pas de compte ?",
+      "register": "Créer un compte"
+    },
+    "register": {
+      "title": "Créer un compte",
+      "description": "Entrez vos informations pour vous inscrire.",
+      "fullName": "Nom complet",
+      "fullNamePlaceholder": "Entrez votre nom",
+      "email": "Adresse email",
+      "emailPlaceholder": "Entrez votre email",
+      "password": "Mot de passe",
+      "passwordPlaceholder": "Entrez votre mot de passe",
+      "submit": "Créer le compte",
+      "hasAccount": "Vous avez déjà un compte ?",
+      "login": "Connexion"
+    },
+    "forgot": {
+      "title": "Mot de passe oublié",
+      "description": "Entrez votre adresse email et nous vous enverrons les instructions de réinitialisation.",
+      "email": "Adresse email",
+      "submit": "Envoyer",
+      "noAccess": "Vous n’avez plus accès ?",
+      "tryAnother": "Essayer une autre méthode"
+    },
+    "otp": {
+      "title": "Vérification OTP",
+      "description": "Nous avons envoyé un code de vérification à",
+      "submit": "Vérifier",
+      "resend": "Renvoyer le code dans"
+    }
+  },
+  "dashboard": {
+    "title": "Tableau de bord",
+    "breadcrumbHome": "Accueil",
+    "generateReport": "Générer le rapport",
+    "createEvent": "Créer un événement",
+    "search": "Rechercher",
+    "roleOrganizer": "Organisateur",
+    "home": "Accueil",
+    "management": "Gestion",
+    "other": "Autre",
+    "menu": {
+      "dashboard": "Tableau de bord",
+      "calendars": "Calendriers",
+      "promotions": "Promotions",
+      "payouts": "Paiements",
+      "users": "Utilisateurs",
+      "events": "Événements",
+      "tickets": "Tickets",
+      "earnings": "Revenus",
+      "reviews": "Avis",
+      "reports": "Rapports",
+      "settings": "Paramètres"
+    },
+    "metrics": {
+      "totalTicketsSold": "Total tickets vendus",
+      "totalRevenue": "Revenu total",
+      "upcomingEvents": "Événements à venir",
+      "checkinsCompleted": "Check-ins effectués"
+    },
+    "analytics": "Analyse des ventes",
+    "deadlineCalendar": "Échéances & Calendrier",
+    "upcomingEvents": "Événements à venir",
+    "eventName": "Nom de l’événement",
+    "dateTime": "Date & heure",
+    "status": "Statut",
+    "ticketsSold": "Tickets vendus",
+    "active": "Actif",
+    "upcoming": "À venir",
+    "helpTitle": "Centre d’aide",
+    "helpDescription": "Vous avez des difficultés avec la billetterie ? Contactez-nous pour plus d’informations."
+  },
+  "settings": {
+    "title": "Paramètres",
+    "breadcrumbOther": "Autre",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "tabs": {
+      "general": "Général",
+      "plan": "Plan & Tarification",
+      "account": "Mon compte",
+      "billing": "Paiement & Facturation",
+      "tax": "Taxes & Droits",
+      "link": "Comptes liés",
+      "language": "Temps & Langue",
+      "password": "Mot de passe",
+      "notifications": "Notifications"
+    },
+    "general": {
+      "title": "Général",
+      "description": "Gérez les informations principales de votre organisation.",
+      "accountDetails": "Détails du compte",
+      "accountDetailsDescription": "Vos clients utiliseront ces informations pour vous contacter.",
+      "companyName": "Nom de l’entreprise",
+      "industry": "Industrie",
+      "currency": "Devise",
+      "address": "Adresse",
+      "addressDescription": "Cette adresse apparaîtra sur vos factures.",
+      "addressName": "Nom de l’adresse",
+      "country": "Pays ou région",
+      "city": "Ville",
+      "addressLine": "Adresse",
+      "postalCode": "Code postal"
+    },
+    "plan": {
+      "title": "Plan & Tarification",
+      "description": "Gérez vos abonnements et choisissez le plan adapté à votre activité."
+    },
+    "account": {
+      "title": "Mon compte",
+      "description": "Modifiez vos informations personnelles.",
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "email": "Adresse email",
+      "phone": "Téléphone"
+    },
+    "billing": {
+      "title": "Paiement & Facturation",
+      "description": "Gérez vos informations de paiement et de facturation.",
+      "cardName": "Nom sur la carte",
+      "cardNumber": "Numéro de carte",
+      "expiry": "Date d’expiration",
+      "cvc": "CVC"
+    },
+    "tax": {
+      "title": "Taxes & Droits",
+      "description": "Consultez les taxes et droits liés à vos achats et abonnements.",
+      "country": "Pays ou région",
+      "collecting": "Collecte",
+      "percentage": "Pourcentage",
+      "fullName": "Nom complet",
+      "countryTreaty": "Pays de traité",
+      "residence": "Résidence permanente",
+      "mailingAddress": "Adresse postale"
+    },
+    "link": {
+      "title": "Comptes liés",
+      "description": "Vos clients utiliseront ces informations pour vous contacter."
+    },
+    "language": {
+      "title": "Temps & Langue",
+      "description": "Configurez votre fuseau horaire et votre langue.",
+      "timeTitle": "Temps",
+      "timeDescription": "Définissez votre fuseau horaire préféré pour que toutes les activités soient alignées avec votre heure locale.",
+      "timeZone": "Fuseau horaire",
+      "languageTitle": "Définir votre langue",
+      "languageDescription": "Choisissez la langue. Tous les textes et communications seront affichés dans la langue choisie.",
+      "language": "Langue"
+    },
+    "password": {
+      "title": "Mot de passe",
+      "description": "Modifiez ou consultez votre mot de passe.",
+      "currentPassword": "Mot de passe actuel",
+      "newPassword": "Nouveau mot de passe",
+      "hint": "Doit contenir au moins 8 caractères"
+    },
+    "notifications": {
+      "title": "Notifications push",
+      "description": "Recevez des alertes pour les nouvelles commandes, les mises à jour de traitement et les commandes terminées ou annulées.",
+      "items": {
+        "transactionConfirmation": {
+          "title": "Confirmation de transaction",
+          "description": "Envoyée automatiquement au client après qu’il a passé sa commande."
+        },
+        "transactionEdited": {
+          "title": "Transaction modifiée",
+          "description": "Envoyée au client après la modification de sa commande."
+        },
+        "transactionInvoice": {
+          "title": "Facture de transaction",
+          "description": "Envoyée au client lorsqu’une commande a un solde impayé."
+        },
+        "transactionCancelled": {
+          "title": "Transaction annulée",
+          "description": "Envoyée automatiquement au client si sa commande est annulée."
+        },
+        "transactionRefund": {
+          "title": "Remboursement de transaction",
+          "description": "Envoyée automatiquement au client si sa commande est remboursée."
+        },
+        "paymentError": {
+          "title": "Erreur de paiement",
+          "description": "Envoyée automatiquement au client si son paiement ne peut pas être traité."
+        }
+      }
+    }
+  }
+}
