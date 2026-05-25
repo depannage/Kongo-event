@@ -317,5 +317,166 @@
         }
       }
     }
+  },
+  "reports": {
+    "day": "Day",
+    "week": "Week",
+    "year": "Year",
+    "title": "Sales Reports",
+    "breadcrumbHome": "Home",
+    "breadcrumbDashboard": "Dashboard",
+    "exportCsv": "Export CSV",
+    "month": "Month",
+    "fromLastPeriod": "from last period",
+    "revenueAnalytics": "Revenue Analytics",
+    "recentTransactions": "Recent Transactions",
+    "search": "Search",
+    "filter": "Filter",
+    "sortBy": "Sort by",
+    "paid": "Paid",
+    "cancelled": "Cancelled",
+    "metrics": {
+      "totalRevenue": "Total Revenue",
+      "ticketsSold": "Tickets Sold",
+      "refundedAmount": "Refunded Amount",
+      "payoutsIssued": "Payouts Issued"
+    },
+    "table": {
+      "no": "No",
+      "name": "Name",
+      "email": "Email",
+      "ticketType": "Ticket Type",
+      "purchaseDate": "Purchase Date",
+      "checkinStatus": "Check-in Status"
+    }
+  },
+  "tickets": {
+    "breadcrumbManagement": "Management",
+    "breadcrumbTickets": "Tickets",
+    "exportCsv": "Export CSV",
+    "search": "Search",
+    "filter": "Filter",
+    "sortBy": "Sort by",
+    "checkedIn": "Checked In",
+    "notCheckedIn": "Not Checked In",
+    "sales": {
+      "title": "Ticket Sales",
+      "tableTitle": "Attendee List Table"
+    },
+    "metrics": {
+      "ticketsSold": "Tickets Sold",
+      "revenueGenerated": "Revenue Generated",
+      "ticketsRemaining": "Tickets Remaining",
+      "checkinsCompleted": "Check-ins Completed",
+      "checkinsRemaining": "Check-ins Remaining"
+    },
+    "table": {
+      "no": "No",
+      "name": "Name",
+      "email": "Email",
+      "ticketType": "Ticket Type",
+      "purchaseDate": "Purchase Date",
+      "checkinStatus": "Check-in Status"
+    },
+    "active": "Active",
+    "soldOut": "Sold Out",
+    "public": "Public",
+    "hidden": "Hidden",
+    "ticketTypes": {
+      "title": "Tickets",
+      "create": "Create New Ticket",
+      "tableTitle": "Tickets Table",
+      "table": {
+        "no": "No",
+        "ticketName": "Ticket Name",
+        "price": "Price",
+        "quantity": "Quantity",
+        "sold": "Sold",
+        "salesStatus": "Sales Status",
+        "visibility": "Visibility"
+      }
+    }
+  },
+  "eventsAdmin": {
+    "title": "My Events",
+    "breadcrumbManagement": "Management",
+    "breadcrumbEvents": "Events",
+    "createEvent": "Create Event",
+    "search": "Search",
+    "filter": "Filter",
+    "sortBy": "Sort by",
+    "tableTitle": "Events Table",
+    "metrics": {
+      "published": "Published",
+      "draft": "Draft",
+      "rejected": "Rejected"
+    },
+    "table": {
+      "no": "No",
+      "eventName": "Event Name",
+      "dateTime": "Date & Time",
+      "status": "Status",
+      "ticketsSold": "Tickets Sold",
+      "revenue": "Revenue",
+      "actions": "Actions"
+    },
+    "status": {
+      "published": "Published",
+      "draft": "Draft",
+      "cancelled": "Cancelled"
+    },
+    "form": {
+      "thumbnail": "Thumbnail",
+      "drop": "Drag & Drop your files or",
+      "browse": "Browse",
+      "title": "Title",
+      "description": "Description",
+      "location": "Location",
+      "date": "Date",
+      "uploadCompleted": "Upload Completed"
+    },
+    "create": {
+      "title": "Create New Event",
+      "submit": "Create"
+    },
+    "update": {
+      "title": "Update Event",
+      "submit": "Update"
+    }
+  },
+  "usersAdmin": {
+    "title": "Users",
+    "breadcrumbManagement": "Management",
+    "breadcrumbUsers": "Users",
+    "exportCsv": "Export CSV",
+    "addUser": "Add New User",
+    "tableTitle": "User Table",
+    "search": "Search",
+    "filter": "Filter",
+    "sortBy": "Sort by",
+    "cancel": "Cancel",
+    "table": {
+      "no": "No",
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone Number",
+      "role": "Role",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "pagination": {
+      "showing": "Showing 1 to 10 of 500 results"
+    },
+    "form": {
+      "name": "Name",
+      "email": "Email Address",
+      "phone": "Phone Number",
+      "password": "Password",
+      "role": "Role"
+    },
+    "update": {
+      "title": "Update User",
+      "submit": "Update"
+    }
   }
 }

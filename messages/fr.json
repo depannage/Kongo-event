@@ -317,5 +317,166 @@
         }
       }
     }
+  },
+  "reports": {
+    "day": "Jour",
+    "week": "Semaine",
+    "year": "Année",
+    "title": "Rapports des ventes",
+    "breadcrumbHome": "Accueil",
+    "breadcrumbDashboard": "Tableau de bord",
+    "exportCsv": "Exporter CSV",
+    "month": "Mois",
+    "fromLastPeriod": "par rapport à la période précédente",
+    "revenueAnalytics": "Analyse des revenus",
+    "recentTransactions": "Transactions récentes",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "sortBy": "Trier par",
+    "paid": "Payé",
+    "cancelled": "Annulé",
+    "metrics": {
+      "ticketsSold": "Tickets vendus",
+      "revenueGenerated": "Revenu généré",
+      "ticketsRemaining": "Tickets restants",
+      "checkinsCompleted": "Check-ins effectués",
+      "checkinsRemaining": "Check-ins restants"
+    },
+    "table": {
+      "no": "N°",
+      "name": "Nom",
+      "email": "Email",
+      "ticketType": "Type de ticket",
+      "purchaseDate": "Date d’achat",
+      "checkinStatus": "Statut check-in"
+    }
+  },
+  "tickets": {
+    "breadcrumbManagement": "Gestion",
+    "breadcrumbTickets": "Tickets",
+    "exportCsv": "Exporter CSV",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "sortBy": "Trier par",
+    "checkedIn": "Check-in fait",
+    "notCheckedIn": "Non check-in",
+    "sales": {
+      "title": "Ventes de tickets",
+      "tableTitle": "Table des participants"
+    },
+    "metrics": {
+      "ticketsSold": "Tickets vendus",
+      "revenueGenerated": "Revenu généré",
+      "ticketsRemaining": "Tickets restants",
+      "checkinsCompleted": "Check-ins effectués"
+    },
+    "table": {
+      "no": "N°",
+      "name": "Nom",
+      "email": "Email",
+      "ticketType": "Type de ticket",
+      "purchaseDate": "Date d’achat",
+      "checkinStatus": "Statut check-in"
+    },
+    "active": "Actif",
+    "soldOut": "Épuisé",
+    "public": "Public",
+    "hidden": "Masqué",
+    "ticketTypes": {
+      "title": "Tickets",
+      "create": "Créer un ticket",
+      "tableTitle": "Table des tickets",
+      "table": {
+        "no": "N°",
+        "ticketName": "Nom du ticket",
+        "price": "Prix",
+        "quantity": "Quantité",
+        "sold": "Vendus",
+        "salesStatus": "Statut de vente",
+        "visibility": "Visibilité"
+      }
+    }
+  },
+  "eventsAdmin": {
+    "title": "Mes événements",
+    "breadcrumbManagement": "Gestion",
+    "breadcrumbEvents": "Événements",
+    "createEvent": "Créer un événement",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "sortBy": "Trier par",
+    "tableTitle": "Table des événements",
+    "metrics": {
+      "published": "Publiés",
+      "draft": "Brouillons",
+      "rejected": "Rejetés"
+    },
+    "table": {
+      "no": "N°",
+      "eventName": "Nom de l’événement",
+      "dateTime": "Date & heure",
+      "status": "Statut",
+      "ticketsSold": "Tickets vendus",
+      "revenue": "Revenu",
+      "actions": "Actions"
+    },
+    "status": {
+      "published": "Publié",
+      "draft": "Brouillon",
+      "cancelled": "Annulé"
+    },
+    "form": {
+      "thumbnail": "Image",
+      "drop": "Glissez-déposez vos fichiers ou",
+      "browse": "parcourir",
+      "title": "Titre",
+      "description": "Description",
+      "location": "Lieu",
+      "date": "Date",
+      "uploadCompleted": "Téléversement terminé"
+    },
+    "create": {
+      "title": "Créer un événement",
+      "submit": "Créer"
+    },
+    "update": {
+      "title": "Modifier l’événement",
+      "submit": "Modifier"
+    }
+  },
+  "usersAdmin": {
+    "title": "Utilisateurs",
+    "breadcrumbManagement": "Gestion",
+    "breadcrumbUsers": "Utilisateurs",
+    "exportCsv": "Exporter CSV",
+    "addUser": "Ajouter un utilisateur",
+    "tableTitle": "Table des utilisateurs",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "sortBy": "Trier par",
+    "cancel": "Annuler",
+    "table": {
+      "no": "N°",
+      "name": "Nom",
+      "email": "Email",
+      "phone": "Téléphone",
+      "role": "Rôle",
+      "status": "Statut",
+      "actions": "Actions"
+    },
+    "pagination": {
+      "showing": "Affichage de 1 à 10 sur 500 résultats"
+    },
+    "form": {
+      "name": "Nom",
+      "email": "Adresse email",
+      "phone": "Téléphone",
+      "password": "Mot de passe",
+      "role": "Rôle"
+    },
+    "update": {
+      "title": "Modifier l’utilisateur",
+      "submit": "Modifier"
+    }
   }
 }
