@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import {
     Calendar,
     ChevronLeft,
@@ -22,39 +21,41 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useSidebar } from "@/contexts/SidebarContext";
+
 import Image from "next/image";
+import {useLocalizedPath} from "@/components/shared/hooks/useLocalizedPath";
 
 export default function DashboardSidebar() {
     const t = useTranslations("dashboard");
-    const pathname = usePathname();
     const { isCollapsed, toggleSidebar } = useSidebar();
+    const { getLocalizedHref, isActive } = useLocalizedPath();
     const [searchTerm, setSearchTerm] = useState("");
 
     const menuItems = [
         {
             section: t("home"),
             items: [
-                { icon: LayoutDashboard, label: t("menu.dashboard"), href: "/overview" },
-                { icon: Calendar, label: t("menu.calendars"), href: "/calendars" },
-                { icon: CircleDollarSign, label: t("menu.promotions"), href: "/promotions" },
-                { icon: Wallet, label: t("menu.payouts"), href: "/payouts" },
+                { icon: LayoutDashboard, label: t("menu.dashboard"), href: "overview" },
+                { icon: Calendar, label: t("menu.calendars"), href: "calendars" },
+                { icon: CircleDollarSign, label: t("menu.promotions"), href: "promotions" },
+                { icon: Wallet, label: t("menu.payouts"), href: "payouts" },
             ]
         },
         {
             section: t("management"),
             items: [
-                { icon: Users, label: t("menu.users"), href: "/users" },
-                { icon: Music, label: t("menu.events"), href: "/events" },
-                { icon: Ticket, label: t("menu.tickets"), href: "/tickets" },
-                { icon: CreditCard, label: t("menu.earnings"), href: "/earnings" },
-                { icon: MessageCircle, label: t("menu.reviews"), href: "/reviews" },
+                { icon: Users, label: t("menu.users"), href: "users" },
+                { icon: Music, label: t("menu.events"), href: "events" },
+                { icon: Ticket, label: t("menu.tickets"), href: "tickets" },
+                { icon: CreditCard, label: t("menu.earnings"), href: "earnings" },
+                { icon: MessageCircle, label: t("menu.reviews"), href: "reviews" },
             ]
         },
         {
             section: t("other"),
             items: [
-                { icon: SlidersHorizontal, label: t("menu.reports"), href: "/reports" },
-                { icon: Settings, label: t("menu.settings"), href: "/settings" },
+                { icon: SlidersHorizontal, label: t("menu.reports"), href: "reports" },
+                { icon: Settings, label: t("menu.settings"), href: "settings" },
             ]
         },
     ];
@@ -73,16 +74,18 @@ export default function DashboardSidebar() {
             <div className="flex flex-col h-full">
                 {/* Logo */}
                 <div className="flex items-center justify-between h-20 px-5 border-b border-slate-100">
-                    {!isCollapsed && (
-                        <div className="flex items-center gap-2 mt-4">
-                            <Image src={"/images/logo.jpeg"} alt={"logo"} width={100} height={50} />
-                        </div>
-                    )}
-                    {isCollapsed && (
-                        <div className="flex items-center gap-2 mt-4">
-                            <Image src={"/images/logo.jpeg"} alt={"logo"} width={100} height={50} />
-                        </div>
-                    )}
+                    <Link href={getLocalizedHref("overview")} className="flex items-center">
+                        {!isCollapsed && (
+                            <div className="flex items-center gap-2 mt-4">
+                                <Image src={"/images/logo.jpeg"} alt={"logo"} width={100} height={50} />
+                            </div>
+                        )}
+                        {isCollapsed && (
+                            <div className="flex items-center gap-2 mt-4">
+                                <Image src={"/images/logo.jpeg"} alt={"logo"} width={40} height={40} className="rounded-lg" />
+                            </div>
+                        )}
+                    </Link>
                     <button
                         onClick={toggleSidebar}
                         className="p-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 transition-colors"
@@ -127,19 +130,21 @@ export default function DashboardSidebar() {
                             <div className="space-y-1">
                                 {section.items.map((item, itemIdx) => {
                                     const Icon = item.icon;
-                                    const isActive = pathname === item.href;
+                                    const active = isActive(item.href);
+                                    const localizedHref = getLocalizedHref(item.href);
+
                                     return (
                                         <Link
                                             key={itemIdx}
-                                            href={item.href}
+                                            href={localizedHref}
                                             className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
-                                                isActive
+                                                active
                                                     ? "bg-slate-100 text-slate-900"
                                                     : "text-slate-600 hover:bg-slate-50"
                                             } ${isCollapsed ? "justify-center" : ""}`}
                                             title={isCollapsed ? item.label : undefined}
                                         >
-                                            <Icon className={`size-5 transition-colors ${isActive ? "text-blue-600" : "text-slate-400"}`} />
+                                            <Icon className={`size-5 transition-colors ${active ? "text-blue-600" : "text-slate-400"}`} />
                                             {!isCollapsed && <span>{item.label}</span>}
                                         </Link>
                                     );
