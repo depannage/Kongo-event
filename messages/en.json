@@ -478,5 +478,83 @@
       "title": "Update User",
       "submit": "Update"
     }
+  },
+  "earnings": {
+    "title": "Earnings",
+    "breadcrumbManagement": "Management",
+    "requestPayout": "Request Payout",
+    "search": "Search",
+    "filter": "Filter",
+    "sortBy": "Sort by",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "tableTitle": "Earnings Table",
+    "metrics": {
+      "totalRevenue": "Total Revenue",
+      "totalPayouts": "Total Payouts",
+      "pendingPayouts": "Pending Payouts",
+      "availableBalance": "Available Balance"
+    },
+    "table": {
+      "no": "No.",
+      "eventName": "Event Name",
+      "ticketsSold": "Tickets Sold",
+      "revenue": "Revenue",
+      "platformFee": "Platform Fee",
+      "netEarnings": "Net Earnings",
+      "status": "Status"
+    },
+    "status": {
+      "paid": "Paid",
+      "available": "Available",
+      "pending": "Pending"
+    },
+    "modal": {
+      "title": "Payout Request",
+      "amount": "Amount to Withdraw",
+      "paymentMethod": "Payment Method",
+      "details": "Bank/PayPal Details",
+      "note": "Note (Optional)"
+    }
+  },
+  "reviewsAdmin": {
+    "title": "Reviews",
+    "breadcrumbManagement": "Management",
+    "exportCsv": "Export CSV",
+    "search": "Search",
+    "filter": "Filter",
+    "sortBy": "Sort by",
+    "public": "Public",
+    "tableTitle": "Reviews Table",
+    "metrics": {
+      "averageRating": "Average Rating",
+      "totalReviews": "Total Reviews",
+      "positiveReviews": "Positive Reviews",
+      "negativeReviews": "Negative Reviews"
+    },
+    "table": {
+      "no": "No",
+      "attendeeName": "Attendee Name",
+      "eventName": "Event Name",
+      "rating": "Rating",
+      "reviewText": "Review Text",
+      "date": "Date",
+      "visibility": "Visibility"
+    },
+    "pagination": {
+      "showing": "Showing 1 to 10 of 500 results"
+    }
+  },
+  "calendarAdmin": {
+    "title": "Calendars",
+    "breadcrumbHome": "Home",
+    "addEvent": "Add Event",
+    "monthTitle": "May 2025",
+    "monthDescription": "Monthly view of scheduled events",
+    "today": "Today",
+    "upcomingTitle": "Upcoming Events",
+    "upcomingDescription": "List of upcoming scheduled events",
+    "upcoming": "Upcoming",
+    "draft": "Draft"
   }
 }
