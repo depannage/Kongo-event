@@ -478,5 +478,83 @@
       "title": "Modifier l’utilisateur",
       "submit": "Modifier"
     }
+  },
+  "earnings": {
+    "title": "Revenus",
+    "breadcrumbManagement": "Gestion",
+    "requestPayout": "Demander un paiement",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "sortBy": "Trier par",
+    "cancel": "Annuler",
+    "submit": "Soumettre",
+    "tableTitle": "Table des revenus",
+    "metrics": {
+      "totalRevenue": "Revenu total",
+      "totalPayouts": "Paiements totaux",
+      "pendingPayouts": "Paiements en attente",
+      "availableBalance": "Solde disponible"
+    },
+    "table": {
+      "no": "N°",
+      "eventName": "Nom de l’événement",
+      "ticketsSold": "Tickets vendus",
+      "revenue": "Revenu",
+      "platformFee": "Frais plateforme",
+      "netEarnings": "Revenu net",
+      "status": "Statut"
+    },
+    "status": {
+      "paid": "Payé",
+      "available": "Disponible",
+      "pending": "En attente"
+    },
+    "modal": {
+      "title": "Demande de paiement",
+      "amount": "Montant à retirer",
+      "paymentMethod": "Méthode de paiement",
+      "details": "Détails banque/PayPal",
+      "note": "Note (optionnel)"
+    }
+  },
+  "reviewsAdmin": {
+    "title": "Avis",
+    "breadcrumbManagement": "Gestion",
+    "exportCsv": "Exporter CSV",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "sortBy": "Trier par",
+    "public": "Public",
+    "tableTitle": "Table des avis",
+    "metrics": {
+      "averageRating": "Note moyenne",
+      "totalReviews": "Avis totaux",
+      "positiveReviews": "Avis positifs",
+      "negativeReviews": "Avis négatifs"
+    },
+    "table": {
+      "no": "N°",
+      "attendeeName": "Nom du participant",
+      "eventName": "Nom de l’événement",
+      "rating": "Note",
+      "reviewText": "Texte de l’avis",
+      "date": "Date",
+      "visibility": "Visibilité"
+    },
+    "pagination": {
+      "showing": "Affichage de 1 à 10 sur 500 résultats"
+    }
+  },
+  "calendarAdmin": {
+    "title": "Calendrier",
+    "breadcrumbHome": "Accueil",
+    "addEvent": "Ajouter un événement",
+    "monthTitle": "Mai 2025",
+    "monthDescription": "Vue mensuelle des événements programmés",
+    "today": "Aujourd’hui",
+    "upcomingTitle": "Événements à venir",
+    "upcomingDescription": "Liste des prochains événements programmés",
+    "upcoming": "À venir",
+    "draft": "Brouillon"
   }
 }
