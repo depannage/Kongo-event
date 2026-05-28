@@ -23,7 +23,8 @@ import { useTranslations } from "next-intl";
 import { useSidebar } from "@/contexts/SidebarContext";
 
 import Image from "next/image";
-import {useLocalizedPath} from "@/components/shared/hooks/useLocalizedPath";
+import {useLocalizedPath} from "@/shared/hooks/useLocalizedPath";
+
 
 export default function DashboardSidebar() {
     const t = useTranslations("dashboard");
