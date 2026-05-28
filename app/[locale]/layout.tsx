@@ -6,6 +6,8 @@ import { routing } from "@/i18n/routing";
 import { siteConfig } from "@/config/site";
 import { SidebarProvider } from "@/contexts/SidebarContext";
 import "../globals.css";
+import {ReactQueryProvider} from "@/providers";
+import {Toaster} from "sonner";
 
 const poppins = Poppins({
   variable: "--font-sans",
@@ -84,7 +86,25 @@ export default async function LocaleLayout({
       <NextIntlClientProvider>
         <SidebarProvider>
           <div className="flex min-h-screen flex-col">
-            <main className="flex-1">{children}</main>
+            <main className="flex-1">
+              <ReactQueryProvider>
+                {children}
+              </ReactQueryProvider>
+              <Toaster
+                  position="top-right"
+                  richColors
+                  closeButton
+                  toastOptions={{
+                    classNames: {
+                      toast: "rounded border border-slate-200 bg-white shadow-lg",
+                      title: "text-sm font-semibold text-slate-900",
+                      description: "text-sm text-slate-500",
+                      error: "border-red-200 bg-red-50",
+                      success: "border-green-200 bg-green-50",
+                    },
+                  }}
+              />
+            </main>
           </div>
         </SidebarProvider>
       </NextIntlClientProvider>

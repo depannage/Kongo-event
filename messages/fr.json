@@ -145,7 +145,10 @@
       "passwordPlaceholder": "Entrez votre mot de passe",
       "submit": "Créer le compte",
       "hasAccount": "Vous avez déjà un compte ?",
-      "login": "Connexion"
+      "login": "Connexion",
+      "phone": "Téléphone",
+      "phonePlaceholder": "Ex: +243810000000"
+}
     },
     "forgot": {
       "title": "Mot de passe oublié",

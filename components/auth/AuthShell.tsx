@@ -15,17 +15,7 @@ export default function AuthShell({ children }: { children: React.ReactNode }) {
                     backgroundSize: "18px 18px",
                 }}
             >
-                <div className="flex justify-center pt-8">
-                    <div className="flex items-center gap-2">
-            <span className="flex size-7 items-center justify-center rounded-md bg-blue-600 text-white">
-              <Settings className="size-4" />
-            </span>
-                        <span className="text-base font-extrabold text-slate-900">
-              Kongo Event
-            </span>
-                    </div>
-                </div>
-
+                {/*ajouter quelque chose*/}
                 <div className="flex flex-1 items-center justify-center px-4 py-10">
                     {children}
                 </div>
