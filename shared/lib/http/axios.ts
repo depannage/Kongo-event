@@ -1,7 +1,7 @@
 import axios from "axios";
-import {tokenStore} from "@/components/shared/lib/tokenStore";
-import {authEvents} from "@/components/shared/lib/auth/authEvents";
-import {refreshAccessToken} from "@/components/shared/lib/http/refresh";
+import {tokenStore} from "@/shared/lib/tokenStore";
+import {authEvents} from "@/shared/lib/auth/authEvents";
+import {refreshAccessToken} from "@/shared/lib/http/refresh";
 
 
 export const api = axios.create({

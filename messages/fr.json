@@ -148,7 +148,6 @@
       "login": "Connexion",
       "phone": "Téléphone",
       "phonePlaceholder": "Ex: +243810000000"
-}
     },
     "forgot": {
       "title": "Mot de passe oublié",
@@ -559,34 +558,6 @@
     "upcomingDescription": "Liste des prochains événements programmés",
     "upcoming": "À venir",
     "draft": "Brouillon"
-  },
-  "promotionsAdmin": {
-    "title": "Promotions",
-    "breadcrumbManagement": "Gestion",
-    "addPromotion": "Ajouter une promotion",
-    "tableTitle": "Table des promotions",
-    "search": "Rechercher",
-    "filter": "Filtrer",
-    "sortBy": "Trier par",
-    "active": "Actif",
-    "expired": "Expiré",
-    "metrics": {
-      "discountCodes": "Codes de réduction actifs",
-      "referralLinks": "Liens de parrainage créés",
-      "salesFromPromotions": "Ventes via promotions"
-    },
-    "table": {
-      "no": "N°",
-      "code": "Code",
-      "discount": "Réduction",
-      "used": "Utilisé",
-      "expiryDate": "Date d’expiration",
-      "status": "Statut",
-      "actions": "Actions"
-    },
-    "pagination": {
-      "showing": "Affichage de 1 à 10 sur 500 résultats"
-    }
   },
   "promotionsAdmin": {
     "title": "Promotions",

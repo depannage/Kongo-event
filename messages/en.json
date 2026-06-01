@@ -588,33 +588,5 @@
     "pagination": {
       "showing": "Showing 1 to 10 of 500 results"
     }
-  },
-  "promotionsAdmin": {
-    "title": "Promotions",
-    "breadcrumbManagement": "Management",
-    "addPromotion": "Add Promotion",
-    "tableTitle": "Promotions Table",
-    "search": "Search",
-    "filter": "Filter",
-    "sortBy": "Sort by",
-    "active": "Active",
-    "expired": "Expired",
-    "metrics": {
-      "discountCodes": "Discount Codes Active",
-      "referralLinks": "Referral Links Created",
-      "salesFromPromotions": "Sales from Promotions"
-    },
-    "table": {
-      "no": "No",
-      "code": "Code",
-      "discount": "Discount",
-      "used": "Used",
-      "expiryDate": "Expiry Date",
-      "status": "Status",
-      "actions": "Actions"
-    },
-    "pagination": {
-      "showing": "Showing 1 to 10 of 500 results"
-    }
   }
 }
