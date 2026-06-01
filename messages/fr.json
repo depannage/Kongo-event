@@ -229,6 +229,7 @@
       "companyName": "Nom de l’entreprise",
       "industry": "Industrie",
       "currency": "Devise",
+      "timezone": "Fuseau horaire",
       "address": "Adresse",
       "addressDescription": "Cette adresse apparaîtra sur vos factures.",
       "addressName": "Nom de l’adresse",
@@ -247,7 +248,9 @@
       "firstName": "Prénom",
       "lastName": "Nom",
       "email": "Adresse email",
-      "phone": "Téléphone"
+      "phone": "Téléphone",
+      "role": "Rôle",
+      "memberSince": "Membre depuis"
     },
     "billing": {
       "title": "Paiement & Facturation",
@@ -266,6 +269,7 @@
       "fullName": "Nom complet",
       "countryTreaty": "Pays de traité",
       "residence": "Résidence permanente",
+      "taxId": "Numéro fiscal",
       "mailingAddress": "Adresse postale"
     },
     "link": {
@@ -287,6 +291,7 @@
       "description": "Modifiez ou consultez votre mot de passe.",
       "currentPassword": "Mot de passe actuel",
       "newPassword": "Nouveau mot de passe",
+      "confirmPassword": "Confirmer le mot de passe",
       "hint": "Doit contenir au moins 8 caractères"
     },
     "notifications": {
@@ -338,11 +343,10 @@
     "paid": "Payé",
     "cancelled": "Annulé",
     "metrics": {
+      "totalRevenue": "Revenu total",
       "ticketsSold": "Tickets vendus",
-      "revenueGenerated": "Revenu généré",
-      "ticketsRemaining": "Tickets restants",
-      "checkinsCompleted": "Check-ins effectués",
-      "checkinsRemaining": "Check-ins restants"
+      "refundedAmount": "Montant remboursé",
+      "payoutsIssued": "Paiements effectués"
     },
     "table": {
       "no": "N°",
@@ -527,6 +531,7 @@
     "filter": "Filtrer",
     "sortBy": "Trier par",
     "public": "Public",
+    "hidden": "Masqué",
     "tableTitle": "Table des avis",
     "metrics": {
       "averageRating": "Note moyenne",

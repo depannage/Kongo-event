@@ -231,6 +231,7 @@
       "companyName": "Company Name",
       "industry": "Industry",
       "currency": "Currency",
+      "timezone": "Time Zone",
       "address": "Address",
       "addressDescription": "This address will appear on your invoice.",
       "addressName": "Address Name",
@@ -249,7 +250,9 @@
       "firstName": "First Name",
       "lastName": "Last Name",
       "email": "Email Address",
-      "phone": "Phone Number"
+      "phone": "Phone Number",
+      "role": "Role",
+      "memberSince": "Member Since"
     },
     "billing": {
       "title": "Payment & Billing",
@@ -268,6 +271,7 @@
       "fullName": "Full Name",
       "countryTreaty": "Treaty Country",
       "residence": "Permanent Residence",
+      "taxId": "Tax ID",
       "mailingAddress": "Mailing Address"
     },
     "link": {
@@ -289,6 +293,7 @@
       "description": "Change or view your password.",
       "currentPassword": "Current Password",
       "newPassword": "New Password",
+      "confirmPassword": "Confirm Password",
       "hint": "Must be at least 8 characters"
     },
     "notifications": {
@@ -529,6 +534,7 @@
     "filter": "Filter",
     "sortBy": "Sort by",
     "public": "Public",
+    "hidden": "Hidden",
     "tableTitle": "Reviews Table",
     "metrics": {
       "averageRating": "Average Rating",
