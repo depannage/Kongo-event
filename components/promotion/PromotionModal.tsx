@@ -3,29 +3,85 @@
 import { X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import type { Promotion, PromotionStatus, PromotionType } from "@/components/promotion/types";
+import { toast } from "sonner";
+import type { Promotion, PromotionType } from "@/components/promotion/types";
+import {
+    parseDiscountValue,
+    parseMaxUses,
+    toExpiresAtIso,
+} from "@/components/promotion/utils/coupon-form";
+import { useCreateCoupon } from "@/shared/hooks/coupon.hooks";
+import { useEvents } from "@/shared/hooks/event.hooks";
+import type { Event } from "@/shared/types/event.types";
 
 type PromotionModalProps = {
     promotion?: Promotion | null;
     onClose: () => void;
+    onCreated?: () => void;
 };
 
-export function PromotionModal({ promotion, onClose }: PromotionModalProps) {
+function getEventLabel(event: Event): string {
+    return event.title ?? event.name ?? event.id;
+}
+
+export function PromotionModal({ promotion, onClose, onCreated }: PromotionModalProps) {
     const t = useTranslations("promotionsAdmin");
+    const isEdit = Boolean(promotion);
+    const { data: eventsResponse, isLoading: isEventsLoading } = useEvents();
+    const createCoupon = useCreateCoupon();
+
     const [formData, setFormData] = useState({
+        eventId: "",
         code: promotion?.code ?? "",
         discount: promotion?.discount ?? "",
-        type: promotion?.type ?? "percentage",
+        type: promotion?.type ?? ("percentage" as PromotionType),
         usageLimit: promotion?.usageLimit ?? "",
-        expiryDate: promotion?.expiryDate ?? "",
-        status: promotion?.status ?? "active",
+        expiryDate: "",
     });
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const events: Event[] = eventsResponse?.data ?? [];
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log("Save promotion:", formData);
-        onClose();
+
+        if (isEdit) {
+            toast.info(t("modal.editNotAvailable"));
+            return;
+        }
+
+        if (!formData.eventId) {
+            toast.warning(t("modal.eventRequired"));
+            return;
+        }
+
+        const discount = parseDiscountValue(formData.discount);
+        if (discount <= 0) {
+            toast.warning(t("modal.discountRequired"));
+            return;
+        }
+
+        if (!formData.expiryDate) {
+            toast.warning(t("modal.expiryRequired"));
+            return;
+        }
+
+        try {
+            await createCoupon.mutateAsync({
+                eventId: formData.eventId,
+                code: formData.code.trim(),
+                discount,
+                maxUses: parseMaxUses(formData.usageLimit),
+                expiresAt: toExpiresAtIso(formData.expiryDate),
+            });
+            toast.success(t("modal.createSuccess"));
+            onCreated?.();
+            onClose();
+        } catch {
+            toast.error(t("modal.createError"));
+        }
     };
+
+    const isSubmitting = createCoupon.isPending;
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
@@ -46,6 +102,39 @@ export function PromotionModal({ promotion, onClose }: PromotionModalProps) {
 
                 <form onSubmit={handleSubmit} className="space-y-4 p-6">
                     <div>
+                        <label
+                            htmlFor="promotion-event"
+                            className="mb-2 block text-sm font-semibold text-slate-700"
+                        >
+                            {t("modal.event")} <span className="text-red-500">*</span>
+                        </label>
+                        <select
+                            id="promotion-event"
+                            value={formData.eventId}
+                            onChange={(e) =>
+                                setFormData({ ...formData, eventId: e.target.value })
+                            }
+                            disabled={isEdit || isEventsLoading || isSubmitting}
+                            className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 disabled:cursor-not-allowed disabled:bg-slate-50"
+                            required
+                        >
+                            <option value="">
+                                {isEventsLoading
+                                    ? t("modal.loadingEvents")
+                                    : t("modal.eventPlaceholder")}
+                            </option>
+                            {events.map((event) => (
+                                <option key={event.id} value={event.id}>
+                                    {getEventLabel(event)}
+                                </option>
+                            ))}
+                        </select>
+                        {!isEventsLoading && events.length === 0 && (
+                            <p className="mt-1.5 text-xs text-amber-600">{t("modal.noEvents")}</p>
+                        )}
+                    </div>
+
+                    <div>
                         <label className="mb-2 block text-sm font-semibold text-slate-700">
                             {t("modal.code")} <span className="text-red-500">*</span>
                         </label>
@@ -55,7 +144,8 @@ export function PromotionModal({ promotion, onClose }: PromotionModalProps) {
                             onChange={(e) =>
                                 setFormData({ ...formData, code: e.target.value.toUpperCase() })
                             }
-                            className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 font-mono text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                            disabled={isEdit || isSubmitting}
+                            className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 font-mono text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 disabled:bg-slate-50"
                             placeholder={t("modal.codePlaceholder")}
                             required
                         />
@@ -63,10 +153,14 @@ export function PromotionModal({ promotion, onClose }: PromotionModalProps) {
 
                     <div className="grid grid-cols-2 gap-4">
                         <div>
-                            <label className="mb-2 block text-sm font-semibold text-slate-700">
+                            <label
+                                htmlFor="promotion-discount-type"
+                                className="mb-2 block text-sm font-semibold text-slate-700"
+                            >
                                 {t("modal.discountType")}
                             </label>
                             <select
+                                id="promotion-discount-type"
                                 value={formData.type}
                                 onChange={(e) =>
                                     setFormData({
@@ -74,7 +168,8 @@ export function PromotionModal({ promotion, onClose }: PromotionModalProps) {
                                         type: e.target.value as PromotionType,
                                     })
                                 }
-                                className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                                disabled={isEdit || isSubmitting}
+                                className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 disabled:bg-slate-50"
                             >
                                 <option value="percentage">{t("modal.typePercentage")}</option>
                                 <option value="fixed">{t("modal.typeFixed")}</option>
@@ -86,9 +181,13 @@ export function PromotionModal({ promotion, onClose }: PromotionModalProps) {
                             </label>
                             <input
                                 type="text"
+                                inputMode="decimal"
                                 value={formData.discount}
-                                onChange={(e) => setFormData({ ...formData, discount: e.target.value })}
-                                className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                                onChange={(e) =>
+                                    setFormData({ ...formData, discount: e.target.value })
+                                }
+                                disabled={isEdit || isSubmitting}
+                                className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 disabled:bg-slate-50"
                                 placeholder={
                                     formData.type === "percentage"
                                         ? t("modal.discountPlaceholderPercent")
@@ -110,58 +209,51 @@ export function PromotionModal({ promotion, onClose }: PromotionModalProps) {
                                 onChange={(e) =>
                                     setFormData({ ...formData, usageLimit: e.target.value })
                                 }
-                                className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                                disabled={isEdit || isSubmitting}
+                                className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 disabled:bg-slate-50"
                                 placeholder={t("modal.usageLimitPlaceholder")}
                             />
                         </div>
                         <div>
-                            <label className="mb-2 block text-sm font-semibold text-slate-700">
+                            <label
+                                htmlFor="promotion-expiry"
+                                className="mb-2 block text-sm font-semibold text-slate-700"
+                            >
                                 {t("table.expiryDate")} <span className="text-red-500">*</span>
                             </label>
                             <input
+                                id="promotion-expiry"
                                 type="date"
                                 value={formData.expiryDate}
                                 onChange={(e) =>
                                     setFormData({ ...formData, expiryDate: e.target.value })
                                 }
-                                className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                                disabled={isEdit || isSubmitting}
+                                className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 disabled:bg-slate-50"
                                 required
                             />
                         </div>
-                    </div>
-
-                    <div>
-                        <label className="mb-2 block text-sm font-semibold text-slate-700">
-                            {t("table.status")}
-                        </label>
-                        <select
-                            value={formData.status}
-                            onChange={(e) =>
-                                setFormData({
-                                    ...formData,
-                                    status: e.target.value as PromotionStatus,
-                                })
-                            }
-                            className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-                        >
-                            <option value="active">{t("active")}</option>
-                            <option value="expired">{t("expired")}</option>
-                        </select>
                     </div>
 
                     <div className="flex justify-end gap-3 pt-4">
                         <button
                             type="button"
                             onClick={onClose}
-                            className="rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-50"
+                            disabled={isSubmitting}
+                            className="rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-50 disabled:opacity-50"
                         >
                             {t("modal.cancel")}
                         </button>
                         <button
                             type="submit"
-                            className="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-blue-700"
+                            disabled={isSubmitting || (!isEdit && events.length === 0)}
+                            className="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
                         >
-                            {promotion ? t("modal.update") : t("modal.create")}
+                            {isSubmitting
+                                ? t("modal.creating")
+                                : promotion
+                                  ? t("modal.update")
+                                  : t("modal.create")}
                         </button>
                     </div>
                 </form>
