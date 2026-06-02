@@ -24,7 +24,8 @@ import {
     TrendingUp,
     Wallet,
 } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { formatCurrency, formatNumber } from "@/shared/lib/formatNumber";
 import { useState } from "react";
 import { Line } from "react-chartjs-2";
 import { useSidebar } from "@/contexts/SidebarContext";
@@ -152,6 +153,7 @@ const TRANSACTIONS = [
 
 export default function ReportsPage() {
     const t = useTranslations("reports");
+    const locale = useLocale();
     const { isCollapsed } = useSidebar();
     const [searchTerm, setSearchTerm] = useState("");
     const [filterStatus, setFilterStatus] = useState("all");
@@ -200,28 +202,28 @@ export default function ReportsPage() {
                         <MetricCard
                             icon={<CircleDollarSign className="size-5" />}
                             title={t("metrics.totalRevenue")}
-                            value={`$${totalRevenue.toLocaleString()}`}
+                            value={formatCurrency(totalRevenue, locale)}
                             trend="up"
                             percentage="+12.5%"
                         />
                         <MetricCard
                             icon={<Ticket className="size-5" />}
                             title={t("metrics.ticketsSold")}
-                            value={ticketsSold.toLocaleString()}
+                            value={formatNumber(ticketsSold, locale)}
                             trend="up"
                             percentage="+8.2%"
                         />
                         <MetricCard
                             icon={<RefreshCcw className="size-5" />}
                             title={t("metrics.refundedAmount")}
-                            value={`$${refundedAmount.toLocaleString()}`}
+                            value={formatCurrency(refundedAmount, locale)}
                             trend="down"
                             percentage="-3.1%"
                         />
                         <MetricCard
                             icon={<CreditCard className="size-5" />}
                             title={t("metrics.payoutsIssued")}
-                            value={`$${payoutsIssued.toLocaleString()}`}
+                            value={formatCurrency(payoutsIssued, locale)}
                             trend="up"
                             percentage="+15.3%"
                         />

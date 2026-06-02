@@ -148,7 +148,6 @@
       "login": "Connexion",
       "phone": "Téléphone",
       "phonePlaceholder": "Ex: +243810000000"
-}
     },
     "forgot": {
       "title": "Mot de passe oublié",
@@ -230,6 +229,7 @@
       "companyName": "Nom de l’entreprise",
       "industry": "Industrie",
       "currency": "Devise",
+      "timezone": "Fuseau horaire",
       "address": "Adresse",
       "addressDescription": "Cette adresse apparaîtra sur vos factures.",
       "addressName": "Nom de l’adresse",
@@ -248,7 +248,9 @@
       "firstName": "Prénom",
       "lastName": "Nom",
       "email": "Adresse email",
-      "phone": "Téléphone"
+      "phone": "Téléphone",
+      "role": "Rôle",
+      "memberSince": "Membre depuis"
     },
     "billing": {
       "title": "Paiement & Facturation",
@@ -267,6 +269,7 @@
       "fullName": "Nom complet",
       "countryTreaty": "Pays de traité",
       "residence": "Résidence permanente",
+      "taxId": "Numéro fiscal",
       "mailingAddress": "Adresse postale"
     },
     "link": {
@@ -288,6 +291,7 @@
       "description": "Modifiez ou consultez votre mot de passe.",
       "currentPassword": "Mot de passe actuel",
       "newPassword": "Nouveau mot de passe",
+      "confirmPassword": "Confirmer le mot de passe",
       "hint": "Doit contenir au moins 8 caractères"
     },
     "notifications": {
@@ -339,11 +343,10 @@
     "paid": "Payé",
     "cancelled": "Annulé",
     "metrics": {
+      "totalRevenue": "Revenu total",
       "ticketsSold": "Tickets vendus",
-      "revenueGenerated": "Revenu généré",
-      "ticketsRemaining": "Tickets restants",
-      "checkinsCompleted": "Check-ins effectués",
-      "checkinsRemaining": "Check-ins restants"
+      "refundedAmount": "Montant remboursé",
+      "payoutsIssued": "Paiements effectués"
     },
     "table": {
       "no": "N°",
@@ -528,6 +531,7 @@
     "filter": "Filtrer",
     "sortBy": "Trier par",
     "public": "Public",
+    "hidden": "Masqué",
     "tableTitle": "Table des avis",
     "metrics": {
       "averageRating": "Note moyenne",
@@ -559,34 +563,6 @@
     "upcomingDescription": "Liste des prochains événements programmés",
     "upcoming": "À venir",
     "draft": "Brouillon"
-  },
-  "promotionsAdmin": {
-    "title": "Promotions",
-    "breadcrumbManagement": "Gestion",
-    "addPromotion": "Ajouter une promotion",
-    "tableTitle": "Table des promotions",
-    "search": "Rechercher",
-    "filter": "Filtrer",
-    "sortBy": "Trier par",
-    "active": "Actif",
-    "expired": "Expiré",
-    "metrics": {
-      "discountCodes": "Codes de réduction actifs",
-      "referralLinks": "Liens de parrainage créés",
-      "salesFromPromotions": "Ventes via promotions"
-    },
-    "table": {
-      "no": "N°",
-      "code": "Code",
-      "discount": "Réduction",
-      "used": "Utilisé",
-      "expiryDate": "Date d’expiration",
-      "status": "Statut",
-      "actions": "Actions"
-    },
-    "pagination": {
-      "showing": "Affichage de 1 à 10 sur 500 résultats"
-    }
   },
   "promotionsAdmin": {
     "title": "Promotions",

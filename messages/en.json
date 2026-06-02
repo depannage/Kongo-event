@@ -231,6 +231,7 @@
       "companyName": "Company Name",
       "industry": "Industry",
       "currency": "Currency",
+      "timezone": "Time Zone",
       "address": "Address",
       "addressDescription": "This address will appear on your invoice.",
       "addressName": "Address Name",
@@ -249,7 +250,9 @@
       "firstName": "First Name",
       "lastName": "Last Name",
       "email": "Email Address",
-      "phone": "Phone Number"
+      "phone": "Phone Number",
+      "role": "Role",
+      "memberSince": "Member Since"
     },
     "billing": {
       "title": "Payment & Billing",
@@ -268,6 +271,7 @@
       "fullName": "Full Name",
       "countryTreaty": "Treaty Country",
       "residence": "Permanent Residence",
+      "taxId": "Tax ID",
       "mailingAddress": "Mailing Address"
     },
     "link": {
@@ -289,6 +293,7 @@
       "description": "Change or view your password.",
       "currentPassword": "Current Password",
       "newPassword": "New Password",
+      "confirmPassword": "Confirm Password",
       "hint": "Must be at least 8 characters"
     },
     "notifications": {
@@ -529,6 +534,7 @@
     "filter": "Filter",
     "sortBy": "Sort by",
     "public": "Public",
+    "hidden": "Hidden",
     "tableTitle": "Reviews Table",
     "metrics": {
       "averageRating": "Average Rating",
@@ -560,34 +566,6 @@
     "upcomingDescription": "List of upcoming scheduled events",
     "upcoming": "Upcoming",
     "draft": "Draft"
-  },
-  "promotionsAdmin": {
-    "title": "Promotions",
-    "breadcrumbManagement": "Management",
-    "addPromotion": "Add Promotion",
-    "tableTitle": "Promotions Table",
-    "search": "Search",
-    "filter": "Filter",
-    "sortBy": "Sort by",
-    "active": "Active",
-    "expired": "Expired",
-    "metrics": {
-      "discountCodes": "Discount Codes Active",
-      "referralLinks": "Referral Links Created",
-      "salesFromPromotions": "Sales from Promotions"
-    },
-    "table": {
-      "no": "No",
-      "code": "Code",
-      "discount": "Discount",
-      "used": "Used",
-      "expiryDate": "Expiry Date",
-      "status": "Status",
-      "actions": "Actions"
-    },
-    "pagination": {
-      "showing": "Showing 1 to 10 of 500 results"
-    }
   },
   "promotionsAdmin": {
     "title": "Promotions",

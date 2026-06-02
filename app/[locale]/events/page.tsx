@@ -508,8 +508,8 @@ function UpdateEventModal({ t, event, onClose }: { t: any; event: any; onClose: 
         description: "Event description here",
         location: event.location,
         date: event.date,
-        capacity: event.capacity,
-        price: event.revenue / event.ticketsSold,
+        capacity: String(event.capacity),
+        price: String(event.revenue / event.ticketsSold),
     });
 
     const handleSubmit = (e: React.FormEvent) => {
