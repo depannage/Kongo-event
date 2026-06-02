@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import TicketTable from "@/components/tickets/TicketTable";
 import TicketFormModal from "@/components/tickets/TicketFormModal";
+import SummaryCards from "@/components/tickets/SummaryCards";
 import {
   useCreateTicket,
   useDeleteTicket,
@@ -129,11 +130,17 @@ export default function TicketsPage() {
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
             <MetricCard title="Total" value={metrics.total} />
-            <MetricCard title="Pending" value={metrics.pending} />
-            <MetricCard title="Active" value={metrics.active} />
-            <MetricCard title="Used" value={metrics.used} />
-            <MetricCard title="Cancelled" value={metrics.cancelled} />
+            <MetricCard title="En attente" value={metrics.pending} />
+            <MetricCard title="Actifs" value={metrics.active} />
+            <MetricCard title="Utilisés" value={metrics.used} />
+            <MetricCard title="Annulés" value={metrics.cancelled} />
           </div>
+          <SummaryCards
+            activeTickets={metrics.active}
+            soldOutTickets={metrics.cancelled}
+            totalTickets={metrics.total}
+            onCreateTicket={handleOpenCreate}
+          />
 
           {ticketsQuery.isPending ? (
             <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center text-sm text-slate-500">
@@ -210,6 +217,15 @@ export default function TicketsPage() {
   );
 }
 
+function DetailItem({ label, value }: { label: string; value?: string }) {
+  return (
+    <div className="rounded-md border border-slate-200 bg-slate-50 p-3">
+      <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{label}</p>
+      <p className="mt-1 font-medium text-slate-900">{value ?? "-"}</p>
+    </div>
+  );
+}
+
 function MetricCard({ title, value }: { title: string; value: number }) {
   return (
     <Card className="rounded-2xl border-slate-200">
@@ -220,14 +236,5 @@ function MetricCard({ title, value }: { title: string; value: number }) {
         <p className="text-2xl font-bold text-slate-900">{value}</p>
       </CardContent>
     </Card>
-  );
-}
-
-function DetailItem({ label, value }: { label: string; value?: string }) {
-  return (
-    <div className="rounded-md border border-slate-200 bg-slate-50 p-3">
-      <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{label}</p>
-      <p className="mt-1 font-medium text-slate-900">{value ?? "-"}</p>
-    </div>
   );
 }
