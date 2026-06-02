@@ -643,7 +643,18 @@
       "discountPlaceholderPercent": "e.g., 20%",
       "discountPlaceholderFixed": "e.g., $10",
       "usageLimit": "Usage Limit",
-      "usageLimitPlaceholder": "Unlimited or number"
+      "usageLimitPlaceholder": "Unlimited or number",
+      "event": "Event",
+      "eventPlaceholder": "Select an event",
+      "loadingEvents": "Loading events…",
+      "noEvents": "No events available. Create an event before adding a promotion.",
+      "eventRequired": "Please select an event.",
+      "discountRequired": "Please enter a valid discount value.",
+      "expiryRequired": "Please choose an expiry date.",
+      "createSuccess": "Promotion created successfully.",
+      "createError": "Could not create the promotion. Please try again.",
+      "creating": "Creating…",
+      "editNotAvailable": "Editing is not available yet."
     },
     "pagination": {
       "showing": "Showing 1 to 10 of 500 results"
