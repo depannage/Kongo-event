@@ -33,3 +33,33 @@ export type SalesReportsResponse = {
     };
     recentTransactions: RecentTransaction[];
 };
+
+export type PromotionsSummary = {
+    discountCodesActive: number;
+    referralLinksCreated: number;
+    salesFromPromotions: number;
+    activePromotions: number;
+    expiredPromotions: number;
+    totalUses: number;
+};
+
+export type DashboardPromotion = {
+    id: string;
+    code: string;
+    discount: string;
+    type: string;
+    usageLimit: string | number | null;
+    used: number;
+    expiryDate: string;
+    status: string;
+    createdAt?: string;
+};
+
+export type PromotionsDashboardResponse = {
+    summary: PromotionsSummary;
+    promotions: DashboardPromotion[];
+    page: number;
+    limit: number;
+    total: number;
+    pages: number;
+};

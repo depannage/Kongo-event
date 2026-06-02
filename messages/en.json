@@ -583,25 +583,67 @@
     "title": "Promotions",
     "breadcrumbManagement": "Management",
     "addPromotion": "Add Promotion",
+    "exportCsv": "Export CSV",
     "tableTitle": "Promotions Table",
     "search": "Search",
     "filter": "Filter",
+    "filterAll": "All Status",
     "sortBy": "Sort by",
     "active": "Active",
     "expired": "Expired",
+    "emptyPromotions": "No promotions found",
+    "createFirst": "+ Create your first promotion",
     "metrics": {
       "discountCodes": "Discount Codes Active",
       "referralLinks": "Referral Links Created",
       "salesFromPromotions": "Sales from Promotions"
     },
+    "statusSummary": {
+      "active": "Active Promotions",
+      "expired": "Expired Promotions"
+    },
     "table": {
       "no": "No",
       "code": "Code",
       "discount": "Discount",
+      "type": "Type",
+      "typePercentage": "Percentage",
+      "typeFixed": "Fixed Amount",
       "used": "Used",
+      "usageLimit": "Usage Limit",
+      "unlimited": "∞ Unlimited",
       "expiryDate": "Expiry Date",
       "status": "Status",
-      "actions": "Actions"
+      "actions": "Actions",
+      "copyCode": "Copy code",
+      "view": "View",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "tableFooter": {
+      "showing": "Showing {count} of {total} promotions",
+      "showingRange": "Showing {from} to {to} of {total} promotions",
+      "selected": "({count} selected)"
+    },
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "modal": {
+      "editTitle": "Edit Promotion",
+      "cancel": "Cancel",
+      "create": "Create Promotion",
+      "update": "Update Promotion",
+      "code": "Promo Code",
+      "codePlaceholder": "e.g., SUMMER25",
+      "discountType": "Discount Type",
+      "discountValue": "Discount Value",
+      "typePercentage": "Percentage (%)",
+      "typeFixed": "Fixed Amount ($)",
+      "discountPlaceholderPercent": "e.g., 20%",
+      "discountPlaceholderFixed": "e.g., $10",
+      "usageLimit": "Usage Limit",
+      "usageLimitPlaceholder": "Unlimited or number"
     },
     "pagination": {
       "showing": "Showing 1 to 10 of 500 results"
