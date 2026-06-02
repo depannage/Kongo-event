@@ -336,12 +336,20 @@
     "month": "Mois",
     "fromLastPeriod": "par rapport à la période précédente",
     "revenueAnalytics": "Analyse des revenus",
+    "chart": {
+      "thisPeriod": "Cette période",
+      "lastPeriod": "Période précédente",
+      "totalThisPeriod": "Revenu total sur la période",
+      "noData": "Aucune donnée pour cette période"
+    },
     "recentTransactions": "Transactions récentes",
     "search": "Rechercher",
     "filter": "Filtrer",
     "sortBy": "Trier par",
     "paid": "Payé",
     "cancelled": "Annulé",
+    "refunded": "Remboursé",
+    "emptyTransactions": "Aucune transaction trouvée",
     "metrics": {
       "totalRevenue": "Revenu total",
       "ticketsSold": "Tickets vendus",
@@ -354,7 +362,11 @@
       "email": "Email",
       "ticketType": "Type de ticket",
       "purchaseDate": "Date d’achat",
-      "checkinStatus": "Statut check-in"
+      "amount": "Montant",
+      "checkinStatus": "Statut"
+    },
+    "pagination": {
+      "showing": "Affichage de {from} à {to} sur {total} transactions"
     }
   },
   "tickets": {
