@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { CalendarCheck, CircleDollarSign, Plus, Ticket, Ticket as TicketIcon } from "lucide-react";
+import { CalendarCheck, CircleDollarSign, Plus, Ticket as TicketIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useSidebar } from "@/contexts/SidebarContext";
 import DashboardNavbar from "@/components/dashboard/DashboardNavbar";
@@ -52,7 +52,7 @@ export default function TicketsPage() {
     setIsModalOpen(true);
   };
 
-  const handleEdit = (ticket: typeof Ticket) => {
+  const handleEdit = (ticket: Ticket) => {
     setEditingTicket(ticket);
     setIsModalOpen(true);
   };
@@ -133,9 +133,9 @@ export default function TicketsPage() {
           </div>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <MetricCard icon={<Ticket className="size-5" />} title={t("metrics.ticketsSold")} value={metrics.total} trend="+10.5%" trendUp={true} />
+            <MetricCard icon={<TicketIcon className="size-5" />} title={t("metrics.ticketsSold")} value={metrics.total} trend="+10.5%" trendUp={true} />
             <MetricCard icon={<CircleDollarSign className="size-5" />} title={t("metrics.revenueGenerated")} value={metrics.pending} trend="+8.2%" trendUp={true} />
-            <MetricCard icon={<Ticket className="size-5" />} title={t("metrics.ticketsRemaining")} value={metrics.active} trend="+12.5%" trendUp={true} />
+            <MetricCard icon={<TicketIcon className="size-5" />} title={t("metrics.ticketsRemaining")} value={metrics.active} trend="+12.5%" trendUp={true} />
             <MetricCard icon={<CalendarCheck className="size-5" />} title={t("metrics.checkinsCompleted")} value={metrics.used} trend="+12.5%" trendUp={true} />
           </div>
           <SummaryCards

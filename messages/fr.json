@@ -580,25 +580,67 @@
     "title": "Promotions",
     "breadcrumbManagement": "Gestion",
     "addPromotion": "Ajouter une promotion",
+    "exportCsv": "Exporter CSV",
     "tableTitle": "Table des promotions",
     "search": "Rechercher",
     "filter": "Filtrer",
+    "filterAll": "Tous les statuts",
     "sortBy": "Trier par",
     "active": "Actif",
     "expired": "Expiré",
+    "emptyPromotions": "Aucune promotion trouvée",
+    "createFirst": "+ Créer votre première promotion",
     "metrics": {
       "discountCodes": "Codes de réduction actifs",
       "referralLinks": "Liens de parrainage créés",
       "salesFromPromotions": "Ventes via promotions"
     },
+    "statusSummary": {
+      "active": "Promotions actives",
+      "expired": "Promotions expirées"
+    },
     "table": {
       "no": "N°",
       "code": "Code",
       "discount": "Réduction",
+      "type": "Type",
+      "typePercentage": "Pourcentage",
+      "typeFixed": "Montant fixe",
       "used": "Utilisé",
+      "usageLimit": "Limite d’utilisation",
+      "unlimited": "∞ Illimité",
       "expiryDate": "Date d’expiration",
       "status": "Statut",
-      "actions": "Actions"
+      "actions": "Actions",
+      "copyCode": "Copier le code",
+      "view": "Voir",
+      "edit": "Modifier",
+      "delete": "Supprimer"
+    },
+    "tableFooter": {
+      "showing": "Affichage de {count} sur {total} promotions",
+      "showingRange": "Affichage de {from} à {to} sur {total} promotions",
+      "selected": "({count} sélectionnées)"
+    },
+    "pagination": {
+      "previous": "Précédent",
+      "next": "Suivant"
+    },
+    "modal": {
+      "editTitle": "Modifier la promotion",
+      "cancel": "Annuler",
+      "create": "Créer la promotion",
+      "update": "Mettre à jour",
+      "code": "Code promo",
+      "codePlaceholder": "ex. ETE2026",
+      "discountType": "Type de réduction",
+      "discountValue": "Valeur de la réduction",
+      "typePercentage": "Pourcentage (%)",
+      "typeFixed": "Montant fixe ($)",
+      "discountPlaceholderPercent": "ex. 20%",
+      "discountPlaceholderFixed": "ex. 10 $",
+      "usageLimit": "Limite d’utilisation",
+      "usageLimitPlaceholder": "Illimité ou nombre"
     },
     "pagination": {
       "showing": "Affichage de 1 à 10 sur 500 résultats"
