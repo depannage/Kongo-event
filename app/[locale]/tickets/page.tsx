@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Plus, Ticket as TicketIcon } from "lucide-react";
+import { CalendarCheck, CircleDollarSign, Plus, Ticket, Ticket as TicketIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useSidebar } from "@/contexts/SidebarContext";
 import DashboardNavbar from "@/components/dashboard/DashboardNavbar";
@@ -19,6 +19,8 @@ import {
   useUpdateTicket,
 } from "@/core/hooks/ticket/useTicket";
 import type { CreateTicketPayload, Ticket } from "@/core/types/ticket";
+import MetricCard from "@/components/MetricCard";
+import { useTranslations } from "next-intl";
 
 export default function TicketsPage() {
   const { isCollapsed } = useSidebar();
@@ -43,12 +45,14 @@ export default function TicketsPage() {
     return { total: tickets.length, pending, active, used, cancelled };
   }, [tickets]);
 
+  const t = useTranslations("tickets");
+
   const handleOpenCreate = () => {
     setEditingTicket(null);
     setIsModalOpen(true);
   };
 
-  const handleEdit = (ticket: Ticket) => {
+  const handleEdit = (ticket: typeof Ticket) => {
     setEditingTicket(ticket);
     setIsModalOpen(true);
   };
@@ -128,12 +132,11 @@ export default function TicketsPage() {
             </Button>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
-            <MetricCard title="Total" value={metrics.total} />
-            <MetricCard title="En attente" value={metrics.pending} />
-            <MetricCard title="Actifs" value={metrics.active} />
-            <MetricCard title="Utilisés" value={metrics.used} />
-            <MetricCard title="Annulés" value={metrics.cancelled} />
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <MetricCard icon={<Ticket className="size-5" />} title={t("metrics.ticketsSold")} value={metrics.total} trend="+10.5%" trendUp={true} />
+            <MetricCard icon={<CircleDollarSign className="size-5" />} title={t("metrics.revenueGenerated")} value={metrics.pending} trend="+8.2%" trendUp={true} />
+            <MetricCard icon={<Ticket className="size-5" />} title={t("metrics.ticketsRemaining")} value={metrics.active} trend="+12.5%" trendUp={true} />
+            <MetricCard icon={<CalendarCheck className="size-5" />} title={t("metrics.checkinsCompleted")} value={metrics.used} trend="+12.5%" trendUp={true} />
           </div>
           <SummaryCards
             activeTickets={metrics.active}
@@ -226,15 +229,3 @@ function DetailItem({ label, value }: { label: string; value?: string }) {
   );
 }
 
-function MetricCard({ title, value }: { title: string; value: number }) {
-  return (
-    <Card className="rounded-2xl border-slate-200">
-      <CardHeader className="pb-2">
-        <CardTitle className="text-sm font-semibold text-slate-500">{title}</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <p className="text-2xl font-bold text-slate-900">{value}</p>
-      </CardContent>
-    </Card>
-  );
-}
