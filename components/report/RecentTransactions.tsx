@@ -1,14 +1,16 @@
 "use client";
 
 import { Search, SortAsc } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 import type { ReportTransaction } from "@/components/report/types";
 import { getTransactionStatusColor } from "@/components/report/utils/transaction-status";
+import { formatCurrency } from "@/shared/lib/formatNumber";
 
 type RecentTransactionsProps = {
     transactions: ReportTransaction[];
     totalCount: number;
+    isLoading?: boolean;
     searchTerm: string;
     onSearchTermChange: (value: string) => void;
     filterStatus: string;
@@ -18,12 +20,14 @@ type RecentTransactionsProps = {
 export function RecentTransactions({
     transactions,
     totalCount,
+    isLoading = false,
     searchTerm,
     onSearchTermChange,
     filterStatus,
     onFilterStatusChange,
 }: RecentTransactionsProps) {
     const t = useTranslations("reports");
+    const locale = useLocale();
     const [selectedRows, setSelectedRows] = useState<string[]>([]);
 
     const toggleRow = (id: string) => {
@@ -67,7 +71,7 @@ export function RecentTransactions({
                             <option value="all">All Status</option>
                             <option value="paid">{t("paid")}</option>
                             <option value="cancelled">{t("cancelled")}</option>
-                            <option value="refunded">Refunded</option>
+                            <option value="refunded">{t("refunded")}</option>
                         </select>
 
                         <button
@@ -113,7 +117,7 @@ export function RecentTransactions({
                                 {t("table.purchaseDate")}
                             </th>
                             <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
-                                Amount
+                                {t("table.amount")}
                             </th>
                             <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
                                 {t("table.checkinStatus")}
@@ -123,7 +127,16 @@ export function RecentTransactions({
                     </thead>
 
                     <tbody>
-                        {transactions.map((transaction, index) => (
+                        {isLoading &&
+                            Array.from({ length: 5 }).map((_, index) => (
+                                <tr key={`skeleton-${index}`} className="border-b border-slate-100">
+                                    <td colSpan={9} className="px-5 py-4">
+                                        <div className="h-5 animate-pulse rounded-lg bg-slate-100" />
+                                    </td>
+                                </tr>
+                            ))}
+                        {!isLoading &&
+                            transactions.map((transaction, index) => (
                             <tr
                                 key={transaction.id}
                                 className="group border-b border-slate-100 transition-colors hover:bg-slate-50"
@@ -159,7 +172,7 @@ export function RecentTransactions({
                                     {transaction.purchaseDate}
                                 </td>
                                 <td className="px-5 py-4 font-semibold text-slate-700">
-                                    ${transaction.amount}
+                                    {formatCurrency(transaction.amount, locale)}
                                 </td>
                                 <td className="px-5 py-4">
                                     <span
@@ -172,20 +185,24 @@ export function RecentTransactions({
                                     •••
                                 </td>
                             </tr>
-                        ))}
+                            ))}
                     </tbody>
                 </table>
 
-                {transactions.length === 0 && (
+                {!isLoading && transactions.length === 0 && (
                     <div className="py-12 text-center">
-                        <p className="text-slate-400">No transactions found</p>
+                        <p className="text-slate-400">{t("emptyTransactions")}</p>
                     </div>
                 )}
             </div>
 
             <div className="flex items-center justify-between border-t border-slate-100 px-5 py-4">
                 <p className="text-sm text-slate-500">
-                    Showing {transactions.length} of {totalCount} transactions
+                    {t("pagination.showing", {
+                        from: transactions.length > 0 ? 1 : 0,
+                        to: transactions.length,
+                        total: totalCount,
+                    })}
                 </p>
 
                 <div className="flex gap-2">

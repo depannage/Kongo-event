@@ -1,9 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import { dashboardService } from "@/shared/services/dashboard.service";
+import {
+    dashboardService,
+    type SalesReportsPeriod,
+} from "@/shared/services/dashboard.service";
 
-export function useSalesReports() {
+export function useSalesReports(period: SalesReportsPeriod = "month") {
     return useQuery({
-        queryKey: ["dashboard", "sales"],
-        queryFn: () => dashboardService.getSalesReports(),
+        queryKey: ["dashboard", "sales", period],
+        queryFn: () => dashboardService.getSalesReports(period),
     });
 }

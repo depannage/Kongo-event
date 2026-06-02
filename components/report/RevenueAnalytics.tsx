@@ -1,19 +1,65 @@
 "use client";
 
-import { RefreshCcw, TrendingDown } from "lucide-react";
-import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { RefreshCcw, TrendingDown, TrendingUp } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
+import { useMemo } from "react";
 import { Line } from "react-chartjs-2";
+import {
+    buildRevenueChartData,
+    buildRevenueChartOptions,
+    computePeriodChangePercent,
+} from "@/components/report/chart/revenue-chart.config";
 import { registerReportCharts } from "@/components/report/chart/register-chart";
-import { REVENUE_LINE_DATA, REVENUE_LINE_OPTIONS } from "@/components/report/chart/revenue-chart.config";
+import type { SalesReportsResponse } from "@/shared/types/dashboard.types";
+import type { SalesReportsPeriod } from "@/shared/services/dashboard.service";
+import { formatCurrency } from "@/shared/lib/formatNumber";
 
-const PERIODS = ["day", "week", "month", "year"] as const;
+const PERIODS: SalesReportsPeriod[] = ["day", "week", "month", "year"];
 
 registerReportCharts();
 
-export function RevenueAnalytics() {
+type RevenueAnalyticsProps = {
+    analytics?: SalesReportsResponse["revenueAnalytics"];
+    isLoading?: boolean;
+    period: SalesReportsPeriod;
+    onPeriodChange: (period: SalesReportsPeriod) => void;
+    onRefresh?: () => void;
+};
+
+export function RevenueAnalytics({
+    analytics,
+    isLoading = false,
+    period,
+    onPeriodChange,
+    onRefresh,
+}: RevenueAnalyticsProps) {
     const t = useTranslations("reports");
-    const [selectedPeriod, setSelectedPeriod] = useState<string>("month");
+    const locale = useLocale();
+
+    const points = analytics?.points ?? [];
+    const total = analytics?.total ?? 0;
+
+    const chartLabels = useMemo(
+        () => ({
+            thisPeriod: t("chart.thisPeriod"),
+            lastPeriod: t("chart.lastPeriod"),
+            tooltipTitle: t("revenueAnalytics"),
+        }),
+        [t]
+    );
+
+    const chartData = useMemo(
+        () => buildRevenueChartData(points, chartLabels),
+        [points, chartLabels]
+    );
+
+    const chartOptions = useMemo(
+        () => buildRevenueChartOptions(points, chartLabels),
+        [points, chartLabels]
+    );
+
+    const changePercent = useMemo(() => computePeriodChangePercent(points), [points]);
+    const isPositiveTrend = changePercent !== null && changePercent >= 0;
 
     return (
         <div className="mb-6 rounded-2xl border border-slate-200 bg-white shadow-sm transition-all hover:shadow-lg">
@@ -22,27 +68,32 @@ export function RevenueAnalytics() {
 
                 <div className="flex items-center gap-3">
                     <div className="flex gap-1 rounded-xl bg-slate-100 p-1">
-                        {PERIODS.map((period) => (
+                        {PERIODS.map((p) => (
                             <button
-                                key={period}
+                                key={p}
                                 type="button"
-                                onClick={() => setSelectedPeriod(period)}
-                                className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-all ${
-                                    selectedPeriod === period
+                                disabled={isLoading}
+                                onClick={() => onPeriodChange(p)}
+                                className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-all disabled:opacity-50 ${
+                                    period === p
                                         ? "bg-white text-slate-900 shadow-sm"
                                         : "text-slate-500 hover:text-slate-700"
                                 }`}
                             >
-                                {t(period)}
+                                {t(p)}
                             </button>
                         ))}
                     </div>
                     <button
                         type="button"
                         title={t("revenueAnalytics")}
-                        className="flex size-9 items-center justify-center rounded-xl border border-slate-200 transition-colors hover:bg-slate-50"
+                        disabled={isLoading}
+                        onClick={onRefresh}
+                        className="flex size-9 items-center justify-center rounded-xl border border-slate-200 transition-colors hover:bg-slate-50 disabled:opacity-50"
                     >
-                        <RefreshCcw className="size-4 text-slate-400" />
+                        <RefreshCcw
+                            className={`size-4 text-slate-400 ${isLoading ? "animate-spin" : ""}`}
+                        />
                     </button>
                 </div>
             </div>
@@ -50,21 +101,49 @@ export function RevenueAnalytics() {
             <div className="px-5 pt-5">
                 <div className="flex flex-wrap items-end gap-3">
                     <div>
-                        <p className="text-3xl font-bold text-slate-900">$1,302.00</p>
-                        <p className="mt-1 text-xs text-slate-500">Total revenue this period</p>
+                        {isLoading ? (
+                            <div className="h-9 w-40 animate-pulse rounded-lg bg-slate-100" />
+                        ) : (
+                            <p className="text-3xl font-bold text-slate-900">
+                                {formatCurrency(total, locale)}
+                            </p>
+                        )}
+                        <p className="mt-1 text-xs text-slate-500">{t("chart.totalThisPeriod")}</p>
                     </div>
-                    <div className="flex items-center gap-2 pb-1">
-                        <span className="inline-flex items-center gap-1 rounded-full bg-rose-50 px-2 py-0.5 text-xs font-semibold text-rose-600">
-                            <TrendingDown className="size-3" />
-                            8.5%
-                        </span>
-                        <span className="text-xs text-slate-400">{t("fromLastPeriod")}</span>
-                    </div>
+                    {!isLoading && changePercent !== null && (
+                        <div className="flex items-center gap-2 pb-1">
+                            <span
+                                className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold ${
+                                    isPositiveTrend
+                                        ? "bg-emerald-50 text-emerald-600"
+                                        : "bg-rose-50 text-rose-600"
+                                }`}
+                            >
+                                {isPositiveTrend ? (
+                                    <TrendingUp className="size-3" />
+                                ) : (
+                                    <TrendingDown className="size-3" />
+                                )}
+                                {Math.abs(changePercent).toFixed(1)}%
+                            </span>
+                            <span className="text-xs text-slate-400">{t("fromLastPeriod")}</span>
+                        </div>
+                    )}
                 </div>
             </div>
 
             <div className="h-[300px] px-4 pb-5 pt-5 sm:px-5">
-                <Line data={REVENUE_LINE_DATA} options={REVENUE_LINE_OPTIONS} />
+                {isLoading ? (
+                    <div className="flex h-full items-center justify-center">
+                        <div className="h-full w-full animate-pulse rounded-xl bg-slate-100" />
+                    </div>
+                ) : points.length > 0 ? (
+                    <Line data={chartData} options={chartOptions} />
+                ) : (
+                    <div className="flex h-full items-center justify-center text-sm text-slate-400">
+                        {t("chart.noData")}
+                    </div>
+                )}
             </div>
         </div>
     );

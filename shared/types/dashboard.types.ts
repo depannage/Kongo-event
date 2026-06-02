@@ -13,6 +13,17 @@ export type RevenueAnalyticsPoint = {
     lastPeriod: number;
 };
 
+/** Transaction telle que renvoyée par GET /dashboard/sales */
+export type RecentTransaction = {
+    id: string;
+    name: string;
+    email: string;
+    ticketType: string;
+    purchaseDate: string;
+    status: string;
+    amount: number;
+};
+
 export type SalesReportsResponse = {
     summary: SalesSummary;
     revenueAnalytics: {
@@ -20,5 +31,5 @@ export type SalesReportsResponse = {
         total: number;
         points: RevenueAnalyticsPoint[];
     };
-    recentTransactions: unknown[];
+    recentTransactions: RecentTransaction[];
 };

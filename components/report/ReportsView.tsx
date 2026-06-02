@@ -1,10 +1,12 @@
 "use client";
 
+import { useLocale } from "next-intl";
 import { useMemo, useState } from "react";
+import type { SalesReportsPeriod } from "@/shared/services/dashboard.service";
 import DashboardNavbar from "@/components/dashboard/DashboardNavbar";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
-import { MOCK_TRANSACTIONS } from "@/components/report/constants/mock-transactions";
 import { RecentTransactions } from "@/components/report/RecentTransactions";
+import { mapRecentTransactions } from "@/components/report/utils/map-recent-transactions";
 import { ReportsHeader } from "@/components/report/ReportsHeader";
 import { ReportsMetricsGrid } from "@/components/report/ReportsMetricsGrid";
 import { RevenueAnalytics } from "@/components/report/RevenueAnalytics";
@@ -20,15 +22,28 @@ const EMPTY_METRICS: SalesMetrics = {
 };
 
 export function ReportsView() {
+    const locale = useLocale();
     const { isCollapsed } = useSidebar();
-    const { data: salesReports, isLoading: isSalesLoading } = useSalesReports();
+    const [period, setPeriod] = useState<SalesReportsPeriod>("month");
+    const {
+        data: salesReports,
+        isLoading: isSalesLoading,
+        isFetching,
+        refetch,
+    } = useSalesReports(period);
     const [searchTerm, setSearchTerm] = useState("");
     const [filterStatus, setFilterStatus] = useState("all");
 
     const metrics: SalesMetrics = salesReports?.summary ?? EMPTY_METRICS;
+    const isReportsLoading = isSalesLoading || isFetching;
+
+    const allTransactions = useMemo(
+        () => mapRecentTransactions(salesReports?.recentTransactions, locale),
+        [salesReports?.recentTransactions, locale]
+    );
 
     const filteredTransactions = useMemo(() => {
-        return MOCK_TRANSACTIONS.filter((transaction) => {
+        return allTransactions.filter((transaction) => {
             const matchesSearch =
                 transaction.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 transaction.email.toLowerCase().includes(searchTerm.toLowerCase());
@@ -37,7 +52,7 @@ export function ReportsView() {
                 transaction.status.toLowerCase() === filterStatus.toLowerCase();
             return matchesSearch && matchesStatus;
         });
-    }, [searchTerm, filterStatus]);
+    }, [allTransactions, searchTerm, filterStatus]);
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
@@ -52,11 +67,18 @@ export function ReportsView() {
 
                 <main className="p-4 sm:p-6 lg:p-8">
                     <ReportsHeader />
-                    <ReportsMetricsGrid metrics={metrics} isLoading={isSalesLoading} />
-                    <RevenueAnalytics />
+                    <ReportsMetricsGrid metrics={metrics} isLoading={isReportsLoading} />
+                    <RevenueAnalytics
+                        analytics={salesReports?.revenueAnalytics}
+                        isLoading={isReportsLoading}
+                        period={period}
+                        onPeriodChange={setPeriod}
+                        onRefresh={() => refetch()}
+                    />
                     <RecentTransactions
                         transactions={filteredTransactions}
-                        totalCount={MOCK_TRANSACTIONS.length}
+                        totalCount={allTransactions.length}
+                        isLoading={isReportsLoading}
                         searchTerm={searchTerm}
                         onSearchTermChange={setSearchTerm}
                         filterStatus={filterStatus}
