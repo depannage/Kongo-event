@@ -7,7 +7,7 @@ import type {
   UpdateTicketPayload,
 } from "@/core/types/ticket";
 
-const BASE_PATH = "/api/v1/tickets";
+const BASE_PATH = "/tickets";
 
 function normalizeTicketsResponse(payload: unknown): Ticket[] {
   if (Array.isArray(payload)) {
