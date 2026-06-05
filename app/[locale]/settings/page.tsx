@@ -74,10 +74,10 @@ export default function SettingsPage() {
                         </div>
 
                         <div className="flex gap-3">
-                            <button className="px-5 py-2.5 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-all">
+                            <button className="px-5 py-2.5 rounded border border-slate-200 bg-white text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-all">
                                 {t("cancel")}
                             </button>
-                            <button className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition-all hover:shadow-md">
+                            <button className="inline-flex items-center gap-2 px-5 py-2.5 rounded bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition-all hover:shadow-md">
                                 <Save className="size-4" />
                                 {t("save")}
                             </button>
@@ -85,7 +85,7 @@ export default function SettingsPage() {
                     </div>
 
                     {/* Settings Container */}
-                    <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+                    <div className="bg-white rounded border border-slate-200 overflow-hidden shadow-sm">
                         <div className="grid grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)]">
                             {/* Sidebar Tabs */}
                             <aside className="border-b border-slate-200 lg:border-b-0 lg:border-r bg-slate-50/30">
@@ -95,7 +95,7 @@ export default function SettingsPage() {
                                             <button
                                                 key={tab.key}
                                                 onClick={() => setActiveTab(tab.key)}
-                                                className={`shrink-0 rounded-xl px-4 py-2.5 text-left text-sm font-semibold transition-all lg:w-full ${
+                                                className={`shrink-0 rounded px-4 py-2.5 text-left text-sm font-semibold transition-all lg:w-full ${
                                                     activeTab === tab.key
                                                         ? "bg-white text-slate-900 shadow-sm border border-slate-200"
                                                         : "text-slate-600 hover:bg-white/50"
@@ -141,7 +141,7 @@ function SectionHeader({
     return (
         <div className="mb-8 pb-6 border-b border-slate-100">
             <div className="flex items-center gap-3 mb-4">
-                <div className="flex size-10 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+                <div className="flex size-10 items-center justify-center rounded bg-blue-50 text-blue-600">
                     {icon}
                 </div>
                 <div>
@@ -180,7 +180,7 @@ function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
     return (
         <input
             {...props}
-            className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium text-slate-800 outline-none transition-all placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 hover:border-slate-300"
+            className="h-11 w-full rounded border border-slate-200 bg-white px-4 text-sm font-medium text-slate-800 outline-none transition-all placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 hover:border-slate-300"
         />
     );
 }
@@ -199,7 +199,7 @@ function Select({
             <select
                 defaultValue={defaultValue}
                 onChange={onChange}
-                className="h-11 w-full appearance-none rounded-xl border border-slate-200 bg-white px-4 pr-10 text-sm font-medium text-slate-800 outline-none transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-100 hover:border-slate-300"
+                className="h-11 w-full appearance-none rounded border border-slate-200 bg-white px-4 pr-10 text-sm font-medium text-slate-800 outline-none transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-100 hover:border-slate-300"
             >
                 {children}
             </select>
@@ -349,7 +349,7 @@ function PlanSection({ t }: { t: any }) {
                 {plans.map((plan) => (
                     <div
                         key={plan.id}
-                        className={`rounded-2xl border p-6 transition-all cursor-pointer hover:shadow-lg ${
+                        className={`rounded border p-6 transition-all cursor-pointer hover:shadow-lg ${
                             selectedPlan === plan.id
                                 ? "border-blue-500 bg-blue-50/20 ring-2 ring-blue-500/20"
                                 : "border-slate-200 hover:border-slate-300"
@@ -358,7 +358,7 @@ function PlanSection({ t }: { t: any }) {
                     >
                         <div className="flex items-start justify-between mb-4">
                             <h3 className="text-lg font-extrabold text-slate-900">{plan.name}</h3>
-                            <span className="rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-semibold text-blue-700">
+                            <span className="rounded bg-blue-100 px-2.5 py-0.5 text-xs font-semibold text-blue-700">
                                 {plan.badge}
                             </span>
                         </div>
@@ -379,7 +379,7 @@ function PlanSection({ t }: { t: any }) {
                             ))}
                         </div>
 
-                        <button className={`w-full py-2.5 rounded-xl text-sm font-semibold transition-all ${
+                        <button className={`w-full py-2.5 rounded text-sm font-semibold transition-all ${
                             selectedPlan === plan.id
                                 ? "bg-blue-600 text-white hover:bg-blue-700"
                                 : "border border-slate-200 text-slate-700 hover:bg-slate-50"
@@ -461,7 +461,7 @@ function BillingSection({ t }: { t: any }) {
                     </Field>
                 </div>
 
-                <div className="bg-blue-50 rounded-xl p-4">
+                <div className="bg-blue-50 rounded p-4">
                     <p className="text-sm text-blue-800">
                         💡 Your payment information is encrypted and secure. We use industry-standard SSL encryption.
                     </p>
@@ -485,7 +485,7 @@ function TaxSection({ t }: { t: any }) {
                 description={t("tax.description")}
             />
 
-            <div className="mb-8 overflow-hidden rounded-xl border border-slate-200">
+            <div className="mb-8 overflow-hidden rounded border border-slate-200">
                 <table className="w-full text-left text-sm">
                     <thead className="bg-slate-50 border-b border-slate-200">
                     <tr>
@@ -665,7 +665,7 @@ function PasswordSection({ t }: { t: any }) {
                     />
                 </Field>
 
-                <div className="bg-amber-50 rounded-xl p-4 border border-amber-200">
+                <div className="bg-amber-50 rounded p-4 border border-amber-200">
                     <p className="text-sm text-amber-800">
                         🔒 Password requirements: Minimum 8 characters, at least one uppercase letter, one lowercase letter, one number, and one special character.
                     </p>
@@ -682,7 +682,7 @@ function PasswordInput({ show, onToggle, value }: { show: boolean; onToggle: () 
                 type={show ? "text" : "password"}
                 defaultValue={value}
                 placeholder="Enter password"
-                className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 pr-12 text-sm font-medium text-slate-800 outline-none transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                className="h-11 w-full rounded border border-slate-200 bg-white px-4 pr-12 text-sm font-medium text-slate-800 outline-none transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
             />
             <button
                 type="button"
@@ -778,12 +778,12 @@ function Toggle({ enabled, onChange }: { enabled: boolean; onChange: () => void 
         <button
             type="button"
             onClick={onChange}
-            className={`relative h-6 w-11 rounded-full transition-all ${
+            className={`relative h-6 w-11 rounded transition-all ${
                 enabled ? "bg-blue-600" : "bg-slate-200"
             }`}
         >
             <span
-                className={`absolute top-[2px] size-5 rounded-full bg-white shadow-sm transition-all ${
+                className={`absolute top-[2px] size-5 rounded bg-white shadow-sm transition-all ${
                     enabled ? "right-[2px]" : "left-[2px]"
                 }`}
             />

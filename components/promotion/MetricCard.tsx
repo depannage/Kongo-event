@@ -9,9 +9,9 @@ type MetricCardProps = {
 
 export function MetricCard({ icon, title, value, isLoading = false }: MetricCardProps) {
     return (
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+        <div className="rounded border border-slate-200 bg-white p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
             <div className="mb-4 flex items-start justify-between">
-                <div className="rounded-xl bg-blue-50 p-3 text-blue-600">{icon}</div>
+                <div className="rounded bg-blue-50 p-3 text-blue-600">{icon}</div>
                 <Info className="size-4 cursor-pointer text-slate-300 transition-colors hover:text-slate-400" />
             </div>
 
@@ -19,7 +19,7 @@ export function MetricCard({ icon, title, value, isLoading = false }: MetricCard
 
             {isLoading ? (
                 <div
-                    className="h-8 w-32 animate-pulse rounded-lg bg-slate-100"
+                    className="h-8 w-32 animate-pulse rounded bg-slate-100"
                     aria-busy="true"
                     aria-label={title}
                 />

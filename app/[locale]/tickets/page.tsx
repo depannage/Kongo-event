@@ -146,11 +146,11 @@ export default function TicketsPage() {
           />
 
           {ticketsQuery.isPending ? (
-            <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center text-sm text-slate-500">
+            <div className="rounded border border-slate-200 bg-white p-8 text-center text-sm text-slate-500">
               Chargement des tickets...
             </div>
           ) : ticketsQuery.isError ? (
-            <div className="rounded-2xl border border-rose-200 bg-rose-50 p-8 text-center text-sm text-rose-700">
+            <div className="rounded border border-rose-200 bg-rose-50 p-8 text-center text-sm text-rose-700">
               Impossible de récupérer les tickets.
             </div>
           ) : (
@@ -163,7 +163,7 @@ export default function TicketsPage() {
             />
           )}
 
-          <Card className="rounded-2xl border-slate-200">
+          <Card className="rounded border-slate-200">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <TicketIcon className="size-5 text-blue-600" />
@@ -222,7 +222,7 @@ export default function TicketsPage() {
 
 function DetailItem({ label, value }: { label: string; value?: string }) {
   return (
-    <div className="rounded-md border border-slate-200 bg-slate-50 p-3">
+    <div className="rounded border border-slate-200 bg-slate-50 p-3">
       <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{label}</p>
       <p className="mt-1 font-medium text-slate-900">{value ?? "-"}</p>
     </div>

@@ -16,7 +16,7 @@ export function ReportsHeader() {
 
             <button
                 type="button"
-                className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 transition-all hover:bg-slate-50 hover:shadow-sm"
+                className="inline-flex items-center gap-2 rounded border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 transition-all hover:bg-slate-50 hover:shadow-sm"
             >
                 <Download className="size-4" />
                 {t("exportCsv")}

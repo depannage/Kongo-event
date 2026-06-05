@@ -14,7 +14,7 @@ export function Logo({ withText = true }: LogoProps) {
         alt={siteConfig.name}
         width={54}
         height={54}
-        className="rounded-md object-contain"
+        className="rounded object-contain"
         priority
       />
 

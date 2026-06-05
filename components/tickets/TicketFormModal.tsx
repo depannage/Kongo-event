@@ -86,13 +86,13 @@ export default function TicketFormModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 p-4 sm:items-center">
-      <div className="w-full max-w-2xl overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
+      <div className="w-full max-w-2xl overflow-hidden rounded border border-slate-200 bg-white shadow-2xl">
         <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4">
           <h2 className="text-xl font-extrabold text-slate-950">{title}</h2>
           <button
             type="button"
             onClick={onClose}
-            className="flex size-9 items-center justify-center rounded-full border border-slate-200 text-slate-500 transition-colors hover:bg-slate-50"
+            className="flex size-9 items-center justify-center rounded border border-slate-200 text-slate-500 transition-colors hover:bg-slate-50"
           >
             <X className="size-4" />
           </button>
@@ -145,7 +145,7 @@ export default function TicketFormModal({
             <select
               value={values.status}
               onChange={(e) => setField("status", e.target.value)}
-              className="h-11 w-full rounded-md border border-input bg-background px-3 text-sm outline-none transition-colors focus:border-ring focus:ring-[3px] focus:ring-ring/30"
+              className="h-11 w-full rounded border border-input bg-background px-3 text-sm outline-none transition-colors focus:border-ring focus:ring-[3px] focus:ring-ring/30"
             >
               {TICKET_STATUSES.map((status) => (
                 <option key={status} value={status}>

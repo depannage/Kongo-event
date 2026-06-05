@@ -36,12 +36,12 @@ export function PromotionsStatusSummary({ counts, isLoading = false }: Promotion
     return (
         <div className="mb-6 grid grid-cols-1 gap-5 sm:grid-cols-2">
             {items.map((item) => (
-                <div key={item.label} className={`rounded-2xl border p-4 ${item.cardClass}`}>
+                <div key={item.label} className={`rounded border p-4 ${item.cardClass}`}>
                     <div className="flex items-center justify-between">
                         <div>
                             <p className={`mb-1 text-sm font-medium ${item.labelClass}`}>{item.label}</p>
                             {isLoading ? (
-                                <div className="h-8 w-16 animate-pulse rounded-lg bg-white/60" />
+                                <div className="h-8 w-16 animate-pulse rounded bg-white/60" />
                             ) : (
                                 <p className={`text-2xl font-bold ${item.valueClass}`}>
                                     {formatNumber(item.value, locale)}

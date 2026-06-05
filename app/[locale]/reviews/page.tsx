@@ -125,7 +125,7 @@ export default function ReviewsPage() {
                             </p>
                         </div>
 
-                        <button className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-all">
+                        <button className="inline-flex items-center gap-2 px-5 py-2.5 rounded border border-slate-200 bg-white text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-all">
                             <Download className="size-4" />
                             {t("exportCsv")}
                         </button>
@@ -165,37 +165,37 @@ export default function ReviewsPage() {
 
                     {/* Rating Distribution */}
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-6">
-                        <div className="bg-white rounded-2xl border border-slate-200 p-4">
+                        <div className="bg-white rounded border border-slate-200 p-4">
                             <div className="flex items-center justify-between mb-2">
                                 <span className="text-sm font-medium text-slate-500">Positive (4-5★)</span>
                                 <span className="text-2xl font-bold text-emerald-600">{positiveReviews}</span>
                             </div>
-                            <div className="w-full bg-slate-100 rounded-full h-2">
-                                <div className="bg-emerald-500 h-2 rounded-full" style={{ width: `${(positiveReviews / totalReviews) * 100}%` }} />
+                            <div className="w-full bg-slate-100 rounded h-2">
+                                <div className="bg-emerald-500 h-2 rounded" style={{ width: `${(positiveReviews / totalReviews) * 100}%` }} />
                             </div>
                         </div>
-                        <div className="bg-white rounded-2xl border border-slate-200 p-4">
+                        <div className="bg-white rounded border border-slate-200 p-4">
                             <div className="flex items-center justify-between mb-2">
                                 <span className="text-sm font-medium text-slate-500">Neutral (3★)</span>
                                 <span className="text-2xl font-bold text-amber-600">{neutralReviews}</span>
                             </div>
-                            <div className="w-full bg-slate-100 rounded-full h-2">
-                                <div className="bg-amber-500 h-2 rounded-full" style={{ width: `${(neutralReviews / totalReviews) * 100}%` }} />
+                            <div className="w-full bg-slate-100 rounded h-2">
+                                <div className="bg-amber-500 h-2 rounded" style={{ width: `${(neutralReviews / totalReviews) * 100}%` }} />
                             </div>
                         </div>
-                        <div className="bg-white rounded-2xl border border-slate-200 p-4">
+                        <div className="bg-white rounded border border-slate-200 p-4">
                             <div className="flex items-center justify-between mb-2">
                                 <span className="text-sm font-medium text-slate-500">Negative (1-2★)</span>
                                 <span className="text-2xl font-bold text-rose-600">{negativeReviews}</span>
                             </div>
-                            <div className="w-full bg-slate-100 rounded-full h-2">
-                                <div className="bg-rose-500 h-2 rounded-full" style={{ width: `${(negativeReviews / totalReviews) * 100}%` }} />
+                            <div className="w-full bg-slate-100 rounded h-2">
+                                <div className="bg-rose-500 h-2 rounded" style={{ width: `${(negativeReviews / totalReviews) * 100}%` }} />
                             </div>
                         </div>
                     </div>
 
                     {/* Reviews Table */}
-                    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg transition-all">
+                    <div className="bg-white rounded border border-slate-200 shadow-sm hover:shadow-lg transition-all">
                         <div className="p-5 border-b border-slate-100">
                             <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                                 <h2 className="text-lg font-bold text-slate-900">
@@ -204,7 +204,7 @@ export default function ReviewsPage() {
 
                                 <div className="flex flex-col sm:flex-row gap-3">
                                     {/* Search */}
-                                    <div className="flex h-10 w-full items-center gap-2 rounded-xl border border-slate-200 px-3 focus-within:border-blue-400 focus-within:ring-2 focus-within:ring-blue-100 sm:w-64">
+                                    <div className="flex h-10 w-full items-center gap-2 rounded border border-slate-200 px-3 focus-within:border-blue-400 focus-within:ring-2 focus-within:ring-blue-100 sm:w-64">
                                         <Search className="size-4 text-slate-400" />
                                         <input
                                             type="text"
@@ -219,7 +219,7 @@ export default function ReviewsPage() {
                                     <select
                                         value={filterRating}
                                         onChange={(e) => setFilterRating(e.target.value)}
-                                        className="h-10 px-3 rounded-xl border border-slate-200 text-sm font-medium text-slate-600 outline-none focus:border-blue-400"
+                                        className="h-10 px-3 rounded border border-slate-200 text-sm font-medium text-slate-600 outline-none focus:border-blue-400"
                                     >
                                         <option value="all">All Ratings</option>
                                         <option value="5">5 Stars</option>
@@ -233,7 +233,7 @@ export default function ReviewsPage() {
                                     <select
                                         value={filterVisibility}
                                         onChange={(e) => setFilterVisibility(e.target.value)}
-                                        className="h-10 px-3 rounded-xl border border-slate-200 text-sm font-medium text-slate-600 outline-none focus:border-blue-400"
+                                        className="h-10 px-3 rounded border border-slate-200 text-sm font-medium text-slate-600 outline-none focus:border-blue-400"
                                     >
                                         <option value="all">All Visibility</option>
                                         <option value="public">Public</option>
@@ -253,7 +253,7 @@ export default function ReviewsPage() {
                                                 setSortOrder("asc");
                                             }
                                         }}
-                                        className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-slate-200 px-4 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors"
+                                        className="inline-flex h-10 items-center justify-center gap-2 rounded border border-slate-200 px-4 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors"
                                     >
                                         <SortAsc className="size-4" />
                                         Sort by {sortBy}
@@ -301,7 +301,7 @@ export default function ReviewsPage() {
                                         <td className="px-5 py-4 text-sm font-semibold text-slate-500">{index + 1}</td>
                                         <td className="px-5 py-4">
                                             <div className="flex items-center gap-3">
-                                                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white text-sm font-semibold">
+                                                <div className="w-8 h-8 rounded bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white text-sm font-semibold">
                                                     {review.attendeeName.charAt(0)}
                                                 </div>
                                                 <p className="font-semibold text-slate-900">{review.attendeeName}</p>
@@ -336,7 +336,7 @@ export default function ReviewsPage() {
                                                 ) : (
                                                     <EyeOff className="size-3 text-amber-500" />
                                                 )}
-                                                <span className={`inline-flex px-2.5 py-1 rounded-full text-xs font-semibold border ${getVisibilityColor(review.visibility)}`}>
+                                                <span className={`inline-flex px-2.5 py-1 rounded text-xs font-semibold border ${getVisibilityColor(review.visibility)}`}>
                                                         {review.visibility === "public" ? t("public") : t("hidden")}
                                                     </span>
                                             </div>
@@ -345,12 +345,12 @@ export default function ReviewsPage() {
                                             <div className="flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                                 <button
                                                     onClick={() => setViewModal(review)}
-                                                    className="p-1.5 rounded-lg hover:bg-slate-100 transition-colors"
+                                                    className="p-1.5 rounded hover:bg-slate-100 transition-colors"
                                                     title="View"
                                                 >
                                                     <Eye className="size-4 text-slate-500" />
                                                 </button>
-                                                <button className="p-1.5 rounded-lg hover:bg-amber-50 transition-colors" title="Toggle Visibility">
+                                                <button className="p-1.5 rounded hover:bg-amber-50 transition-colors" title="Toggle Visibility">
                                                     {review.visibility === "public" ? (
                                                         <EyeOff className="size-4 text-amber-500" />
                                                     ) : (
@@ -380,16 +380,16 @@ export default function ReviewsPage() {
                             </p>
 
                             <div className="flex gap-2">
-                                <button className="px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
+                                <button className="px-3 py-1.5 rounded border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
                                     Previous
                                 </button>
-                                <button className="px-3 py-1.5 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors">
+                                <button className="px-3 py-1.5 rounded bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors">
                                     1
                                 </button>
-                                <button className="px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
+                                <button className="px-3 py-1.5 rounded border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
                                     2
                                 </button>
-                                <button className="px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
+                                <button className="px-3 py-1.5 rounded border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
                                     Next
                                 </button>
                             </div>
@@ -421,9 +421,9 @@ function MetricCard({
     trendUp: boolean;
 }) {
     return (
-        <div className="bg-white rounded-2xl border border-slate-200 p-5 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+        <div className="bg-white rounded border border-slate-200 p-5 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
             <div className="flex items-start justify-between mb-4">
-                <div className="p-3 rounded-xl bg-blue-50 text-blue-600">
+                <div className="p-3 rounded bg-blue-50 text-blue-600">
                     {icon}
                 </div>
                 <Info className="size-4 text-slate-300 cursor-pointer hover:text-slate-400 transition-colors" />
@@ -433,7 +433,7 @@ function MetricCard({
 
             <div className="flex items-baseline justify-between">
                 <p className="text-2xl font-bold text-slate-900">{value}</p>
-                <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold ${
+                <span className={`inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-semibold ${
                     trendUp
                         ? "bg-emerald-50 text-emerald-600"
                         : "bg-rose-50 text-rose-600"
@@ -468,12 +468,12 @@ function RatingStars({ value }: { value: number }) {
 function ReviewModal({ review, t, onClose }: { review: any; t: any; onClose: () => void }) {
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-            <div className="w-full max-w-lg rounded-2xl bg-white shadow-2xl animate-in zoom-in-95 duration-300">
+            <div className="w-full max-w-lg rounded bg-white shadow-2xl animate-in zoom-in-95 duration-300">
                 <div className="border-b border-slate-100 px-6 py-4 flex items-center justify-between">
                     <h2 className="text-xl font-extrabold text-slate-950">Review Details</h2>
                     <button
                         onClick={onClose}
-                        className="flex size-9 items-center justify-center rounded-full border border-slate-200 text-slate-500 hover:bg-slate-50 transition-colors"
+                        className="flex size-9 items-center justify-center rounded border border-slate-200 text-slate-500 hover:bg-slate-50 transition-colors"
                     >
                         <X className="size-4" />
                     </button>
@@ -482,7 +482,7 @@ function ReviewModal({ review, t, onClose }: { review: any; t: any; onClose: () 
                 <div className="p-6 space-y-4">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-semibold">
+                            <div className="w-10 h-10 rounded bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-semibold">
                                 {review.attendeeName.charAt(0)}
                             </div>
                             <div>
@@ -508,7 +508,7 @@ function ReviewModal({ review, t, onClose }: { review: any; t: any; onClose: () 
                             <ThumbsUp className="size-4 text-slate-400" />
                             <span className="text-sm text-slate-600">{review.helpful} people found this helpful</span>
                         </div>
-                        <span className={`inline-flex px-2.5 py-1 rounded-full text-xs font-semibold border ${
+                        <span className={`inline-flex px-2.5 py-1 rounded text-xs font-semibold border ${
                             review.visibility === "public"
                                 ? "bg-emerald-50 text-emerald-600 border-emerald-200"
                                 : "bg-amber-50 text-amber-600 border-amber-200"
@@ -521,11 +521,11 @@ function ReviewModal({ review, t, onClose }: { review: any; t: any; onClose: () 
                 <div className="border-t border-slate-100 px-6 py-4 flex justify-end gap-3">
                     <button
                         onClick={onClose}
-                        className="px-4 py-2 rounded-xl border border-slate-200 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors"
+                        className="px-4 py-2 rounded border border-slate-200 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors"
                     >
                         Close
                     </button>
-                    <button className="px-4 py-2 rounded-xl bg-blue-600 text-sm font-semibold text-white hover:bg-blue-700 transition-colors">
+                    <button className="px-4 py-2 rounded bg-blue-600 text-sm font-semibold text-white hover:bg-blue-700 transition-colors">
                         {review.visibility === "public" ? "Hide Review" : "Publish Review"}
                     </button>
                 </div>

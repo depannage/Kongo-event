@@ -147,11 +147,11 @@ export default function UsersPage() {
                         </div>
 
                         <div className="flex gap-3">
-                            <button className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-all">
+                            <button className="inline-flex items-center gap-2 px-5 py-2.5 rounded border border-slate-200 bg-white text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-all">
                                 <Download className="size-4" />
                                 {t("exportCsv")}
                             </button>
-                            <button className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition-all hover:shadow-md">
+                            <button className="inline-flex items-center gap-2 px-5 py-2.5 rounded bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition-all hover:shadow-md">
                                 <Plus className="size-4" />
                                 {t("addUser")}
                             </button>
@@ -182,37 +182,37 @@ export default function UsersPage() {
 
                     {/* Role Distribution */}
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-6">
-                        <div className="bg-white rounded-2xl border border-slate-200 p-4">
+                        <div className="bg-white rounded border border-slate-200 p-4">
                             <div className="flex items-center justify-between mb-2">
                                 <span className="text-sm font-medium text-slate-500">Admins</span>
                                 <span className="text-2xl font-bold text-purple-600">{adminUsers}</span>
                             </div>
-                            <div className="w-full bg-slate-100 rounded-full h-2">
-                                <div className="bg-purple-500 h-2 rounded-full" style={{ width: `${(adminUsers / totalUsers) * 100}%` }} />
+                            <div className="w-full bg-slate-100 rounded h-2">
+                                <div className="bg-purple-500 h-2 rounded" style={{ width: `${(adminUsers / totalUsers) * 100}%` }} />
                             </div>
                         </div>
-                        <div className="bg-white rounded-2xl border border-slate-200 p-4">
+                        <div className="bg-white rounded border border-slate-200 p-4">
                             <div className="flex items-center justify-between mb-2">
                                 <span className="text-sm font-medium text-slate-500">Organizers</span>
                                 <span className="text-2xl font-bold text-blue-600">{organizerUsers}</span>
                             </div>
-                            <div className="w-full bg-slate-100 rounded-full h-2">
-                                <div className="bg-blue-500 h-2 rounded-full" style={{ width: `${(organizerUsers / totalUsers) * 100}%` }} />
+                            <div className="w-full bg-slate-100 rounded h-2">
+                                <div className="bg-blue-500 h-2 rounded" style={{ width: `${(organizerUsers / totalUsers) * 100}%` }} />
                             </div>
                         </div>
-                        <div className="bg-white rounded-2xl border border-slate-200 p-4">
+                        <div className="bg-white rounded border border-slate-200 p-4">
                             <div className="flex items-center justify-between mb-2">
                                 <span className="text-sm font-medium text-slate-500">Attendees</span>
                                 <span className="text-2xl font-bold text-green-600">{attendeeUsers}</span>
                             </div>
-                            <div className="w-full bg-slate-100 rounded-full h-2">
-                                <div className="bg-green-500 h-2 rounded-full" style={{ width: `${(attendeeUsers / totalUsers) * 100}%` }} />
+                            <div className="w-full bg-slate-100 rounded h-2">
+                                <div className="bg-green-500 h-2 rounded" style={{ width: `${(attendeeUsers / totalUsers) * 100}%` }} />
                             </div>
                         </div>
                     </div>
 
                     {/* Users Table */}
-                    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg transition-all">
+                    <div className="bg-white rounded border border-slate-200 shadow-sm hover:shadow-lg transition-all">
                         <div className="p-5 border-b border-slate-100">
                             <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                                 <h2 className="text-lg font-bold text-slate-900">
@@ -221,7 +221,7 @@ export default function UsersPage() {
 
                                 <div className="flex flex-col sm:flex-row gap-3">
                                     {/* Search */}
-                                    <div className="flex h-10 w-full items-center gap-2 rounded-xl border border-slate-200 px-3 focus-within:border-blue-400 focus-within:ring-2 focus-within:ring-blue-100 sm:w-64">
+                                    <div className="flex h-10 w-full items-center gap-2 rounded border border-slate-200 px-3 focus-within:border-blue-400 focus-within:ring-2 focus-within:ring-blue-100 sm:w-64">
                                         <Search className="size-4 text-slate-400" />
                                         <input
                                             type="text"
@@ -236,7 +236,7 @@ export default function UsersPage() {
                                     <select
                                         value={filterRole}
                                         onChange={(e) => setFilterRole(e.target.value)}
-                                        className="h-10 px-3 rounded-xl border border-slate-200 text-sm font-medium text-slate-600 outline-none focus:border-blue-400"
+                                        className="h-10 px-3 rounded border border-slate-200 text-sm font-medium text-slate-600 outline-none focus:border-blue-400"
                                     >
                                         <option value="all">All Roles</option>
                                         <option value="admin">Admin</option>
@@ -248,7 +248,7 @@ export default function UsersPage() {
                                     <select
                                         value={filterStatus}
                                         onChange={(e) => setFilterStatus(e.target.value)}
-                                        className="h-10 px-3 rounded-xl border border-slate-200 text-sm font-medium text-slate-600 outline-none focus:border-blue-400"
+                                        className="h-10 px-3 rounded border border-slate-200 text-sm font-medium text-slate-600 outline-none focus:border-blue-400"
                                     >
                                         <option value="all">All Status</option>
                                         <option value="active">Active</option>
@@ -269,7 +269,7 @@ export default function UsersPage() {
                                                 setSortOrder("asc");
                                             }
                                         }}
-                                        className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-slate-200 px-4 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors"
+                                        className="inline-flex h-10 items-center justify-center gap-2 rounded border border-slate-200 px-4 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors"
                                     >
                                         <SortAsc className="size-4" />
                                         Sort by {sortBy}
@@ -316,7 +316,7 @@ export default function UsersPage() {
                                         <td className="px-5 py-4 text-sm font-semibold text-slate-500">{index + 1}</td>
                                         <td className="px-5 py-4">
                                             <div className="flex items-center gap-3">
-                                                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white text-sm font-semibold">
+                                                <div className="w-8 h-8 rounded bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white text-sm font-semibold">
                                                     {user.name.charAt(0)}
                                                 </div>
                                                 <p className="font-semibold text-slate-900">{user.name}</p>
@@ -326,31 +326,31 @@ export default function UsersPage() {
                                         <td className="px-5 py-4 text-sm text-slate-500">{user.phone}</td>
                                         <td className="px-5 py-4 text-sm text-slate-500">{user.joinDate}</td>
                                         <td className="px-5 py-4">
-                        <span className={`inline-flex px-2.5 py-1 rounded-full text-xs font-semibold border ${getRoleColor(user.role)}`}>
+                        <span className={`inline-flex px-2.5 py-1 rounded text-xs font-semibold border ${getRoleColor(user.role)}`}>
                           {user.role}
                         </span>
                                         </td>
                                         <td className="px-5 py-4">
                                             <div className="flex items-center gap-1.5">
                                                 {getStatusIcon(user.status)}
-                                                <span className={`inline-flex px-2.5 py-1 rounded-full text-xs font-semibold border ${getStatusColor(user.status)}`}>
+                                                <span className={`inline-flex px-2.5 py-1 rounded text-xs font-semibold border ${getStatusColor(user.status)}`}>
                             {user.status}
                           </span>
                                             </div>
                                         </td>
                                         <td className="px-5 py-4">
                                             <div className="flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                <button className="p-1.5 rounded-lg hover:bg-slate-100 transition-colors" title="View">
+                                                <button className="p-1.5 rounded hover:bg-slate-100 transition-colors" title="View">
                                                     <Eye className="size-4 text-slate-500" />
                                                 </button>
                                                 <button
                                                     onClick={() => handleEdit(user)}
-                                                    className="p-1.5 rounded-lg hover:bg-sky-50 transition-colors"
+                                                    className="p-1.5 rounded hover:bg-sky-50 transition-colors"
                                                     title="Edit"
                                                 >
                                                     <Pencil className="size-4 text-sky-500" />
                                                 </button>
-                                                <button className="p-1.5 rounded-lg hover:bg-rose-50 transition-colors" title="Delete">
+                                                <button className="p-1.5 rounded hover:bg-rose-50 transition-colors" title="Delete">
                                                     <Trash2 className="size-4 text-rose-500" />
                                                 </button>
                                             </div>
@@ -379,19 +379,19 @@ export default function UsersPage() {
                             </p>
 
                             <div className="flex gap-2">
-                                <button className="px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
+                                <button className="px-3 py-1.5 rounded border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
                                     Previous
                                 </button>
-                                <button className="px-3 py-1.5 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors">
+                                <button className="px-3 py-1.5 rounded bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors">
                                     1
                                 </button>
-                                <button className="px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
+                                <button className="px-3 py-1.5 rounded border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
                                     2
                                 </button>
-                                <button className="px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
+                                <button className="px-3 py-1.5 rounded border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
                                     3
                                 </button>
-                                <button className="px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
+                                <button className="px-3 py-1.5 rounded border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
                                     Next
                                 </button>
                             </div>
@@ -420,9 +420,9 @@ function StatsCard({ title, value, icon, color }: { title: string; value: number
     };
 
     return (
-        <div className="bg-white rounded-2xl border border-slate-200 p-5 hover:shadow-lg transition-all">
+        <div className="bg-white rounded border border-slate-200 p-5 hover:shadow-lg transition-all">
             <div className="flex items-center justify-between mb-4">
-                <div className={`p-3 rounded-xl ${colors[color as keyof typeof colors]}`}>
+                <div className={`p-3 rounded ${colors[color as keyof typeof colors]}`}>
                     {icon}
                 </div>
             </div>
@@ -451,14 +451,14 @@ function UpdateUserModal({ t, user, onClose }: { t: any; user: any; onClose: () 
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-end bg-black/50 p-4">
-            <div className="h-full w-full max-w-md overflow-y-auto rounded-2xl bg-white shadow-2xl animate-in slide-in-from-right duration-300">
+            <div className="h-full w-full max-w-md overflow-y-auto rounded bg-white shadow-2xl animate-in slide-in-from-right duration-300">
                 <div className="sticky top-0 bg-white border-b border-slate-100 px-6 py-4 flex items-center justify-between">
                     <h2 className="text-xl font-extrabold text-slate-950">
                         {t("update.title")}
                     </h2>
                     <button
                         onClick={onClose}
-                        className="flex size-9 items-center justify-center rounded-full border border-slate-200 text-slate-500 hover:bg-slate-50 transition-colors"
+                        className="flex size-9 items-center justify-center rounded border border-slate-200 text-slate-500 hover:bg-slate-50 transition-colors"
                     >
                         <X className="size-4" />
                     </button>
@@ -492,7 +492,7 @@ function UpdateUserModal({ t, user, onClose }: { t: any; user: any; onClose: () 
                             <select
                                 value={formData.role}
                                 onChange={(e) => setFormData({...formData, role: e.target.value})}
-                                className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                                className="h-11 w-full rounded border border-slate-200 bg-white px-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
                             >
                                 <option value="Admin">Admin</option>
                                 <option value="Organizer">Organizer</option>
@@ -504,7 +504,7 @@ function UpdateUserModal({ t, user, onClose }: { t: any; user: any; onClose: () 
                             <select
                                 value={formData.status}
                                 onChange={(e) => setFormData({...formData, status: e.target.value})}
-                                className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                                className="h-11 w-full rounded border border-slate-200 bg-white px-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
                             >
                                 <option value="Active">Active</option>
                                 <option value="Pending">Pending</option>
@@ -517,13 +517,13 @@ function UpdateUserModal({ t, user, onClose }: { t: any; user: any; onClose: () 
                         <button
                             type="button"
                             onClick={onClose}
-                            className="h-11 rounded-xl border border-slate-200 bg-white px-6 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors"
+                            className="h-11 rounded border border-slate-200 bg-white px-6 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors"
                         >
                             {t("cancel")}
                         </button>
                         <button
                             type="submit"
-                            className="h-11 rounded-xl bg-blue-600 px-6 text-sm font-semibold text-white hover:bg-blue-700 transition-colors"
+                            className="h-11 rounded bg-blue-600 px-6 text-sm font-semibold text-white hover:bg-blue-700 transition-colors"
                         >
                             {t("update.submit")}
                         </button>
@@ -558,7 +558,7 @@ function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
     return (
         <input
             {...props}
-            className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-100 hover:border-slate-300"
+            className="h-11 w-full rounded border border-slate-200 bg-white px-4 text-sm outline-none transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-100 hover:border-slate-300"
         />
     );
 }

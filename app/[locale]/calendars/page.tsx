@@ -133,7 +133,7 @@ export default function CalendarsPage() {
                                 setSelectedEvent(null);
                                 setEventModalOpen(true);
                             }}
-                            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition-all hover:shadow-md"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 rounded bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition-all hover:shadow-md"
                         >
                             <Plus className="size-4" />
                             {t("addEvent")}
@@ -142,7 +142,7 @@ export default function CalendarsPage() {
 
                     <div className="grid grid-cols-1 items-start gap-6 xl:grid-cols-[minmax(0,1fr)_380px]">
                         {/* Calendar Section */}
-                        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg transition-all">
+                        <div className="bg-white rounded border border-slate-200 shadow-sm hover:shadow-lg transition-all">
                             {/* Calendar Header */}
                             <div className="flex flex-col gap-4 border-b border-slate-100 p-5 sm:flex-row sm:items-center sm:justify-between">
                                 <div>
@@ -155,13 +155,13 @@ export default function CalendarsPage() {
                                 </div>
 
                                 <div className="flex items-center gap-2">
-                                    <button className="flex size-10 items-center justify-center rounded-xl border border-slate-200 hover:bg-slate-50 transition-colors">
+                                    <button className="flex size-10 items-center justify-center rounded border border-slate-200 hover:bg-slate-50 transition-colors">
                                         <ChevronLeft className="size-4 text-slate-500" />
                                     </button>
-                                    <button className="h-10 rounded-xl border border-slate-200 px-4 text-sm font-semibold hover:bg-slate-50 transition-colors">
+                                    <button className="h-10 rounded border border-slate-200 px-4 text-sm font-semibold hover:bg-slate-50 transition-colors">
                                         {t("today")}
                                     </button>
-                                    <button className="flex size-10 items-center justify-center rounded-xl border border-slate-200 hover:bg-slate-50 transition-colors">
+                                    <button className="flex size-10 items-center justify-center rounded border border-slate-200 hover:bg-slate-50 transition-colors">
                                         <ChevronRight className="size-4 text-slate-500" />
                                     </button>
                                 </div>
@@ -171,7 +171,7 @@ export default function CalendarsPage() {
                             <div className="overflow-x-auto p-5">
                                 <div className="min-w-[800px]">
                                     {/* Week Days Header */}
-                                    <div className="grid grid-cols-7 overflow-hidden rounded-t-2xl border border-slate-200">
+                                    <div className="grid grid-cols-7 overflow-hidden rounded border border-slate-200">
                                         {WEEK_DAYS.map((item) => (
                                             <div
                                                 key={item.day}
@@ -182,7 +182,7 @@ export default function CalendarsPage() {
                                                 </p>
                                                 <button
                                                     onClick={() => handleDateClick(item.fullDate)}
-                                                    className={`mx-auto mt-3 flex size-10 items-center justify-center rounded-full text-lg font-extrabold transition-all ${
+                                                    className={`mx-auto mt-3 flex size-10 items-center justify-center rounded text-lg font-extrabold transition-all ${
                                                         selectedDate === item.fullDate
                                                             ? "bg-blue-600 text-white shadow-md"
                                                             : "text-slate-900 hover:bg-slate-100"
@@ -195,7 +195,7 @@ export default function CalendarsPage() {
                                     </div>
 
                                     {/* Calendar Cells */}
-                                    <div className="grid grid-cols-7 overflow-hidden rounded-b-2xl border border-t-0 border-slate-200">
+                                    <div className="grid grid-cols-7 overflow-hidden rounded border border-t-0 border-slate-200">
                                         {Array.from({ length: CALENDAR_CELLS }).map((_, index) => {
                                             const weekIndex = Math.floor(index / 7);
                                             const dayIndex = index % 7;
@@ -215,7 +215,7 @@ export default function CalendarsPage() {
                                                         <>
                                                             <button
                                                                 onClick={() => handleDateClick(date.fullDate)}
-                                                                className={`mb-2 inline-flex size-7 items-center justify-center rounded-full text-xs font-semibold transition-all ${
+                                                                className={`mb-2 inline-flex size-7 items-center justify-center rounded text-xs font-semibold transition-all ${
                                                                     selectedDate === date.fullDate
                                                                         ? "bg-blue-600 text-white"
                                                                         : "text-slate-600 hover:bg-slate-100"
@@ -246,7 +246,7 @@ export default function CalendarsPage() {
                         {/* Upcoming Events Sidebar */}
                         <div className="space-y-6">
                             {/* Upcoming Events */}
-                            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg transition-all">
+                            <div className="bg-white rounded border border-slate-200 shadow-sm hover:shadow-lg transition-all">
                                 <div className="border-b border-slate-100 p-5">
                                     <div className="flex items-center justify-between">
                                         <div>
@@ -258,7 +258,7 @@ export default function CalendarsPage() {
                                             </p>
                                         </div>
                                         <div className="flex items-center gap-2">
-                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-emerald-50 text-emerald-600 text-xs font-semibold">
+                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded bg-emerald-50 text-emerald-600 text-xs font-semibold">
                         {upcomingEvents.length} upcoming
                       </span>
                                         </div>
@@ -286,7 +286,7 @@ export default function CalendarsPage() {
 
                             {/* Draft Events */}
                             {draftEvents.length > 0 && (
-                                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg transition-all">
+                                <div className="bg-white rounded border border-slate-200 shadow-sm hover:shadow-lg transition-all">
                                     <div className="border-b border-slate-100 p-5">
                                         <div className="flex items-center justify-between">
                                             <div>
@@ -315,7 +315,7 @@ export default function CalendarsPage() {
                             )}
 
                             {/* Quick Stats */}
-                            <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl p-5 text-white">
+                            <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded p-5 text-white">
                                 <h3 className="text-sm font-semibold text-white/80 mb-2">Total Events</h3>
                                 <p className="text-3xl font-bold mb-1">{EVENTS.length}</p>
                                 <p className="text-sm text-white/70">
@@ -371,7 +371,7 @@ function CalendarEvent({
     return (
         <button
             onClick={onClick}
-            className={`w-full rounded-lg px-2 py-1.5 text-left text-xs font-semibold transition-all ${
+            className={`w-full rounded px-2 py-1.5 text-left text-xs font-semibold transition-all ${
                 variant === "draft"
                     ? "bg-sky-50 text-sky-600 hover:bg-sky-100"
                     : "bg-blue-50 text-blue-600 hover:bg-blue-100"
@@ -397,7 +397,7 @@ function EventCard({ event, onView, t }: { event: any; onView: () => void; t: an
                     <h3 className="text-sm font-extrabold text-slate-900 line-clamp-1">
                         {event.title}
                     </h3>
-                    <span className={`shrink-0 rounded-full border px-2 py-0.5 text-xs font-semibold ${getStatusColor(event.status)}`}>
+                    <span className={`shrink-0 rounded border px-2 py-0.5 text-xs font-semibold ${getStatusColor(event.status)}`}>
             {event.status === "draft" ? t("draft") : t("upcoming")}
           </span>
                 </div>
@@ -440,14 +440,14 @@ function EventModal({ t, event, onClose }: { t: any; event?: any; onClose: () =>
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-            <div className="w-full max-w-lg rounded-2xl bg-white shadow-2xl animate-in zoom-in-95 duration-300">
+            <div className="w-full max-w-lg rounded bg-white shadow-2xl animate-in zoom-in-95 duration-300">
                 <div className="border-b border-slate-100 px-6 py-4 flex items-center justify-between">
                     <h2 className="text-xl font-extrabold text-slate-950">
                         {event ? t("editEvent") : t("addEvent")}
                     </h2>
                     <button
                         onClick={onClose}
-                        className="flex size-9 items-center justify-center rounded-full border border-slate-200 text-slate-500 hover:bg-slate-50 transition-colors"
+                        className="flex size-9 items-center justify-center rounded border border-slate-200 text-slate-500 hover:bg-slate-50 transition-colors"
                     >
                         <X className="size-4" />
                     </button>
@@ -462,7 +462,7 @@ function EventModal({ t, event, onClose }: { t: any; event?: any; onClose: () =>
                             type="text"
                             value={formData.title}
                             onChange={(e) => setFormData({...formData, title: e.target.value})}
-                            className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                            className="h-11 w-full rounded border border-slate-200 bg-white px-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
                             placeholder="Enter event title"
                             required
                         />
@@ -477,7 +477,7 @@ function EventModal({ t, event, onClose }: { t: any; event?: any; onClose: () =>
                                 type="date"
                                 value={formData.date}
                                 onChange={(e) => setFormData({...formData, date: e.target.value})}
-                                className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                                className="h-11 w-full rounded border border-slate-200 bg-white px-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
                                 required
                             />
                         </div>
@@ -489,7 +489,7 @@ function EventModal({ t, event, onClose }: { t: any; event?: any; onClose: () =>
                                 type="time"
                                 value={formData.time.split(" - ")[0]}
                                 onChange={(e) => setFormData({...formData, time: e.target.value})}
-                                className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                                className="h-11 w-full rounded border border-slate-200 bg-white px-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
                                 required
                             />
                         </div>
@@ -503,7 +503,7 @@ function EventModal({ t, event, onClose }: { t: any; event?: any; onClose: () =>
                             type="text"
                             value={formData.location}
                             onChange={(e) => setFormData({...formData, location: e.target.value})}
-                            className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                            className="h-11 w-full rounded border border-slate-200 bg-white px-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
                             placeholder="Enter location"
                             required
                         />
@@ -517,7 +517,7 @@ function EventModal({ t, event, onClose }: { t: any; event?: any; onClose: () =>
                             value={formData.description}
                             onChange={(e) => setFormData({...formData, description: e.target.value})}
                             rows={3}
-                            className="w-full resize-none rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                            className="w-full resize-none rounded border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
                             placeholder="Enter event description"
                         />
                     </div>
@@ -529,7 +529,7 @@ function EventModal({ t, event, onClose }: { t: any; event?: any; onClose: () =>
                         <select
                             value={formData.status}
                             onChange={(e) => setFormData({...formData, status: e.target.value})}
-                            className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                            className="h-11 w-full rounded border border-slate-200 bg-white px-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
                         >
                             <option value="upcoming">Published</option>
                             <option value="draft">Draft</option>
@@ -540,13 +540,13 @@ function EventModal({ t, event, onClose }: { t: any; event?: any; onClose: () =>
                         <button
                             type="button"
                             onClick={onClose}
-                            className="px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors"
+                            className="px-4 py-2.5 rounded border border-slate-200 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors"
                         >
                             Cancel
                         </button>
                         <button
                             type="submit"
-                            className="px-4 py-2.5 rounded-xl bg-blue-600 text-sm font-semibold text-white hover:bg-blue-700 transition-colors"
+                            className="px-4 py-2.5 rounded bg-blue-600 text-sm font-semibold text-white hover:bg-blue-700 transition-colors"
                         >
                             {event ? "Update Event" : "Create Event"}
                         </button>
@@ -567,12 +567,12 @@ function ViewEventModal({ t, event, onClose, onEdit }: { t: any; event: any; onC
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-            <div className="w-full max-w-lg rounded-2xl bg-white shadow-2xl animate-in zoom-in-95 duration-300">
+            <div className="w-full max-w-lg rounded bg-white shadow-2xl animate-in zoom-in-95 duration-300">
                 <div className="border-b border-slate-100 px-6 py-4 flex items-center justify-between">
                     <h2 className="text-xl font-extrabold text-slate-950">{event.title}</h2>
                     <button
                         onClick={onClose}
-                        className="flex size-9 items-center justify-center rounded-full border border-slate-200 text-slate-500 hover:bg-slate-50 transition-colors"
+                        className="flex size-9 items-center justify-center rounded border border-slate-200 text-slate-500 hover:bg-slate-50 transition-colors"
                     >
                         <X className="size-4" />
                     </button>
@@ -580,7 +580,7 @@ function ViewEventModal({ t, event, onClose, onEdit }: { t: any; event: any; onC
 
                 <div className="p-6 space-y-4">
                     <div className="flex items-center justify-between">
-            <span className={`inline-flex rounded-full border px-3 py-1 text-xs font-semibold ${getStatusColor(event.status)}`}>
+            <span className={`inline-flex rounded border px-3 py-1 text-xs font-semibold ${getStatusColor(event.status)}`}>
               {event.status === "draft" ? "Draft" : "Published"}
             </span>
                     </div>
@@ -622,13 +622,13 @@ function ViewEventModal({ t, event, onClose, onEdit }: { t: any; event: any; onC
                 <div className="border-t border-slate-100 px-6 py-4 flex justify-end gap-3">
                     <button
                         onClick={onClose}
-                        className="px-4 py-2 rounded-xl border border-slate-200 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors"
+                        className="px-4 py-2 rounded border border-slate-200 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors"
                     >
                         Close
                     </button>
                     <button
                         onClick={onEdit}
-                        className="px-4 py-2 rounded-xl bg-blue-600 text-sm font-semibold text-white hover:bg-blue-700 transition-colors"
+                        className="px-4 py-2 rounded bg-blue-600 text-sm font-semibold text-white hover:bg-blue-700 transition-colors"
                     >
                         Edit Event
                     </button>

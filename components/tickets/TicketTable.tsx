@@ -29,14 +29,14 @@ export default function TicketTable({
 }: TicketTableProps) {
   if (tickets.length === 0) {
     return (
-      <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center">
+      <div className="rounded border border-slate-200 bg-white p-8 text-center">
         <p className="text-sm text-slate-500">Aucun ticket trouvé.</p>
       </div>
     );
   }
 
   return (
-    <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
+    <div className="overflow-x-auto rounded border border-slate-200 bg-white shadow-sm">
       <table className="w-full min-w-[980px]">
         <thead className="border-b border-slate-200 bg-slate-50">
           <tr>
