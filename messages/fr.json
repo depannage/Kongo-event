@@ -656,5 +656,79 @@
     "pagination": {
       "showing": "Affichage de 1 à 10 sur 500 résultats"
     }
+  },
+  "payoutsAdmin": {
+    "title": "Paiements",
+    "breadcrumbManagement": "Gestion",
+    "addPayment": "Ajouter un paiement",
+    "exportCsv": "Exporter CSV",
+    "tableTitle": "Table des paiements",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "filterAll": "Tous les statuts",
+    "sortBy": "Trier par",
+    "pending": "En attente",
+    "completed": "Terminé",
+    "failed": "Échoué",
+    "cancelled": "Annulé",
+    "refunded": "Remboursé",
+    "emptyPayouts": "Aucun paiement trouvé",
+    "createFirst": "+ Créer votre premier paiement",
+    "metrics": {
+      "totalPayments": "Total des paiements",
+      "totalAmount": "Montant total",
+      "completedPayments": "Paiements terminés"
+    },
+    "statusSummary": {
+      "pending": "Paiements en attente",
+      "completed": "Paiements terminés",
+      "failed": "Paiements échoués"
+    },
+    "table": {
+      "orderId": "Commande",
+      "method": "Méthode",
+      "amount": "Montant",
+      "currency": "Devise",
+      "providerRef": "Réf. fournisseur",
+      "createdAt": "Créé le",
+      "status": "Statut",
+      "actions": "Actions",
+      "view": "Voir",
+      "edit": "Modifier",
+      "delete": "Supprimer",
+      "deleteConfirm": "Supprimer le paiement pour la commande {orderId} ?",
+      "deleteSuccess": "Paiement supprimé avec succès.",
+      "deleteError": "Impossible de supprimer le paiement."
+    },
+    "tableFooter": {
+      "showingRange": "Affichage de {from} à {to} sur {total} paiements",
+      "selected": "({count} sélectionnés)"
+    },
+    "pagination": {
+      "previous": "Précédent",
+      "next": "Suivant"
+    },
+    "modal": {
+      "editTitle": "Modifier le paiement",
+      "cancel": "Annuler",
+      "create": "Créer le paiement",
+      "update": "Mettre à jour",
+      "saving": "Enregistrement…",
+      "orderId": "ID commande",
+      "orderIdPlaceholder": "ex. order-uuid",
+      "method": "Méthode de paiement",
+      "amount": "Montant",
+      "amountPlaceholder": "ex. 100",
+      "currency": "Devise",
+      "currencyPlaceholder": "ex. USD",
+      "providerRef": "Référence fournisseur",
+      "providerRefPlaceholder": "ex. provider-ref",
+      "orderIdRequired": "Veuillez saisir l’ID de la commande.",
+      "amountRequired": "Veuillez saisir un montant valide.",
+      "createSuccess": "Paiement créé avec succès.",
+      "createError": "Impossible de créer le paiement.",
+      "updateSuccess": "Paiement mis à jour avec succès.",
+      "updateError": "Impossible de mettre à jour le paiement."
+    }
   }
 }
