@@ -659,5 +659,79 @@
     "pagination": {
       "showing": "Showing 1 to 10 of 500 results"
     }
+  },
+  "payoutsAdmin": {
+    "title": "Payouts",
+    "breadcrumbManagement": "Management",
+    "addPayment": "Add Payment",
+    "exportCsv": "Export CSV",
+    "tableTitle": "Payments Table",
+    "search": "Search",
+    "filter": "Filter",
+    "filterAll": "All Status",
+    "sortBy": "Sort by",
+    "pending": "Pending",
+    "completed": "Completed",
+    "failed": "Failed",
+    "cancelled": "Cancelled",
+    "refunded": "Refunded",
+    "emptyPayouts": "No payments found",
+    "createFirst": "+ Create your first payment",
+    "metrics": {
+      "totalPayments": "Total Payments",
+      "totalAmount": "Total Amount",
+      "completedPayments": "Completed Payments"
+    },
+    "statusSummary": {
+      "pending": "Pending Payments",
+      "completed": "Completed Payments",
+      "failed": "Failed Payments"
+    },
+    "table": {
+      "orderId": "Order",
+      "method": "Method",
+      "amount": "Amount",
+      "currency": "Currency",
+      "providerRef": "Provider Ref",
+      "createdAt": "Created At",
+      "status": "Status",
+      "actions": "Actions",
+      "view": "View",
+      "edit": "Edit",
+      "delete": "Delete",
+      "deleteConfirm": "Delete payment for order {orderId}?",
+      "deleteSuccess": "Payment deleted successfully.",
+      "deleteError": "Could not delete the payment."
+    },
+    "tableFooter": {
+      "showingRange": "Showing {from} to {to} of {total} payments",
+      "selected": "({count} selected)"
+    },
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "modal": {
+      "editTitle": "Edit Payment",
+      "cancel": "Cancel",
+      "create": "Create Payment",
+      "update": "Update Payment",
+      "saving": "Saving…",
+      "orderId": "Order ID",
+      "orderIdPlaceholder": "e.g. order-uuid",
+      "method": "Payment Method",
+      "amount": "Amount",
+      "amountPlaceholder": "e.g. 100",
+      "currency": "Currency",
+      "currencyPlaceholder": "e.g. USD",
+      "providerRef": "Provider Reference",
+      "providerRefPlaceholder": "e.g. provider-ref",
+      "orderIdRequired": "Please enter an order ID.",
+      "amountRequired": "Please enter a valid amount.",
+      "createSuccess": "Payment created successfully.",
+      "createError": "Could not create the payment.",
+      "updateSuccess": "Payment updated successfully.",
+      "updateError": "Could not update the payment."
+    }
   }
 }
