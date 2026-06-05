@@ -118,7 +118,7 @@ export function PayoutsTable({
     };
 
     return (
-        <div className="rounded-2xl border border-slate-200 bg-white shadow-sm transition-all hover:shadow-lg">
+        <div className="rounded border border-slate-200 bg-white shadow-sm transition-all hover:shadow-lg">
             <div className="border-b border-slate-100 p-5">
                 <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                     <h2 className="text-lg font-bold text-slate-900">
@@ -126,7 +126,7 @@ export function PayoutsTable({
                     </h2>
 
                     <div className="flex flex-col gap-3 sm:flex-row">
-                        <div className="flex h-10 w-full items-center gap-2 rounded-xl border border-slate-200 px-3 focus-within:border-blue-400 focus-within:ring-2 focus-within:ring-blue-100 sm:w-64">
+                        <div className="flex h-10 w-full items-center gap-2 rounded border border-slate-200 px-3 focus-within:border-blue-400 focus-within:ring-2 focus-within:ring-blue-100 sm:w-64">
                             <Search className="size-4 text-slate-400" />
                             <input
                                 type="search"
@@ -141,7 +141,7 @@ export function PayoutsTable({
                             value={filterStatus}
                             onChange={(e) => onFilterStatusChange(e.target.value)}
                             aria-label={t("filter")}
-                            className="h-10 rounded-xl border border-slate-200 px-3 text-sm font-medium text-slate-600 outline-none focus:border-blue-400"
+                            className="h-10 rounded border border-slate-200 px-3 text-sm font-medium text-slate-600 outline-none focus:border-blue-400"
                         >
                             <option value="all">{t("filterAll")}</option>
                             <option value="pending">{t("pending")}</option>
@@ -153,7 +153,7 @@ export function PayoutsTable({
                         <button
                             type="button"
                             onClick={cycleSort}
-                            className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-slate-200 px-4 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50"
+                            className="inline-flex h-10 items-center justify-center gap-2 rounded border border-slate-200 px-4 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50"
                         >
                             <SortAsc className="size-4" />
                             {t("sortBy")} {sortBy}
@@ -213,7 +213,7 @@ export function PayoutsTable({
                             Array.from({ length: 5 }).map((_, index) => (
                                 <tr key={`skeleton-${index}`} className="border-b border-slate-100">
                                     <td colSpan={10} className="px-5 py-4">
-                                        <div className="h-5 animate-pulse rounded-lg bg-slate-100" />
+                                        <div className="h-5 animate-pulse rounded bg-slate-100" />
                                     </td>
                                 </tr>
                             ))}
@@ -241,7 +241,7 @@ export function PayoutsTable({
                                         </span>
                                     </td>
                                     <td className="px-5 py-4">
-                                        <span className="inline-flex rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-700">
+                                        <span className="inline-flex rounded bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-700">
                                             {payout.method}
                                         </span>
                                     </td>
@@ -259,7 +259,7 @@ export function PayoutsTable({
                                     </td>
                                     <td className="px-5 py-4">
                                         <span
-                                            className={`inline-flex rounded-full border px-2.5 py-1 text-xs font-semibold ${getPayoutStatusColor(payout.status)}`}
+                                            className={`inline-flex rounded border px-2.5 py-1 text-xs font-semibold ${getPayoutStatusColor(payout.status)}`}
                                         >
                                             {statusLabel(payout.status)}
                                         </span>
@@ -268,7 +268,7 @@ export function PayoutsTable({
                                         <div className="flex items-center justify-center gap-2 opacity-0 transition-opacity group-hover:opacity-100">
                                             <button
                                                 type="button"
-                                                className="rounded-lg p-1.5 transition-colors hover:bg-slate-100"
+                                                className="rounded p-1.5 transition-colors hover:bg-slate-100"
                                                 title={t("table.view")}
                                             >
                                                 <Eye className="size-4 text-slate-500" />
@@ -276,7 +276,7 @@ export function PayoutsTable({
                                             <button
                                                 type="button"
                                                 onClick={() => onEdit(payout)}
-                                                className="rounded-lg p-1.5 transition-colors hover:bg-sky-50"
+                                                className="rounded p-1.5 transition-colors hover:bg-sky-50"
                                                 title={t("table.edit")}
                                             >
                                                 <Edit className="size-4 text-sky-500" />
@@ -285,7 +285,7 @@ export function PayoutsTable({
                                                 type="button"
                                                 onClick={() => handleDelete(payout)}
                                                 disabled={deletingId === payout.id}
-                                                className="rounded-lg p-1.5 transition-colors hover:bg-rose-50 disabled:opacity-50"
+                                                className="rounded p-1.5 transition-colors hover:bg-rose-50 disabled:opacity-50"
                                                 title={t("table.delete")}
                                             >
                                                 <Trash2 className="size-4 text-rose-500" />
@@ -328,7 +328,7 @@ export function PayoutsTable({
                         type="button"
                         disabled={page <= 1 || isLoading}
                         onClick={() => onPageChange(page - 1)}
-                        className="rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50 disabled:opacity-50"
+                        className="rounded border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50 disabled:opacity-50"
                     >
                         {t("pagination.previous")}
                     </button>
@@ -338,7 +338,7 @@ export function PayoutsTable({
                             type="button"
                             disabled={isLoading}
                             onClick={() => onPageChange(pageNumber)}
-                            className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
+                            className={`rounded px-3 py-1.5 text-sm font-medium transition-colors ${
                                 pageNumber === page
                                     ? "bg-blue-600 text-white hover:bg-blue-700"
                                     : "border border-slate-200 text-slate-600 hover:bg-slate-50"
@@ -351,7 +351,7 @@ export function PayoutsTable({
                         type="button"
                         disabled={page >= pages || pages === 0 || isLoading}
                         onClick={() => onPageChange(page + 1)}
-                        className="rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50 disabled:opacity-50"
+                        className="rounded border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50 disabled:opacity-50"
                     >
                         {t("pagination.next")}
                     </button>

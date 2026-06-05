@@ -11,9 +11,9 @@ export default function LoginErrorPage() {
 
     return (
         <AuthShell>
-            <div className="w-full max-w-[430px] rounded-2xl bg-white p-7 shadow-[0_18px_60px_rgba(15,23,42,0.08)]">
-                <div className="mx-auto mb-5 flex size-14 items-center justify-center rounded-full bg-blue-50">
-                    <div className="flex size-9 items-center justify-center rounded-full border border-blue-100 bg-white text-blue-600 shadow-sm">
+            <div className="w-full max-w-[430px] rounded bg-white p-7 shadow-[0_18px_60px_rgba(15,23,42,0.08)]">
+                <div className="mx-auto mb-5 flex size-14 items-center justify-center rounded bg-blue-50">
+                    <div className="flex size-9 items-center justify-center rounded border border-blue-100 bg-white text-blue-600 shadow-sm">
                         <UserRound className="size-4" />
                     </div>
                 </div>
@@ -32,7 +32,7 @@ export default function LoginErrorPage() {
                         </label>
                         <input
                             defaultValue="johndoe@example.com"
-                            className="h-10 w-full rounded-md border border-red-400 bg-red-50 px-3 text-sm outline-none focus:border-red-500 focus:ring-4 focus:ring-red-100"
+                            className="h-10 w-full rounded border border-red-400 bg-red-50 px-3 text-sm outline-none focus:border-red-500 focus:ring-4 focus:ring-red-100"
                         />
                         <p className="mt-2 text-xs font-medium text-red-500">
                             {t("emailError")}
@@ -48,7 +48,7 @@ export default function LoginErrorPage() {
                             <input
                                 type={showPassword ? "text" : "password"}
                                 defaultValue="123456789"
-                                className="h-10 w-full rounded-md border border-slate-200 bg-white px-3 pr-10 text-sm outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+                                className="h-10 w-full rounded border border-slate-200 bg-white px-3 pr-10 text-sm outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
                             />
                             <button
                                 type="button"
@@ -71,7 +71,7 @@ export default function LoginErrorPage() {
                         </a>
                     </div>
 
-                    <button className="h-11 w-full rounded-md bg-blue-600 text-sm font-semibold text-white">
+                    <button className="h-11 w-full rounded bg-blue-600 text-sm font-semibold text-white">
                         {t("submit")}
                     </button>
                 </form>

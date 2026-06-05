@@ -56,7 +56,7 @@ export default function LanguageSwitcher() {
                     type="button"
                     disabled={isPending}
                     className="
-                    flex h-10 items-center gap-2 rounded-xl
+                    flex h-10 items-center gap-2 rounded
                     border border-slate-200 bg-white
                     px-3 text-sm font-semibold text-slate-700
                     shadow-none transition
@@ -84,7 +84,7 @@ export default function LanguageSwitcher() {
             <DropdownMenuContent
                 align="end"
                 className="
-          w-fit rounded-xl border border-slate-200
+          w-fit rounded border border-slate-200
           bg-white p-2 shadow-[0_18px_50px_rgba(15,23,42,0.08)]
         "
             >
@@ -98,7 +98,7 @@ export default function LanguageSwitcher() {
                             disabled={isPending}
                             className="
                 flex cursor-pointer items-center justify-between
-                rounded-lg px-3 py-3 outline-none transition
+                rounded px-3 py-3 outline-none transition
                 hover:bg-slate-100
                 disabled:cursor-not-allowed disabled:opacity-60
               "

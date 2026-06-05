@@ -21,7 +21,7 @@ export function PayoutsHeader({ onAddPayment }: PayoutsHeaderProps) {
             <div className="flex gap-3">
                 <button
                     type="button"
-                    className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 transition-all hover:bg-slate-50"
+                    className="inline-flex items-center gap-2 rounded border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 transition-all hover:bg-slate-50"
                 >
                     <Download className="size-4" />
                     {t("exportCsv")}
@@ -29,7 +29,7 @@ export function PayoutsHeader({ onAddPayment }: PayoutsHeaderProps) {
                 <button
                     type="button"
                     onClick={onAddPayment}
-                    className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition-all hover:bg-blue-700 hover:shadow-md"
+                    className="inline-flex items-center gap-2 rounded bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition-all hover:bg-blue-700 hover:shadow-md"
                 >
                     <Plus className="size-4" />
                     {t("addPayment")}

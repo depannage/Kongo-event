@@ -7,9 +7,9 @@ export default function OtpVerificationPage() {
 
     return (
         <AuthShell>
-            <div className="w-full max-w-[430px] rounded-2xl bg-white p-7 shadow-[0_18px_60px_rgba(15,23,42,0.08)]">
-                <div className="mx-auto mb-5 flex size-14 items-center justify-center rounded-full bg-blue-50">
-                    <div className="flex size-9 items-center justify-center rounded-full border border-blue-100 bg-white text-blue-600 shadow-sm">
+            <div className="w-full max-w-[430px] rounded bg-white p-7 shadow-[0_18px_60px_rgba(15,23,42,0.08)]">
+                <div className="mx-auto mb-5 flex size-14 items-center justify-center rounded bg-blue-50">
+                    <div className="flex size-9 items-center justify-center rounded border border-blue-100 bg-white text-blue-600 shadow-sm">
                         <Mail className="size-4" />
                     </div>
                 </div>
@@ -32,7 +32,7 @@ export default function OtpVerificationPage() {
                             key={index}
                             maxLength={1}
                             defaultValue={item}
-                            className={`size-12 rounded-lg border text-center text-lg font-bold text-slate-900 outline-none focus:ring-4 ${
+                            className={`size-12 rounded border text-center text-lg font-bold text-slate-900 outline-none focus:ring-4 ${
                                 index === 2
                                     ? "border-blue-500 bg-blue-50 focus:ring-blue-100"
                                     : "border-slate-200 bg-white focus:border-blue-500 focus:ring-blue-100"
@@ -43,7 +43,7 @@ export default function OtpVerificationPage() {
 
                 <button
                     type="button"
-                    className="mt-6 h-11 w-full rounded-md bg-blue-600 text-sm font-semibold text-white"
+                    className="mt-6 h-11 w-full rounded bg-blue-600 text-sm font-semibold text-white"
                 >
                     {t("submit")}
                 </button>

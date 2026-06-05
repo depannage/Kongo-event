@@ -138,10 +138,10 @@ export default function DashboardPage() {
                         </div>
 
                         <div className="flex gap-3">
-                            <button className="px-5 py-2.5 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:shadow-sm transition-all">
+                            <button className="px-5 py-2.5 rounded border border-slate-200 bg-white text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:shadow-sm transition-all">
                                 {t("generateReport")}
                             </button>
-                            <button className="px-5 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 hover:shadow-md transition-all">
+                            <button className="px-5 py-2.5 rounded bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 hover:shadow-md transition-all">
                                 {t("createEvent")}
                             </button>
                         </div>
@@ -222,9 +222,9 @@ function MetricCard({ icon, title, value, trend, trendUp }: {
     trendUp: boolean;
 }) {
     return (
-        <div className="bg-white rounded-2xl border border-slate-200 p-5 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+        <div className="bg-white rounded border border-slate-200 p-5 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
             <div className="flex items-start justify-between mb-4">
-                <div className="p-3 rounded-xl bg-blue-50 text-blue-600">
+                <div className="p-3 rounded bg-blue-50 text-blue-600">
                     {icon}
                 </div>
                 <Info className="size-4 text-slate-300 cursor-pointer hover:text-slate-400 transition-colors" />
@@ -232,7 +232,7 @@ function MetricCard({ icon, title, value, trend, trendUp }: {
             <p className="text-sm text-slate-500 mb-1">{title}</p>
             <div className="flex items-baseline justify-between">
                 <p className="text-2xl font-bold text-slate-900">{value}</p>
-                <span className={`text-xs font-semibold px-2 py-1 rounded-full ${
+                <span className={`text-xs font-semibold px-2 py-1 rounded ${
                     trendUp ? "bg-emerald-50 text-emerald-600" : "bg-red-50 text-red-600"
                 }`}>
                     <TrendingUp className={`size-3 inline mr-1 ${!trendUp && "rotate-180"}`} />
@@ -246,7 +246,7 @@ function MetricCard({ icon, title, value, trend, trendUp }: {
 // Sales Analytics Component
 function SalesAnalytics({ title }: { title: string }) {
     return (
-        <div className="bg-white rounded-2xl border border-slate-200 hover:shadow-lg transition-all">
+        <div className="bg-white rounded border border-slate-200 hover:shadow-lg transition-all">
             <div className="p-5 border-b border-slate-100">
                 <h2 className="text-lg font-bold text-slate-900">{title}</h2>
             </div>
@@ -262,10 +262,10 @@ function SalesAnalytics({ title }: { title: string }) {
 // Deadline Calendar Component
 function DeadlineCalendar({ title, upcomingLabel }: { title: string; upcomingLabel: string }) {
     return (
-        <div className="bg-white rounded-2xl border border-slate-200 hover:shadow-lg transition-all">
+        <div className="bg-white rounded border border-slate-200 hover:shadow-lg transition-all">
             <div className="p-5 border-b border-slate-100 flex items-center justify-between">
                 <h2 className="text-lg font-bold text-slate-900">{title}</h2>
-                <button className="p-2 rounded-lg border border-slate-200 hover:bg-slate-50 transition-colors">
+                <button className="p-2 rounded border border-slate-200 hover:bg-slate-50 transition-colors">
                     <RefreshCcw className="size-4 text-slate-400" />
                 </button>
             </div>
@@ -284,7 +284,7 @@ function DeadlineCalendar({ title, upcomingLabel }: { title: string; upcomingLab
                 <div className="grid grid-cols-7 gap-1 mb-6">
                     {CALENDAR_DATES.map(date => (
                         <div key={date} className="text-center">
-                            <span className={`inline-flex items-center justify-center w-9 h-9 text-sm font-medium rounded-full transition-colors ${
+                            <span className={`inline-flex items-center justify-center w-9 h-9 text-sm font-medium rounded transition-colors ${
                                 date === 22
                                     ? "bg-blue-600 text-white shadow-md"
                                     : "text-slate-700 hover:bg-slate-100 cursor-pointer"
@@ -299,7 +299,7 @@ function DeadlineCalendar({ title, upcomingLabel }: { title: string; upcomingLab
                 <div className="space-y-3">
                     <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Upcoming Events</p>
                     {UPCOMING_EVENTS.map(event => (
-                        <div key={event.id} className="group p-3 rounded-xl border border-slate-100 hover:border-slate-200 hover:shadow-sm transition-all cursor-pointer">
+                        <div key={event.id} className="group p-3 rounded border border-slate-100 hover:border-slate-200 hover:shadow-sm transition-all cursor-pointer">
                             <div className="border-l-2 border-blue-600 pl-3">
                                 <p className="text-sm font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">
                                     {event.title}
@@ -317,13 +317,13 @@ function DeadlineCalendar({ title, upcomingLabel }: { title: string; upcomingLab
 // Upcoming Events Table Component
 function UpcomingEventsTable({ title, search, eventName, dateTime, status, ticketsSold, active }: any) {
     return (
-        <div className="bg-white rounded-2xl border border-slate-200 hover:shadow-lg transition-all">
+        <div className="bg-white rounded border border-slate-200 hover:shadow-lg transition-all">
             <div className="p-5 border-b border-slate-100">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <h2 className="text-lg font-bold text-slate-900">{title}</h2>
 
                     <div className="flex items-center gap-3">
-                        <div className="flex items-center gap-2 px-3 py-2 rounded-xl border border-slate-200 bg-white focus-within:border-blue-400 focus-within:ring-1 focus-within:ring-blue-400">
+                        <div className="flex items-center gap-2 px-3 py-2 rounded border border-slate-200 bg-white focus-within:border-blue-400 focus-within:ring-1 focus-within:ring-blue-400">
                             <Search className="size-4 text-slate-400" />
                             <input
                                 type="text"
@@ -331,7 +331,7 @@ function UpcomingEventsTable({ title, search, eventName, dateTime, status, ticke
                                 className="text-sm outline-none bg-transparent"
                             />
                         </div>
-                        <button className="p-2 rounded-xl border border-slate-200 hover:bg-slate-50 transition-colors">
+                        <button className="p-2 rounded border border-slate-200 hover:bg-slate-50 transition-colors">
                             <ListFilter className="size-4 text-slate-400" />
                         </button>
                     </div>
@@ -363,7 +363,7 @@ function UpcomingEventsTable({ title, search, eventName, dateTime, status, ticke
                             </td>
                             <td className="px-5 py-4 text-sm text-slate-500">{event.date}</td>
                             <td className="px-5 py-4">
-                                    <span className="inline-flex px-2.5 py-1 text-xs font-semibold rounded-full bg-emerald-50 text-emerald-600">
+                                    <span className="inline-flex px-2.5 py-1 text-xs font-semibold rounded bg-emerald-50 text-emerald-600">
                                         {active}
                                     </span>
                             </td>
@@ -383,13 +383,13 @@ function UpcomingEventsTable({ title, search, eventName, dateTime, status, ticke
 // Help Box Component
 function HelpBox({ title, description }: { title: string; description: string }) {
     return (
-        <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl p-6 text-white text-center hover:shadow-xl transition-all">
-            <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-white/20 mb-4">
+        <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded p-6 text-white text-center hover:shadow-xl transition-all">
+            <div className="inline-flex items-center justify-center w-14 h-14 rounded bg-white/20 mb-4">
                 <CircleHelp className="size-7" />
             </div>
             <h3 className="text-xl font-bold mb-2">{title}</h3>
             <p className="text-sm text-blue-100">{description}</p>
-            <button className="mt-4 px-4 py-2 bg-white/20 rounded-lg text-sm font-semibold hover:bg-white/30 transition-colors">
+            <button className="mt-4 px-4 py-2 bg-white/20 rounded text-sm font-semibold hover:bg-white/30 transition-colors">
                 Learn More
             </button>
         </div>

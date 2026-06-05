@@ -9,7 +9,7 @@ export default function AuthShell({ children }: { children: React.ReactNode }) {
     return (
         <main className="min-h-screen bg-slate-100">
             <section
-                className="relative mx-auto flex min-h-screen flex-col overflow-hidden rounded-2xl border border-slate-200 bg-[#f8f9fc]"
+                className="relative mx-auto flex min-h-screen flex-col overflow-hidden rounded border border-slate-200 bg-[#f8f9fc]"
                 style={{
                     backgroundImage: "radial-gradient(#cfd5e2 1px, transparent 1px)",
                     backgroundSize: "18px 18px",

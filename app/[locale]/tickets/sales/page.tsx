@@ -126,7 +126,7 @@ export default function TicketSalesPage() {
                             </p>
                         </div>
 
-                        <button className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-all hover:shadow-sm">
+                        <button className="inline-flex items-center gap-2 px-5 py-2.5 rounded border border-slate-200 bg-white text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-all hover:shadow-sm">
                             <Download className="size-4" />
                             {t("exportCsv")}
                         </button>
@@ -166,52 +166,52 @@ export default function TicketSalesPage() {
 
                     {/* Additional Stats Cards */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-6">
-                        <div className="bg-white rounded-2xl border border-slate-200 p-5">
+                        <div className="bg-white rounded border border-slate-200 p-5">
                             <h3 className="text-sm font-semibold text-slate-500 mb-3">Ticket Type Distribution</h3>
                             <div className="flex items-center justify-between mb-2">
                                 <span className="text-sm font-medium text-slate-700">VIP Tickets</span>
                                 <span className="text-lg font-bold text-slate-900">{vipTickets}</span>
                             </div>
-                            <div className="w-full bg-slate-100 rounded-full h-2 mb-3">
-                                <div className="bg-purple-500 h-2 rounded-full" style={{ width: `${(vipTickets / totalTickets) * 100}%` }} />
+                            <div className="w-full bg-slate-100 rounded h-2 mb-3">
+                                <div className="bg-purple-500 h-2 rounded" style={{ width: `${(vipTickets / totalTickets) * 100}%` }} />
                             </div>
                             <div className="flex items-center justify-between">
                                 <span className="text-sm font-medium text-slate-700">General Tickets</span>
                                 <span className="text-lg font-bold text-slate-900">{generalTickets}</span>
                             </div>
-                            <div className="w-full bg-slate-100 rounded-full h-2">
-                                <div className="bg-blue-500 h-2 rounded-full" style={{ width: `${(generalTickets / totalTickets) * 100}%` }} />
+                            <div className="w-full bg-slate-100 rounded h-2">
+                                <div className="bg-blue-500 h-2 rounded" style={{ width: `${(generalTickets / totalTickets) * 100}%` }} />
                             </div>
                         </div>
 
-                        <div className="bg-white rounded-2xl border border-slate-200 p-5">
+                        <div className="bg-white rounded border border-slate-200 p-5">
                             <h3 className="text-sm font-semibold text-slate-500 mb-3">Check-in Status</h3>
                             <div className="flex items-center justify-between mb-2">
                                 <span className="text-sm font-medium text-slate-700">Checked In</span>
                                 <span className="text-lg font-bold text-emerald-600">{checkedIn}</span>
                             </div>
-                            <div className="w-full bg-slate-100 rounded-full h-2 mb-3">
-                                <div className="bg-emerald-500 h-2 rounded-full" style={{ width: `${(checkedIn / totalTickets) * 100}%` }} />
+                            <div className="w-full bg-slate-100 rounded h-2 mb-3">
+                                <div className="bg-emerald-500 h-2 rounded" style={{ width: `${(checkedIn / totalTickets) * 100}%` }} />
                             </div>
                             <div className="flex items-center justify-between">
                                 <span className="text-sm font-medium text-slate-700">Not Checked In</span>
                                 <span className="text-lg font-bold text-rose-600">{notCheckedIn}</span>
                             </div>
-                            <div className="w-full bg-slate-100 rounded-full h-2">
-                                <div className="bg-rose-500 h-2 rounded-full" style={{ width: `${(notCheckedIn / totalTickets) * 100}%` }} />
+                            <div className="w-full bg-slate-100 rounded h-2">
+                                <div className="bg-rose-500 h-2 rounded" style={{ width: `${(notCheckedIn / totalTickets) * 100}%` }} />
                             </div>
                         </div>
                     </div>
 
                     {/* Attendees Table */}
-                    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg transition-all">
+                    <div className="bg-white rounded border border-slate-200 shadow-sm hover:shadow-lg transition-all">
                         <div className="p-5 border-b border-slate-100">
                             <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                                 <h2 className="text-lg font-bold text-slate-900">{t("sales.tableTitle")}</h2>
 
                                 <div className="flex flex-col sm:flex-row gap-3">
                                     {/* Search */}
-                                    <div className="flex h-10 w-full items-center gap-2 rounded-xl border border-slate-200 px-3 focus-within:border-blue-400 focus-within:ring-2 focus-within:ring-blue-100 sm:w-64">
+                                    <div className="flex h-10 w-full items-center gap-2 rounded border border-slate-200 px-3 focus-within:border-blue-400 focus-within:ring-2 focus-within:ring-blue-100 sm:w-64">
                                         <Search className="size-4 text-slate-400" />
                                         <input
                                             type="text"
@@ -226,7 +226,7 @@ export default function TicketSalesPage() {
                                     <select
                                         value={filterStatus}
                                         onChange={(e) => setFilterStatus(e.target.value)}
-                                        className="h-10 px-3 rounded-xl border border-slate-200 text-sm font-medium text-slate-600 outline-none focus:border-blue-400"
+                                        className="h-10 px-3 rounded border border-slate-200 text-sm font-medium text-slate-600 outline-none focus:border-blue-400"
                                     >
                                         <option value="all">All Status</option>
                                         <option value="checked in">Checked In</option>
@@ -237,7 +237,7 @@ export default function TicketSalesPage() {
                                     <select
                                         value={filterTicketType}
                                         onChange={(e) => setFilterTicketType(e.target.value)}
-                                        className="h-10 px-3 rounded-xl border border-slate-200 text-sm font-medium text-slate-600 outline-none focus:border-blue-400"
+                                        className="h-10 px-3 rounded border border-slate-200 text-sm font-medium text-slate-600 outline-none focus:border-blue-400"
                                     >
                                         <option value="all">All Ticket Types</option>
                                         <option value="vip">VIP</option>
@@ -253,7 +253,7 @@ export default function TicketSalesPage() {
                                             setSortBy(nextSortBy);
                                             setSortOrder(sortOrder === "asc" ? "desc" : "asc");
                                         }}
-                                        className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-slate-200 px-4 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors"
+                                        className="inline-flex h-10 items-center justify-center gap-2 rounded border border-slate-200 px-4 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors"
                                     >
                                         <SortAsc className="size-4" />
                                         Sort by {sortBy}
@@ -302,7 +302,7 @@ export default function TicketSalesPage() {
                                         </td>
                                         <td className="px-5 py-4 text-sm text-slate-500">{attendee.email}</td>
                                         <td className="px-5 py-4">
-                                                <span className={`inline-flex px-2 py-1 rounded-full text-xs font-semibold ${getTicketTypeColor(attendee.ticketType)}`}>
+                                                <span className={`inline-flex px-2 py-1 rounded text-xs font-semibold ${getTicketTypeColor(attendee.ticketType)}`}>
                                                     {attendee.ticketType}
                                                 </span>
                                         </td>
@@ -315,7 +315,7 @@ export default function TicketSalesPage() {
                                                 ) : (
                                                     <UserX className="size-4 text-rose-500" />
                                                 )}
-                                                <span className={`inline-flex px-2.5 py-1 rounded-full text-xs font-semibold border ${getStatusColor(attendee.status)}`}>
+                                                <span className={`inline-flex px-2.5 py-1 rounded text-xs font-semibold border ${getStatusColor(attendee.status)}`}>
                                                         {attendee.status === "Checked In" ? t("checkedIn") : t("notCheckedIn")}
                                                     </span>
                                             </div>
@@ -344,18 +344,18 @@ export default function TicketSalesPage() {
 
                             <div className="flex gap-2">
                                 <button
-                                    className="px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors disabled:opacity-50"
+                                    className="px-3 py-1.5 rounded border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors disabled:opacity-50"
                                     disabled
                                 >
                                     Previous
                                 </button>
-                                <button className="px-3 py-1.5 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors">
+                                <button className="px-3 py-1.5 rounded bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors">
                                     1
                                 </button>
-                                <button className="px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
+                                <button className="px-3 py-1.5 rounded border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
                                     2
                                 </button>
-                                <button className="px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
+                                <button className="px-3 py-1.5 rounded border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
                                     Next
                                 </button>
                             </div>
@@ -382,9 +382,9 @@ function MetricCard({
     trendUp: boolean;
 }) {
     return (
-        <div className="bg-white rounded-2xl border border-slate-200 p-5 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+        <div className="bg-white rounded border border-slate-200 p-5 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
             <div className="flex items-start justify-between mb-4">
-                <div className="p-3 rounded-xl bg-blue-50 text-blue-600">
+                <div className="p-3 rounded bg-blue-50 text-blue-600">
                     {icon}
                 </div>
                 <Info className="size-4 text-slate-300 cursor-pointer hover:text-slate-400 transition-colors" />
@@ -394,7 +394,7 @@ function MetricCard({
 
             <div className="flex items-baseline justify-between">
                 <p className="text-2xl font-bold text-slate-900">{value}</p>
-                <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold ${
+                <span className={`inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-semibold ${
                     trendUp
                         ? "bg-emerald-50 text-emerald-600"
                         : "bg-rose-50 text-rose-600"

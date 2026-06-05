@@ -127,13 +127,13 @@ export default function EventsPage() {
                         </div>
 
                         <div className="flex gap-3">
-                            <button className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-all">
+                            <button className="inline-flex items-center gap-2 px-5 py-2.5 rounded border border-slate-200 bg-white text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-all">
                                 <Download className="size-4" />
                                 Export
                             </button>
                             <button
                                 onClick={() => setCreateOpen(true)}
-                                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition-all hover:shadow-md"
+                                className="inline-flex items-center gap-2 px-5 py-2.5 rounded bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition-all hover:shadow-md"
                             >
                                 <Plus className="size-4" />
                                 {t("createEvent")}
@@ -174,7 +174,7 @@ export default function EventsPage() {
                     </div>
 
                     {/* Events Table */}
-                    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg transition-all">
+                    <div className="bg-white rounded border border-slate-200 shadow-sm hover:shadow-lg transition-all">
                         <div className="p-5 border-b border-slate-100">
                             <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                                 <h2 className="text-lg font-bold text-slate-900">
@@ -183,7 +183,7 @@ export default function EventsPage() {
 
                                 <div className="flex flex-col sm:flex-row gap-3">
                                     {/* Search */}
-                                    <div className="flex h-10 w-full items-center gap-2 rounded-xl border border-slate-200 px-3 focus-within:border-blue-400 focus-within:ring-2 focus-within:ring-blue-100 sm:w-64">
+                                    <div className="flex h-10 w-full items-center gap-2 rounded border border-slate-200 px-3 focus-within:border-blue-400 focus-within:ring-2 focus-within:ring-blue-100 sm:w-64">
                                         <Search className="size-4 text-slate-400" />
                                         <input
                                             type="text"
@@ -198,7 +198,7 @@ export default function EventsPage() {
                                     <select
                                         value={filterStatus}
                                         onChange={(e) => setFilterStatus(e.target.value)}
-                                        className="h-10 px-3 rounded-xl border border-slate-200 text-sm font-medium text-slate-600 outline-none focus:border-blue-400"
+                                        className="h-10 px-3 rounded border border-slate-200 text-sm font-medium text-slate-600 outline-none focus:border-blue-400"
                                     >
                                         <option value="all">All Status</option>
                                         <option value="published">Published</option>
@@ -219,7 +219,7 @@ export default function EventsPage() {
                                                 setSortOrder("asc");
                                             }
                                         }}
-                                        className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-slate-200 px-4 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors"
+                                        className="inline-flex h-10 items-center justify-center gap-2 rounded border border-slate-200 px-4 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors"
                                     >
                                         <SortAsc className="size-4" />
                                         Sort by {sortBy}
@@ -277,9 +277,9 @@ export default function EventsPage() {
                                                 <div className="flex items-center gap-2">
                                                     <span className="text-sm text-slate-600">{event.capacity}</span>
                                                     <div className="flex-1 max-w-16">
-                                                        <div className="w-full bg-slate-100 rounded-full h-1.5">
+                                                        <div className="w-full bg-slate-100 rounded h-1.5">
                                                             <div
-                                                                className="bg-blue-500 h-1.5 rounded-full"
+                                                                className="bg-blue-500 h-1.5 rounded"
                                                                 style={{ width: `${soldPercentage}%` }}
                                                             />
                                                         </div>
@@ -289,23 +289,23 @@ export default function EventsPage() {
                                             <td className="px-5 py-4 font-semibold text-slate-700">{event.ticketsSold.toLocaleString()}</td>
                                             <td className="px-5 py-4 font-semibold text-emerald-600">${event.revenue.toLocaleString()}</td>
                                             <td className="px-5 py-4">
-                          <span className={`inline-flex px-2.5 py-1 rounded-full text-xs font-semibold border ${getStatusColor(event.status)}`}>
+                          <span className={`inline-flex px-2.5 py-1 rounded text-xs font-semibold border ${getStatusColor(event.status)}`}>
                             {t(`status.${event.status}`)}
                           </span>
                                             </td>
                                             <td className="px-5 py-4">
                                                 <div className="flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                    <button className="p-1.5 rounded-lg hover:bg-slate-100 transition-colors" title="View">
+                                                    <button className="p-1.5 rounded hover:bg-slate-100 transition-colors" title="View">
                                                         <Eye className="size-4 text-slate-500" />
                                                     </button>
                                                     <button
                                                         onClick={() => handleEdit(event)}
-                                                        className="p-1.5 rounded-lg hover:bg-sky-50 transition-colors"
+                                                        className="p-1.5 rounded hover:bg-sky-50 transition-colors"
                                                         title="Edit"
                                                     >
                                                         <Pencil className="size-4 text-sky-500" />
                                                     </button>
-                                                    <button className="p-1.5 rounded-lg hover:bg-rose-50 transition-colors" title="Delete">
+                                                    <button className="p-1.5 rounded hover:bg-rose-50 transition-colors" title="Delete">
                                                         <Trash2 className="size-4 text-rose-500" />
                                                     </button>
                                                 </div>
@@ -338,16 +338,16 @@ export default function EventsPage() {
                             </p>
 
                             <div className="flex gap-2">
-                                <button className="px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
+                                <button className="px-3 py-1.5 rounded border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
                                     Previous
                                 </button>
-                                <button className="px-3 py-1.5 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors">
+                                <button className="px-3 py-1.5 rounded bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors">
                                     1
                                 </button>
-                                <button className="px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
+                                <button className="px-3 py-1.5 rounded border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
                                     2
                                 </button>
-                                <button className="px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
+                                <button className="px-3 py-1.5 rounded border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
                                     Next
                                 </button>
                             </div>
@@ -386,9 +386,9 @@ function MetricCard({
     icon: React.ReactNode;
 }) {
     return (
-        <div className="bg-white rounded-2xl border border-slate-200 p-5 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+        <div className="bg-white rounded border border-slate-200 p-5 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
             <div className="flex items-start justify-between mb-4">
-                <div className="p-3 rounded-xl bg-blue-50 text-blue-600">
+                <div className="p-3 rounded bg-blue-50 text-blue-600">
                     {icon}
                 </div>
                 <Info className="size-4 text-slate-300 cursor-pointer hover:text-slate-400 transition-colors" />
@@ -398,7 +398,7 @@ function MetricCard({
 
             <div className="flex items-baseline justify-between">
                 <p className="text-2xl font-bold text-slate-900">{value}</p>
-                <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold ${
+                <span className={`inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-semibold ${
                     trendUp
                         ? "bg-emerald-50 text-emerald-600"
                         : "bg-rose-50 text-rose-600"
@@ -434,7 +434,7 @@ function CreateEventModal({ t, onClose }: { t: any; onClose: () => void }) {
             <form onSubmit={handleSubmit}>
                 <div className="space-y-4">
                     <Field label={t("form.thumbnail")} required>
-                        <div className="flex h-32 items-center justify-center rounded-xl border-2 border-dashed border-slate-200 bg-slate-50 text-sm font-semibold text-slate-400 hover:border-blue-400 hover:bg-blue-50 transition-all cursor-pointer">
+                        <div className="flex h-32 items-center justify-center rounded border-2 border-dashed border-slate-200 bg-slate-50 text-sm font-semibold text-slate-400 hover:border-blue-400 hover:bg-blue-50 transition-all cursor-pointer">
                             <Upload className="mr-2 size-4" />
                             {t("form.drop")}{" "}
                             <span className="ml-1 text-blue-600">{t("form.browse")}</span>
@@ -453,7 +453,7 @@ function CreateEventModal({ t, onClose }: { t: any; onClose: () => void }) {
             <textarea
                 value={formData.description}
                 onChange={(e) => setFormData({...formData, description: e.target.value})}
-                className="min-h-36 w-full resize-none rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                className="min-h-36 w-full resize-none rounded border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
                 placeholder="Enter event description"
             />
                     </Field>
@@ -524,7 +524,7 @@ function UpdateEventModal({ t, event, onClose }: { t: any; event: any; onClose: 
             <form onSubmit={handleSubmit}>
                 <div className="space-y-4">
                     <Field label={t("form.thumbnail")} required>
-                        <div className="relative h-32 overflow-hidden rounded-xl bg-gradient-to-r from-blue-600 to-purple-600">
+                        <div className="relative h-32 overflow-hidden rounded bg-gradient-to-r from-blue-600 to-purple-600">
                             <div className="absolute inset-0 flex items-center justify-center text-white">
                                 <div className="text-center">
                                     <Upload className="size-6 mx-auto mb-2" />
@@ -546,7 +546,7 @@ function UpdateEventModal({ t, event, onClose }: { t: any; event: any; onClose: 
             <textarea
                 value={formData.description}
                 onChange={(e) => setFormData({...formData, description: e.target.value})}
-                className="min-h-32 w-full resize-none rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                className="min-h-32 w-full resize-none rounded border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
             />
                     </Field>
 
@@ -601,12 +601,12 @@ function ModalShell({
 }) {
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-end bg-black/50 p-4">
-            <div className="h-full w-full max-w-2xl overflow-y-auto rounded-2xl bg-white shadow-2xl animate-in slide-in-from-right duration-300">
+            <div className="h-full w-full max-w-2xl overflow-y-auto rounded bg-white shadow-2xl animate-in slide-in-from-right duration-300">
                 <div className="sticky top-0 bg-white border-b border-slate-100 px-6 py-4 flex items-center justify-between">
                     <h2 className="text-xl font-extrabold text-slate-950">{title}</h2>
                     <button
                         onClick={onClose}
-                        className="flex size-9 items-center justify-center rounded-full border border-slate-200 text-slate-500 hover:bg-slate-50 transition-colors"
+                        className="flex size-9 items-center justify-center rounded border border-slate-200 text-slate-500 hover:bg-slate-50 transition-colors"
                     >
                         <X className="size-4" />
                     </button>
@@ -632,14 +632,14 @@ function ModalActions({
             <button
                 type="button"
                 onClick={onClose}
-                className="h-11 rounded-xl border border-slate-200 bg-white px-6 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors"
+                className="h-11 rounded border border-slate-200 bg-white px-6 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors"
             >
                 Cancel
             </button>
 
             <button
                 type="submit"
-                className="h-11 rounded-xl bg-blue-600 px-6 text-sm font-semibold text-white hover:bg-blue-700 transition-colors"
+                className="h-11 rounded bg-blue-600 px-6 text-sm font-semibold text-white hover:bg-blue-700 transition-colors"
             >
                 {primaryLabel}
             </button>
@@ -670,7 +670,7 @@ function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
     return (
         <input
             {...props}
-            className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-100 hover:border-slate-300"
+            className="h-11 w-full rounded border border-slate-200 bg-white px-4 text-sm outline-none transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-100 hover:border-slate-300"
         />
     );
 }

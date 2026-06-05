@@ -85,7 +85,7 @@ export function PromotionModal({ promotion, onClose, onCreated }: PromotionModal
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-            <div className="animate-in zoom-in-95 w-full max-w-lg rounded-2xl bg-white shadow-2xl duration-300">
+            <div className="animate-in zoom-in-95 w-full max-w-lg rounded bg-white shadow-2xl duration-300">
                 <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
                     <h2 className="text-xl font-extrabold text-slate-950">
                         {promotion ? t("modal.editTitle") : t("addPromotion")}
@@ -94,7 +94,7 @@ export function PromotionModal({ promotion, onClose, onCreated }: PromotionModal
                         type="button"
                         onClick={onClose}
                         title={t("modal.cancel")}
-                        className="flex size-9 items-center justify-center rounded-full border border-slate-200 text-slate-500 transition-colors hover:bg-slate-50"
+                        className="flex size-9 items-center justify-center rounded border border-slate-200 text-slate-500 transition-colors hover:bg-slate-50"
                     >
                         <X className="size-4" />
                     </button>
@@ -115,7 +115,7 @@ export function PromotionModal({ promotion, onClose, onCreated }: PromotionModal
                                 setFormData({ ...formData, eventId: e.target.value })
                             }
                             disabled={isEdit || isEventsLoading || isSubmitting}
-                            className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 disabled:cursor-not-allowed disabled:bg-slate-50"
+                            className="h-11 w-full rounded border border-slate-200 bg-white px-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 disabled:cursor-not-allowed disabled:bg-slate-50"
                             required
                         >
                             <option value="">
@@ -145,7 +145,7 @@ export function PromotionModal({ promotion, onClose, onCreated }: PromotionModal
                                 setFormData({ ...formData, code: e.target.value.toUpperCase() })
                             }
                             disabled={isEdit || isSubmitting}
-                            className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 font-mono text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 disabled:bg-slate-50"
+                            className="h-11 w-full rounded border border-slate-200 bg-white px-4 font-mono text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 disabled:bg-slate-50"
                             placeholder={t("modal.codePlaceholder")}
                             required
                         />
@@ -169,7 +169,7 @@ export function PromotionModal({ promotion, onClose, onCreated }: PromotionModal
                                     })
                                 }
                                 disabled={isEdit || isSubmitting}
-                                className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 disabled:bg-slate-50"
+                                className="h-11 w-full rounded border border-slate-200 bg-white px-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 disabled:bg-slate-50"
                             >
                                 <option value="percentage">{t("modal.typePercentage")}</option>
                                 <option value="fixed">{t("modal.typeFixed")}</option>
@@ -187,7 +187,7 @@ export function PromotionModal({ promotion, onClose, onCreated }: PromotionModal
                                     setFormData({ ...formData, discount: e.target.value })
                                 }
                                 disabled={isEdit || isSubmitting}
-                                className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 disabled:bg-slate-50"
+                                className="h-11 w-full rounded border border-slate-200 bg-white px-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 disabled:bg-slate-50"
                                 placeholder={
                                     formData.type === "percentage"
                                         ? t("modal.discountPlaceholderPercent")
@@ -210,7 +210,7 @@ export function PromotionModal({ promotion, onClose, onCreated }: PromotionModal
                                     setFormData({ ...formData, usageLimit: e.target.value })
                                 }
                                 disabled={isEdit || isSubmitting}
-                                className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 disabled:bg-slate-50"
+                                className="h-11 w-full rounded border border-slate-200 bg-white px-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 disabled:bg-slate-50"
                                 placeholder={t("modal.usageLimitPlaceholder")}
                             />
                         </div>
@@ -229,7 +229,7 @@ export function PromotionModal({ promotion, onClose, onCreated }: PromotionModal
                                     setFormData({ ...formData, expiryDate: e.target.value })
                                 }
                                 disabled={isEdit || isSubmitting}
-                                className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 disabled:bg-slate-50"
+                                className="h-11 w-full rounded border border-slate-200 bg-white px-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 disabled:bg-slate-50"
                                 required
                             />
                         </div>
@@ -240,14 +240,14 @@ export function PromotionModal({ promotion, onClose, onCreated }: PromotionModal
                             type="button"
                             onClick={onClose}
                             disabled={isSubmitting}
-                            className="rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-50 disabled:opacity-50"
+                            className="rounded border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-50 disabled:opacity-50"
                         >
                             {t("modal.cancel")}
                         </button>
                         <button
                             type="submit"
                             disabled={isSubmitting || (!isEdit && events.length === 0)}
-                            className="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+                            className="rounded bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
                         >
                             {isSubmitting
                                 ? t("modal.creating")

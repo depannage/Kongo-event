@@ -103,7 +103,7 @@ export function PromotionsTable({
     };
 
     return (
-        <div className="rounded-2xl border border-slate-200 bg-white shadow-sm transition-all hover:shadow-lg">
+        <div className="rounded border border-slate-200 bg-white shadow-sm transition-all hover:shadow-lg">
             <div className="border-b border-slate-100 p-5">
                 <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                     <h2 className="text-lg font-bold text-slate-900">
@@ -111,7 +111,7 @@ export function PromotionsTable({
                     </h2>
 
                     <div className="flex flex-col gap-3 sm:flex-row">
-                        <div className="flex h-10 w-full items-center gap-2 rounded-xl border border-slate-200 px-3 focus-within:border-blue-400 focus-within:ring-2 focus-within:ring-blue-100 sm:w-64">
+                        <div className="flex h-10 w-full items-center gap-2 rounded border border-slate-200 px-3 focus-within:border-blue-400 focus-within:ring-2 focus-within:ring-blue-100 sm:w-64">
                             <Search className="size-4 text-slate-400" />
                             <input
                                 type="search"
@@ -126,7 +126,7 @@ export function PromotionsTable({
                             value={filterStatus}
                             onChange={(e) => onFilterStatusChange(e.target.value)}
                             aria-label={t("filter")}
-                            className="h-10 rounded-xl border border-slate-200 px-3 text-sm font-medium text-slate-600 outline-none focus:border-blue-400"
+                            className="h-10 rounded border border-slate-200 px-3 text-sm font-medium text-slate-600 outline-none focus:border-blue-400"
                         >
                             <option value="all">{t("filterAll")}</option>
                             <option value="active">{t("active")}</option>
@@ -136,7 +136,7 @@ export function PromotionsTable({
                         <button
                             type="button"
                             onClick={cycleSort}
-                            className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-slate-200 px-4 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50"
+                            className="inline-flex h-10 items-center justify-center gap-2 rounded border border-slate-200 px-4 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50"
                         >
                             <SortAsc className="size-4" />
                             {t("sortBy")} {sortBy}
@@ -197,7 +197,7 @@ export function PromotionsTable({
                             Array.from({ length: 5 }).map((_, index) => (
                                 <tr key={`skeleton-${index}`} className="border-b border-slate-100">
                                     <td colSpan={10} className="px-5 py-4">
-                                        <div className="h-5 animate-pulse rounded-lg bg-slate-100" />
+                                        <div className="h-5 animate-pulse rounded bg-slate-100" />
                                     </td>
                                 </tr>
                             ))}
@@ -230,7 +230,7 @@ export function PromotionsTable({
                                             <button
                                                 type="button"
                                                 onClick={() => handleCopyCode(promo.code)}
-                                                className="rounded-md p-1 transition-colors hover:bg-slate-100"
+                                                className="rounded p-1 transition-colors hover:bg-slate-100"
                                                 title={t("table.copyCode")}
                                             >
                                                 {copiedCode === promo.code ? (
@@ -246,7 +246,7 @@ export function PromotionsTable({
                                     </td>
                                     <td className="px-5 py-4">
                                         <span
-                                            className={`inline-flex rounded-full px-2 py-1 text-xs font-semibold ${
+                                            className={`inline-flex rounded px-2 py-1 text-xs font-semibold ${
                                                 promo.type === "percentage"
                                                     ? "bg-blue-50 text-blue-600"
                                                     : "bg-purple-50 text-purple-600"
@@ -270,9 +270,9 @@ export function PromotionsTable({
                                                 </span>
                                             </div>
                                             {promo.usageLimit !== "Unlimited" && (
-                                                <div className="h-1.5 w-full rounded-full bg-slate-100">
+                                                <div className="h-1.5 w-full rounded bg-slate-100">
                                                     <div
-                                                        className="h-1.5 rounded-full bg-blue-500"
+                                                        className="h-1.5 rounded bg-blue-500"
                                                         style={{ width: `${usagePercentage}%` }}
                                                     />
                                                 </div>
@@ -289,7 +289,7 @@ export function PromotionsTable({
                                     </td>
                                     <td className="px-5 py-4">
                                         <span
-                                            className={`inline-flex rounded-full border px-2.5 py-1 text-xs font-semibold ${getPromotionStatusColor(promo.status)}`}
+                                            className={`inline-flex rounded border px-2.5 py-1 text-xs font-semibold ${getPromotionStatusColor(promo.status)}`}
                                         >
                                             {promo.status === "active"
                                                 ? t("active")
@@ -300,7 +300,7 @@ export function PromotionsTable({
                                         <div className="flex items-center justify-center gap-2 opacity-0 transition-opacity group-hover:opacity-100">
                                             <button
                                                 type="button"
-                                                className="rounded-lg p-1.5 transition-colors hover:bg-slate-100"
+                                                className="rounded p-1.5 transition-colors hover:bg-slate-100"
                                                 title={t("table.view")}
                                             >
                                                 <Eye className="size-4 text-slate-500" />
@@ -308,14 +308,14 @@ export function PromotionsTable({
                                             <button
                                                 type="button"
                                                 onClick={() => onEdit(promo)}
-                                                className="rounded-lg p-1.5 transition-colors hover:bg-sky-50"
+                                                className="rounded p-1.5 transition-colors hover:bg-sky-50"
                                                 title={t("table.edit")}
                                             >
                                                 <Edit className="size-4 text-sky-500" />
                                             </button>
                                             <button
                                                 type="button"
-                                                className="rounded-lg p-1.5 transition-colors hover:bg-rose-50"
+                                                className="rounded p-1.5 transition-colors hover:bg-rose-50"
                                                 title={t("table.delete")}
                                             >
                                                 <Trash2 className="size-4 text-rose-500" />
@@ -359,7 +359,7 @@ export function PromotionsTable({
                         type="button"
                         disabled={page <= 1 || isLoading}
                         onClick={() => onPageChange(page - 1)}
-                        className="rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50 disabled:opacity-50"
+                        className="rounded border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50 disabled:opacity-50"
                     >
                         {t("pagination.previous")}
                     </button>
@@ -369,7 +369,7 @@ export function PromotionsTable({
                             type="button"
                             disabled={isLoading}
                             onClick={() => onPageChange(pageNumber)}
-                            className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
+                            className={`rounded px-3 py-1.5 text-sm font-medium transition-colors ${
                                 pageNumber === page
                                     ? "bg-blue-600 text-white hover:bg-blue-700"
                                     : "border border-slate-200 text-slate-600 hover:bg-slate-50"
@@ -382,7 +382,7 @@ export function PromotionsTable({
                         type="button"
                         disabled={page >= pages || pages === 0 || isLoading}
                         onClick={() => onPageChange(page + 1)}
-                        className="rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50 disabled:opacity-50"
+                        className="rounded border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50 disabled:opacity-50"
                     >
                         {t("pagination.next")}
                     </button>

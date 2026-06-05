@@ -131,13 +131,13 @@ export default function EarningsPage() {
                         </div>
 
                         <div className="flex gap-3">
-                            <button className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-all">
+                            <button className="inline-flex items-center gap-2 px-5 py-2.5 rounded border border-slate-200 bg-white text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-all">
                                 <Download className="size-4" />
                                 Export
                             </button>
                             <button
                                 onClick={() => setOpen(true)}
-                                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition-all hover:shadow-md"
+                                className="inline-flex items-center gap-2 px-5 py-2.5 rounded bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition-all hover:shadow-md"
                             >
                                 <Wallet className="size-4" />
                                 {t("requestPayout")}
@@ -179,7 +179,7 @@ export default function EarningsPage() {
 
                     {/* Status Summary Cards */}
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-6">
-                        <div className="bg-emerald-50 rounded-2xl p-4 border border-emerald-100">
+                        <div className="bg-emerald-50 rounded p-4 border border-emerald-100">
                             <div className="flex items-center justify-between">
                                 <div>
                                     <p className="text-sm font-medium text-emerald-600 mb-1">Paid</p>
@@ -188,7 +188,7 @@ export default function EarningsPage() {
                                 <CheckCircle className="size-8 text-emerald-500" />
                             </div>
                         </div>
-                        <div className="bg-amber-50 rounded-2xl p-4 border border-amber-100">
+                        <div className="bg-amber-50 rounded p-4 border border-amber-100">
                             <div className="flex items-center justify-between">
                                 <div>
                                     <p className="text-sm font-medium text-amber-600 mb-1">Pending</p>
@@ -197,7 +197,7 @@ export default function EarningsPage() {
                                 <Clock className="size-8 text-amber-500" />
                             </div>
                         </div>
-                        <div className="bg-violet-50 rounded-2xl p-4 border border-violet-100">
+                        <div className="bg-violet-50 rounded p-4 border border-violet-100">
                             <div className="flex items-center justify-between">
                                 <div>
                                     <p className="text-sm font-medium text-violet-600 mb-1">Available</p>
@@ -209,7 +209,7 @@ export default function EarningsPage() {
                     </div>
 
                     {/* Earnings Table */}
-                    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg transition-all">
+                    <div className="bg-white rounded border border-slate-200 shadow-sm hover:shadow-lg transition-all">
                         <div className="p-5 border-b border-slate-100">
                             <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                                 <h2 className="text-lg font-bold text-slate-900">
@@ -218,7 +218,7 @@ export default function EarningsPage() {
 
                                 <div className="flex flex-col sm:flex-row gap-3">
                                     {/* Search */}
-                                    <div className="flex h-10 w-full items-center gap-2 rounded-xl border border-slate-200 px-3 focus-within:border-blue-400 focus-within:ring-2 focus-within:ring-blue-100 sm:w-64">
+                                    <div className="flex h-10 w-full items-center gap-2 rounded border border-slate-200 px-3 focus-within:border-blue-400 focus-within:ring-2 focus-within:ring-blue-100 sm:w-64">
                                         <Search className="size-4 text-slate-400" />
                                         <input
                                             type="text"
@@ -233,7 +233,7 @@ export default function EarningsPage() {
                                     <select
                                         value={filterStatus}
                                         onChange={(e) => setFilterStatus(e.target.value)}
-                                        className="h-10 px-3 rounded-xl border border-slate-200 text-sm font-medium text-slate-600 outline-none focus:border-blue-400"
+                                        className="h-10 px-3 rounded border border-slate-200 text-sm font-medium text-slate-600 outline-none focus:border-blue-400"
                                     >
                                         <option value="all">All Status</option>
                                         <option value="paid">Paid</option>
@@ -254,7 +254,7 @@ export default function EarningsPage() {
                                                 setSortOrder("asc");
                                             }
                                         }}
-                                        className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-slate-200 px-4 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors"
+                                        className="inline-flex h-10 items-center justify-center gap-2 rounded border border-slate-200 px-4 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors"
                                     >
                                         <SortAsc className="size-4" />
                                         Sort by {sortBy}
@@ -310,7 +310,7 @@ export default function EarningsPage() {
                                         <td className="px-5 py-4">
                                             <div className="flex items-center gap-1.5">
                                                 {getStatusIcon(earning.status)}
-                                                <span className={`inline-flex px-2.5 py-1 rounded-full text-xs font-semibold border ${getStatusColor(earning.status)}`}>
+                                                <span className={`inline-flex px-2.5 py-1 rounded text-xs font-semibold border ${getStatusColor(earning.status)}`}>
                             {t(`status.${earning.status}`)}
                           </span>
                                             </div>
@@ -336,16 +336,16 @@ export default function EarningsPage() {
                             </p>
 
                             <div className="flex gap-2">
-                                <button className="px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
+                                <button className="px-3 py-1.5 rounded border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
                                     Previous
                                 </button>
-                                <button className="px-3 py-1.5 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors">
+                                <button className="px-3 py-1.5 rounded bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors">
                                     1
                                 </button>
-                                <button className="px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
+                                <button className="px-3 py-1.5 rounded border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
                                     2
                                 </button>
-                                <button className="px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
+                                <button className="px-3 py-1.5 rounded border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
                                     Next
                                 </button>
                             </div>
@@ -375,9 +375,9 @@ function MetricCard({
     trendUp: boolean;
 }) {
     return (
-        <div className="bg-white rounded-2xl border border-slate-200 p-5 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+        <div className="bg-white rounded border border-slate-200 p-5 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
             <div className="flex items-start justify-between mb-4">
-                <div className="p-3 rounded-xl bg-blue-50 text-blue-600">
+                <div className="p-3 rounded bg-blue-50 text-blue-600">
                     {icon}
                 </div>
                 <Info className="size-4 text-slate-300 cursor-pointer hover:text-slate-400 transition-colors" />
@@ -387,7 +387,7 @@ function MetricCard({
 
             <div className="flex items-baseline justify-between">
                 <p className="text-2xl font-bold text-slate-900">{value}</p>
-                <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold ${
+                <span className={`inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-semibold ${
                     trendUp
                         ? "bg-emerald-50 text-emerald-600"
                         : "bg-rose-50 text-rose-600"
@@ -418,12 +418,12 @@ function PayoutModal({ t, onClose }: { t: any; onClose: () => void }) {
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-end bg-black/50 p-4">
-            <div className="h-full w-full max-w-md overflow-y-auto rounded-2xl bg-white shadow-2xl animate-in slide-in-from-right duration-300">
+            <div className="h-full w-full max-w-md overflow-y-auto rounded bg-white shadow-2xl animate-in slide-in-from-right duration-300">
                 <div className="sticky top-0 bg-white border-b border-slate-100 px-6 py-4 flex items-center justify-between">
                     <h2 className="text-xl font-extrabold text-slate-950">{t("modal.title")}</h2>
                     <button
                         onClick={onClose}
-                        className="flex size-9 items-center justify-center rounded-full border border-slate-200 text-slate-500 hover:bg-slate-50 transition-colors"
+                        className="flex size-9 items-center justify-center rounded border border-slate-200 text-slate-500 hover:bg-slate-50 transition-colors"
                     >
                         <X className="size-4" />
                     </button>
@@ -444,7 +444,7 @@ function PayoutModal({ t, onClose }: { t: any; onClose: () => void }) {
                             <select
                                 value={formData.paymentMethod}
                                 onChange={(e) => setFormData({...formData, paymentMethod: e.target.value})}
-                                className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                                className="h-11 w-full rounded border border-slate-200 bg-white px-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
                             >
                                 <option value="paypal">PayPal</option>
                                 <option value="bank">Bank Transfer</option>
@@ -464,7 +464,7 @@ function PayoutModal({ t, onClose }: { t: any; onClose: () => void }) {
               <textarea
                   value={formData.note}
                   onChange={(e) => setFormData({...formData, note: e.target.value})}
-                  className="min-h-24 w-full resize-none rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                  className="min-h-24 w-full resize-none rounded border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
                   placeholder="Optional note"
               />
                         </Field>
@@ -474,13 +474,13 @@ function PayoutModal({ t, onClose }: { t: any; onClose: () => void }) {
                         <button
                             type="button"
                             onClick={onClose}
-                            className="h-11 rounded-xl border border-slate-200 bg-white px-6 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors"
+                            className="h-11 rounded border border-slate-200 bg-white px-6 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors"
                         >
                             {t("cancel")}
                         </button>
                         <button
                             type="submit"
-                            className="h-11 rounded-xl bg-blue-600 px-6 text-sm font-semibold text-white hover:bg-blue-700 transition-colors"
+                            className="h-11 rounded bg-blue-600 px-6 text-sm font-semibold text-white hover:bg-blue-700 transition-colors"
                         >
                             {t("submit")}
                         </button>
@@ -515,7 +515,7 @@ function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
     return (
         <input
             {...props}
-            className="h-11 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-100 hover:border-slate-300"
+            className="h-11 w-full rounded border border-slate-200 bg-white px-4 text-sm outline-none transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-100 hover:border-slate-300"
         />
     );
 }

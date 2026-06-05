@@ -62,19 +62,19 @@ export function RevenueAnalytics({
     const isPositiveTrend = changePercent !== null && changePercent >= 0;
 
     return (
-        <div className="mb-6 rounded-2xl border border-slate-200 bg-white shadow-sm transition-all hover:shadow-lg">
+        <div className="mb-6 rounded border border-slate-200 bg-white shadow-sm transition-all hover:shadow-lg">
             <div className="flex flex-col gap-4 border-b border-slate-100 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
                 <h2 className="text-lg font-bold text-slate-900">{t("revenueAnalytics")}</h2>
 
                 <div className="flex items-center gap-3">
-                    <div className="flex gap-1 rounded-xl bg-slate-100 p-1">
+                    <div className="flex gap-1 rounded bg-slate-100 p-1">
                         {PERIODS.map((p) => (
                             <button
                                 key={p}
                                 type="button"
                                 disabled={isLoading}
                                 onClick={() => onPeriodChange(p)}
-                                className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-all disabled:opacity-50 ${
+                                className={`rounded px-3 py-1.5 text-xs font-semibold transition-all disabled:opacity-50 ${
                                     period === p
                                         ? "bg-white text-slate-900 shadow-sm"
                                         : "text-slate-500 hover:text-slate-700"
@@ -89,7 +89,7 @@ export function RevenueAnalytics({
                         title={t("revenueAnalytics")}
                         disabled={isLoading}
                         onClick={onRefresh}
-                        className="flex size-9 items-center justify-center rounded-xl border border-slate-200 transition-colors hover:bg-slate-50 disabled:opacity-50"
+                        className="flex size-9 items-center justify-center rounded border border-slate-200 transition-colors hover:bg-slate-50 disabled:opacity-50"
                     >
                         <RefreshCcw
                             className={`size-4 text-slate-400 ${isLoading ? "animate-spin" : ""}`}
@@ -102,7 +102,7 @@ export function RevenueAnalytics({
                 <div className="flex flex-wrap items-end gap-3">
                     <div>
                         {isLoading ? (
-                            <div className="h-9 w-40 animate-pulse rounded-lg bg-slate-100" />
+                            <div className="h-9 w-40 animate-pulse rounded bg-slate-100" />
                         ) : (
                             <p className="text-3xl font-bold text-slate-900">
                                 {formatCurrency(total, locale)}
@@ -113,7 +113,7 @@ export function RevenueAnalytics({
                     {!isLoading && changePercent !== null && (
                         <div className="flex items-center gap-2 pb-1">
                             <span
-                                className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold ${
+                                className={`inline-flex items-center gap-1 rounded px-2 py-0.5 text-xs font-semibold ${
                                     isPositiveTrend
                                         ? "bg-emerald-50 text-emerald-600"
                                         : "bg-rose-50 text-rose-600"
@@ -135,7 +135,7 @@ export function RevenueAnalytics({
             <div className="h-[300px] px-4 pb-5 pt-5 sm:px-5">
                 {isLoading ? (
                     <div className="flex h-full items-center justify-center">
-                        <div className="h-full w-full animate-pulse rounded-xl bg-slate-100" />
+                        <div className="h-full w-full animate-pulse rounded bg-slate-100" />
                     </div>
                 ) : points.length > 0 ? (
                     <Line data={chartData} options={chartOptions} />

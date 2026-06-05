@@ -45,13 +45,13 @@ export function RecentTransactions({
     };
 
     return (
-        <div className="rounded-2xl border border-slate-200 bg-white shadow-sm transition-all hover:shadow-lg">
+        <div className="rounded border border-slate-200 bg-white shadow-sm transition-all hover:shadow-lg">
             <div className="border-b border-slate-100 p-5">
                 <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                     <h2 className="text-lg font-bold text-slate-900">{t("recentTransactions")}</h2>
 
                     <div className="flex flex-col gap-3 sm:flex-row">
-                        <div className="flex h-10 w-full items-center gap-2 rounded-xl border border-slate-200 px-3 focus-within:border-blue-400 focus-within:ring-2 focus-within:ring-blue-100 sm:w-64">
+                        <div className="flex h-10 w-full items-center gap-2 rounded border border-slate-200 px-3 focus-within:border-blue-400 focus-within:ring-2 focus-within:ring-blue-100 sm:w-64">
                             <Search className="size-4 text-slate-400" />
                             <input
                                 type="search"
@@ -66,7 +66,7 @@ export function RecentTransactions({
                             value={filterStatus}
                             onChange={(e) => onFilterStatusChange(e.target.value)}
                             aria-label={t("filter")}
-                            className="h-10 rounded-xl border border-slate-200 px-3 text-sm font-medium text-slate-600 outline-none focus:border-blue-400"
+                            className="h-10 rounded border border-slate-200 px-3 text-sm font-medium text-slate-600 outline-none focus:border-blue-400"
                         >
                             <option value="all">All Status</option>
                             <option value="paid">{t("paid")}</option>
@@ -76,7 +76,7 @@ export function RecentTransactions({
 
                         <button
                             type="button"
-                            className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-slate-200 px-4 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50"
+                            className="inline-flex h-10 items-center justify-center gap-2 rounded border border-slate-200 px-4 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50"
                         >
                             <SortAsc className="size-4" />
                             {t("sortBy")}
@@ -131,7 +131,7 @@ export function RecentTransactions({
                             Array.from({ length: 5 }).map((_, index) => (
                                 <tr key={`skeleton-${index}`} className="border-b border-slate-100">
                                     <td colSpan={9} className="px-5 py-4">
-                                        <div className="h-5 animate-pulse rounded-lg bg-slate-100" />
+                                        <div className="h-5 animate-pulse rounded bg-slate-100" />
                                     </td>
                                 </tr>
                             ))}
@@ -159,7 +159,7 @@ export function RecentTransactions({
                                 <td className="px-5 py-4 text-sm text-slate-500">{transaction.email}</td>
                                 <td className="px-5 py-4">
                                     <span
-                                        className={`inline-flex rounded-full px-2 py-1 text-xs font-semibold ${
+                                        className={`inline-flex rounded px-2 py-1 text-xs font-semibold ${
                                             transaction.ticketType === "VIP"
                                                 ? "bg-purple-50 text-purple-600"
                                                 : "bg-slate-50 text-slate-600"
@@ -176,7 +176,7 @@ export function RecentTransactions({
                                 </td>
                                 <td className="px-5 py-4">
                                     <span
-                                        className={`inline-flex rounded-full border px-2.5 py-1 text-xs font-semibold ${getTransactionStatusColor(transaction.status)}`}
+                                        className={`inline-flex rounded border px-2.5 py-1 text-xs font-semibold ${getTransactionStatusColor(transaction.status)}`}
                                     >
                                         {transaction.status}
                                     </span>
@@ -209,31 +209,31 @@ export function RecentTransactions({
                     <button
                         type="button"
                         disabled
-                        className="rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50 disabled:opacity-50"
+                        className="rounded border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50 disabled:opacity-50"
                     >
                         Previous
                     </button>
                     <button
                         type="button"
-                        className="rounded-lg bg-blue-600 px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+                        className="rounded bg-blue-600 px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-blue-700"
                     >
                         1
                     </button>
                     <button
                         type="button"
-                        className="rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50"
+                        className="rounded border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50"
                     >
                         2
                     </button>
                     <button
                         type="button"
-                        className="rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50"
+                        className="rounded border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50"
                     >
                         3
                     </button>
                     <button
                         type="button"
-                        className="rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50"
+                        className="rounded border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50"
                     >
                         Next
                     </button>
