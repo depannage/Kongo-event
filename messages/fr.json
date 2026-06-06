@@ -148,7 +148,6 @@
       "login": "Connexion",
       "phone": "Téléphone",
       "phonePlaceholder": "Ex: +243810000000"
-}
     },
     "forgot": {
       "title": "Mot de passe oublié",
@@ -183,6 +182,13 @@
       "users": "Utilisateurs",
       "events": "Événements",
       "tickets": "Tickets",
+      "eventCategories": "Catégories",
+      "venues": "Lieux",
+      "rooms": "Salles",
+      "sponsors": "Sponsors",
+      "eventSponsors": "Sponsors événements",
+      "ticketTypes": "Types de billets",
+      "manageTickets": "Gestion tickets",
       "earnings": "Revenus",
       "reviews": "Avis",
       "reports": "Rapports",
@@ -412,7 +418,8 @@
     "metrics": {
       "published": "Publiés",
       "draft": "Brouillons",
-      "rejected": "Rejetés"
+      "rejected": "Rejetés",
+      "revenue": "Revenu"
     },
     "table": {
       "no": "N°",
@@ -429,13 +436,26 @@
       "cancelled": "Annulé"
     },
     "form": {
+      "subtitle": "Renseignez les informations, traductions, médias Cloudinary, billets et sessions.",
       "thumbnail": "Image",
       "drop": "Glissez-déposez vos fichiers ou",
       "browse": "parcourir",
       "title": "Titre",
+      "slug": "Slug",
+      "shortDescription": "Résumé",
       "description": "Description",
       "location": "Lieu",
       "date": "Date",
+      "startAt": "Début",
+      "endAt": "Fin",
+      "timezone": "Fuseau horaire",
+      "capacity": "Capacité",
+      "type": "Type",
+      "organizerId": "Organisateur",
+      "categoryId": "Catégorie",
+      "venueId": "Lieu",
+      "sponsorIds": "Sponsors",
+      "speakerIds": "Intervenants",
       "uploadCompleted": "Téléversement terminé"
     },
     "create": {
@@ -445,6 +465,55 @@
     "update": {
       "title": "Modifier l’événement",
       "submit": "Modifier"
+    },
+    "cancel": "Annuler",
+    "filters": {
+      "all": "Tous"
+    },
+    "sort": {
+      "date": "Date",
+      "title": "Titre",
+      "sales": "Ventes"
+    },
+    "actions": {
+      "view": "Voir",
+      "edit": "Modifier",
+      "duplicate": "Dupliquer",
+      "delete": "Supprimer"
+    },
+    "empty": {
+      "events": "Aucun événement trouvé",
+      "location": "Lieu non défini",
+      "sponsors": "Aucun sponsor trouvé"
+    },
+    "sections": {
+      "identity": "Identité",
+      "schedule": "Date et capacité",
+      "tickets": "Billets",
+      "sessions": "Sessions",
+      "media": "Médias",
+      "settings": "Paramètres",
+      "partners": "Sponsors et intervenants"
+    },
+    "tickets": {
+      "add": "Ajouter un billet",
+      "name": "Nom",
+      "price": "Prix",
+      "currency": "Devise",
+      "quantity": "Quantité"
+    },
+    "sessions": {
+      "add": "Ajouter une session",
+      "title": "Titre",
+      "speakerId": "Intervenant",
+      "startAt": "Début",
+      "endAt": "Fin"
+    },
+    "cloudinary": {
+      "drop": "Téléverser vers Cloudinary",
+      "only": "Tous les fichiers et images passent par Cloudinary.",
+      "uploading": "Téléversement en cours",
+      "missing": "Configurez NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME et NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET."
     }
   },
   "usersAdmin": {

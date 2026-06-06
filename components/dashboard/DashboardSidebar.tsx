@@ -14,8 +14,12 @@ import {
     Search,
     Settings,
     SlidersHorizontal,
-    Star,
     Ticket,
+    Tags,
+    MapPin,
+    DoorOpen,
+    Handshake,
+    Link2,
     Users,
     Wallet,
 } from "lucide-react";
@@ -48,6 +52,13 @@ export default function DashboardSidebar() {
                 { icon: Users, label: t("menu.users"), href: "users" },
                 { icon: Music, label: t("menu.events"), href: "events" },
                 { icon: Ticket, label: t("menu.tickets"), href: "tickets" },
+                { icon: Tags, label: t("menu.eventCategories"), href: "event-categories" },
+                { icon: MapPin, label: t("menu.venues"), href: "venues" },
+                { icon: DoorOpen, label: t("menu.rooms"), href: "rooms" },
+                { icon: Handshake, label: t("menu.sponsors"), href: "sponsors" },
+                { icon: Link2, label: t("menu.eventSponsors"), href: "event-sponsors" },
+                { icon: Ticket, label: t("menu.ticketTypes"), href: "ticket-types" },
+                { icon: Ticket, label: t("menu.manageTickets"), href: "tickets/manage" },
                 { icon: CreditCard, label: t("menu.earnings"), href: "earnings" },
                 { icon: MessageCircle, label: t("menu.reviews"), href: "reviews" },
             ]
@@ -83,13 +94,13 @@ export default function DashboardSidebar() {
                         )}
                         {isCollapsed && (
                             <div className="flex items-center gap-2 mt-4">
-                                <Image src={"/images/logo.jpeg"} alt={"logo"} width={40} height={40} className="rounded-lg" />
+                                <Image src={"/images/logo.jpeg"} alt={"logo"} width={40} height={40} className="rounded" />
                             </div>
                         )}
                     </Link>
                     <button
                         onClick={toggleSidebar}
-                        className="p-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 transition-colors"
+                        className="p-1.5 rounded border border-slate-200 hover:bg-slate-50 transition-colors"
                     >
                         {isCollapsed ? <ChevronRight className="size-4" /> : <ChevronLeft className="size-4" />}
                     </button>
@@ -98,7 +109,7 @@ export default function DashboardSidebar() {
                 {/* Search */}
                 <div className="p-5">
                     {!isCollapsed ? (
-                        <div className="flex items-center gap-2 px-3 py-2 rounded-xl border border-slate-200 focus-within:border-blue-400 focus-within:ring-1 focus-within:ring-blue-400">
+                        <div className="flex items-center gap-2 px-3 py-2 rounded border border-slate-200 focus-within:border-blue-400 focus-within:ring-1 focus-within:ring-blue-400">
                             <Search className="size-4 text-slate-400" />
                             <input
                                 type="text"
@@ -138,7 +149,7 @@ export default function DashboardSidebar() {
                                         <Link
                                             key={itemIdx}
                                             href={localizedHref}
-                                            className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
+                                            className={`flex items-center gap-3 px-3 py-2.5 rounded text-sm font-medium transition-all duration-200 ${
                                                 active
                                                     ? "bg-slate-100 text-slate-900"
                                                     : "text-slate-600 hover:bg-slate-50"
