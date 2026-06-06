@@ -236,6 +236,7 @@
       "companyName": "Nom de l’entreprise",
       "industry": "Industrie",
       "currency": "Devise",
+      "timezone": "Fuseau horaire",
       "address": "Adresse",
       "addressDescription": "Cette adresse apparaîtra sur vos factures.",
       "addressName": "Nom de l’adresse",
@@ -254,7 +255,9 @@
       "firstName": "Prénom",
       "lastName": "Nom",
       "email": "Adresse email",
-      "phone": "Téléphone"
+      "phone": "Téléphone",
+      "role": "Rôle",
+      "memberSince": "Membre depuis"
     },
     "billing": {
       "title": "Paiement & Facturation",
@@ -273,6 +276,7 @@
       "fullName": "Nom complet",
       "countryTreaty": "Pays de traité",
       "residence": "Résidence permanente",
+      "taxId": "Numéro fiscal",
       "mailingAddress": "Adresse postale"
     },
     "link": {
@@ -294,6 +298,7 @@
       "description": "Modifiez ou consultez votre mot de passe.",
       "currentPassword": "Mot de passe actuel",
       "newPassword": "Nouveau mot de passe",
+      "confirmPassword": "Confirmer le mot de passe",
       "hint": "Doit contenir au moins 8 caractères"
     },
     "notifications": {
@@ -338,18 +343,25 @@
     "month": "Mois",
     "fromLastPeriod": "par rapport à la période précédente",
     "revenueAnalytics": "Analyse des revenus",
+    "chart": {
+      "thisPeriod": "Cette période",
+      "lastPeriod": "Période précédente",
+      "totalThisPeriod": "Revenu total sur la période",
+      "noData": "Aucune donnée pour cette période"
+    },
     "recentTransactions": "Transactions récentes",
     "search": "Rechercher",
     "filter": "Filtrer",
     "sortBy": "Trier par",
     "paid": "Payé",
     "cancelled": "Annulé",
+    "refunded": "Remboursé",
+    "emptyTransactions": "Aucune transaction trouvée",
     "metrics": {
+      "totalRevenue": "Revenu total",
       "ticketsSold": "Tickets vendus",
-      "revenueGenerated": "Revenu généré",
-      "ticketsRemaining": "Tickets restants",
-      "checkinsCompleted": "Check-ins effectués",
-      "checkinsRemaining": "Check-ins restants"
+      "refundedAmount": "Montant remboursé",
+      "payoutsIssued": "Paiements effectués"
     },
     "table": {
       "no": "N°",
@@ -357,7 +369,11 @@
       "email": "Email",
       "ticketType": "Type de ticket",
       "purchaseDate": "Date d’achat",
-      "checkinStatus": "Statut check-in"
+      "amount": "Montant",
+      "checkinStatus": "Statut"
+    },
+    "pagination": {
+      "showing": "Affichage de {from} à {to} sur {total} transactions"
     }
   },
   "tickets": {
@@ -597,6 +613,7 @@
     "filter": "Filtrer",
     "sortBy": "Trier par",
     "public": "Public",
+    "hidden": "Masqué",
     "tableTitle": "Table des avis",
     "metrics": {
       "averageRating": "Note moyenne",
@@ -633,56 +650,155 @@
     "title": "Promotions",
     "breadcrumbManagement": "Gestion",
     "addPromotion": "Ajouter une promotion",
+    "exportCsv": "Exporter CSV",
     "tableTitle": "Table des promotions",
     "search": "Rechercher",
     "filter": "Filtrer",
+    "filterAll": "Tous les statuts",
     "sortBy": "Trier par",
     "active": "Actif",
     "expired": "Expiré",
+    "emptyPromotions": "Aucune promotion trouvée",
+    "createFirst": "+ Créer votre première promotion",
     "metrics": {
       "discountCodes": "Codes de réduction actifs",
       "referralLinks": "Liens de parrainage créés",
       "salesFromPromotions": "Ventes via promotions"
     },
+    "statusSummary": {
+      "active": "Promotions actives",
+      "expired": "Promotions expirées"
+    },
     "table": {
       "no": "N°",
       "code": "Code",
       "discount": "Réduction",
+      "type": "Type",
+      "typePercentage": "Pourcentage",
+      "typeFixed": "Montant fixe",
       "used": "Utilisé",
+      "usageLimit": "Limite d’utilisation",
+      "unlimited": "∞ Illimité",
       "expiryDate": "Date d’expiration",
       "status": "Statut",
-      "actions": "Actions"
+      "actions": "Actions",
+      "copyCode": "Copier le code",
+      "view": "Voir",
+      "edit": "Modifier",
+      "delete": "Supprimer"
+    },
+    "tableFooter": {
+      "showing": "Affichage de {count} sur {total} promotions",
+      "showingRange": "Affichage de {from} à {to} sur {total} promotions",
+      "selected": "({count} sélectionnées)"
+    },
+    "pagination": {
+      "previous": "Précédent",
+      "next": "Suivant"
+    },
+    "modal": {
+      "editTitle": "Modifier la promotion",
+      "cancel": "Annuler",
+      "create": "Créer la promotion",
+      "update": "Mettre à jour",
+      "code": "Code promo",
+      "codePlaceholder": "ex. ETE2026",
+      "discountType": "Type de réduction",
+      "discountValue": "Valeur de la réduction",
+      "typePercentage": "Pourcentage (%)",
+      "typeFixed": "Montant fixe ($)",
+      "discountPlaceholderPercent": "ex. 20%",
+      "discountPlaceholderFixed": "ex. 10 $",
+      "usageLimit": "Limite d’utilisation",
+      "usageLimitPlaceholder": "Illimité ou nombre",
+      "event": "Événement",
+      "eventPlaceholder": "Sélectionner un événement",
+      "loadingEvents": "Chargement des événements…",
+      "noEvents": "Aucun événement disponible. Créez un événement avant d’ajouter une promotion.",
+      "eventRequired": "Veuillez sélectionner un événement.",
+      "discountRequired": "Veuillez saisir une valeur de réduction valide.",
+      "expiryRequired": "Veuillez choisir une date d’expiration.",
+      "createSuccess": "Promotion créée avec succès.",
+      "createError": "Impossible de créer la promotion. Réessayez.",
+      "creating": "Création…",
+      "editNotAvailable": "La modification n’est pas encore disponible."
     },
     "pagination": {
       "showing": "Affichage de 1 à 10 sur 500 résultats"
     }
   },
-  "promotionsAdmin": {
-    "title": "Promotions",
+  "payoutsAdmin": {
+    "title": "Paiements",
     "breadcrumbManagement": "Gestion",
-    "addPromotion": "Ajouter une promotion",
-    "tableTitle": "Table des promotions",
+    "addPayment": "Ajouter un paiement",
+    "exportCsv": "Exporter CSV",
+    "tableTitle": "Table des paiements",
     "search": "Rechercher",
     "filter": "Filtrer",
+    "filterAll": "Tous les statuts",
     "sortBy": "Trier par",
-    "active": "Actif",
-    "expired": "Expiré",
+    "pending": "En attente",
+    "completed": "Terminé",
+    "failed": "Échoué",
+    "cancelled": "Annulé",
+    "refunded": "Remboursé",
+    "emptyPayouts": "Aucun paiement trouvé",
+    "createFirst": "+ Créer votre premier paiement",
     "metrics": {
-      "discountCodes": "Codes de réduction actifs",
-      "referralLinks": "Liens de parrainage créés",
-      "salesFromPromotions": "Ventes via promotions"
+      "totalPayments": "Total des paiements",
+      "totalAmount": "Montant total",
+      "completedPayments": "Paiements terminés"
+    },
+    "statusSummary": {
+      "pending": "Paiements en attente",
+      "completed": "Paiements terminés",
+      "failed": "Paiements échoués"
     },
     "table": {
-      "no": "N°",
-      "code": "Code",
-      "discount": "Réduction",
-      "used": "Utilisé",
-      "expiryDate": "Date d’expiration",
+      "orderId": "Commande",
+      "method": "Méthode",
+      "amount": "Montant",
+      "currency": "Devise",
+      "providerRef": "Réf. fournisseur",
+      "createdAt": "Créé le",
       "status": "Statut",
-      "actions": "Actions"
+      "actions": "Actions",
+      "view": "Voir",
+      "edit": "Modifier",
+      "delete": "Supprimer",
+      "deleteConfirm": "Supprimer le paiement pour la commande {orderId} ?",
+      "deleteSuccess": "Paiement supprimé avec succès.",
+      "deleteError": "Impossible de supprimer le paiement."
+    },
+    "tableFooter": {
+      "showingRange": "Affichage de {from} à {to} sur {total} paiements",
+      "selected": "({count} sélectionnés)"
     },
     "pagination": {
-      "showing": "Affichage de 1 à 10 sur 500 résultats"
+      "previous": "Précédent",
+      "next": "Suivant"
+    },
+    "modal": {
+      "editTitle": "Modifier le paiement",
+      "cancel": "Annuler",
+      "create": "Créer le paiement",
+      "update": "Mettre à jour",
+      "saving": "Enregistrement…",
+      "orderId": "ID commande",
+      "orderIdPlaceholder": "ex. order-uuid",
+      "method": "Méthode de paiement",
+      "amount": "Montant",
+      "amountPlaceholder": "ex. 100",
+      "currency": "Devise",
+      "currencyPlaceholder": "ex. USD",
+      "providerRef": "Référence fournisseur",
+      "providerRefPlaceholder": "ex. provider-ref",
+      "orderIdRequired": "Veuillez saisir l’ID de la commande.",
+      "amountRequired": "Veuillez saisir un montant valide.",
+      "createSuccess": "Paiement créé avec succès.",
+      "createError": "Impossible de créer le paiement.",
+      "updateSuccess": "Paiement mis à jour avec succès.",
+      "updateError": "Impossible de mettre à jour le paiement."
     }
   }
 }

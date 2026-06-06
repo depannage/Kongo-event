@@ -88,7 +88,7 @@ export default function RegisterPage() {
     return (
         <AuthShell>
             <div className="w-full max-w-[500px] rounded bg-white p-7 shadow-[0_18px_60px_rgba(15,23,42,0.08)]">
-                <div className="mx-auto mb-5 flex size-14 items-center justify-center rounded-full bg-blue-50">
+                <div className="mx-auto mb-5 flex size-14 items-center justify-center rounded bg-blue-50">
                     <Image src="/images/logo.jpeg" alt="logo" width={100} height={100} />
                 </div>
 
@@ -157,7 +157,7 @@ export default function RegisterPage() {
                         className="flex h-12 w-full items-center justify-center rounded bg-blue-600 text-sm font-semibold text-white disabled:bg-blue-200"
                     >
                         {isPending ? (
-                            <span className="size-5 animate-spin rounded-full border-2 border-white/40 border-t-white" />
+                            <span className="size-5 animate-spin rounded border-2 border-white/40 border-t-white" />
                         ) : (
                             t("submit")
                         )}

@@ -238,6 +238,7 @@
       "companyName": "Company Name",
       "industry": "Industry",
       "currency": "Currency",
+      "timezone": "Time Zone",
       "address": "Address",
       "addressDescription": "This address will appear on your invoice.",
       "addressName": "Address Name",
@@ -256,7 +257,9 @@
       "firstName": "First Name",
       "lastName": "Last Name",
       "email": "Email Address",
-      "phone": "Phone Number"
+      "phone": "Phone Number",
+      "role": "Role",
+      "memberSince": "Member Since"
     },
     "billing": {
       "title": "Payment & Billing",
@@ -275,6 +278,7 @@
       "fullName": "Full Name",
       "countryTreaty": "Treaty Country",
       "residence": "Permanent Residence",
+      "taxId": "Tax ID",
       "mailingAddress": "Mailing Address"
     },
     "link": {
@@ -296,6 +300,7 @@
       "description": "Change or view your password.",
       "currentPassword": "Current Password",
       "newPassword": "New Password",
+      "confirmPassword": "Confirm Password",
       "hint": "Must be at least 8 characters"
     },
     "notifications": {
@@ -340,12 +345,20 @@
     "month": "Month",
     "fromLastPeriod": "from last period",
     "revenueAnalytics": "Revenue Analytics",
+    "chart": {
+      "thisPeriod": "This period",
+      "lastPeriod": "Last period",
+      "totalThisPeriod": "Total revenue this period",
+      "noData": "No data for this period"
+    },
     "recentTransactions": "Recent Transactions",
     "search": "Search",
     "filter": "Filter",
     "sortBy": "Sort by",
     "paid": "Paid",
     "cancelled": "Cancelled",
+    "refunded": "Refunded",
+    "emptyTransactions": "No transactions found",
     "metrics": {
       "totalRevenue": "Total Revenue",
       "ticketsSold": "Tickets Sold",
@@ -358,7 +371,11 @@
       "email": "Email",
       "ticketType": "Ticket Type",
       "purchaseDate": "Purchase Date",
-      "checkinStatus": "Check-in Status"
+      "amount": "Amount",
+      "checkinStatus": "Status"
+    },
+    "pagination": {
+      "showing": "Showing {from} to {to} of {total} transactions"
     }
   },
   "tickets": {
@@ -599,6 +616,7 @@
     "filter": "Filter",
     "sortBy": "Sort by",
     "public": "Public",
+    "hidden": "Hidden",
     "tableTitle": "Reviews Table",
     "metrics": {
       "averageRating": "Average Rating",
@@ -635,56 +653,155 @@
     "title": "Promotions",
     "breadcrumbManagement": "Management",
     "addPromotion": "Add Promotion",
+    "exportCsv": "Export CSV",
     "tableTitle": "Promotions Table",
     "search": "Search",
     "filter": "Filter",
+    "filterAll": "All Status",
     "sortBy": "Sort by",
     "active": "Active",
     "expired": "Expired",
+    "emptyPromotions": "No promotions found",
+    "createFirst": "+ Create your first promotion",
     "metrics": {
       "discountCodes": "Discount Codes Active",
       "referralLinks": "Referral Links Created",
       "salesFromPromotions": "Sales from Promotions"
     },
+    "statusSummary": {
+      "active": "Active Promotions",
+      "expired": "Expired Promotions"
+    },
     "table": {
       "no": "No",
       "code": "Code",
       "discount": "Discount",
+      "type": "Type",
+      "typePercentage": "Percentage",
+      "typeFixed": "Fixed Amount",
       "used": "Used",
+      "usageLimit": "Usage Limit",
+      "unlimited": "∞ Unlimited",
       "expiryDate": "Expiry Date",
       "status": "Status",
-      "actions": "Actions"
+      "actions": "Actions",
+      "copyCode": "Copy code",
+      "view": "View",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "tableFooter": {
+      "showing": "Showing {count} of {total} promotions",
+      "showingRange": "Showing {from} to {to} of {total} promotions",
+      "selected": "({count} selected)"
+    },
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "modal": {
+      "editTitle": "Edit Promotion",
+      "cancel": "Cancel",
+      "create": "Create Promotion",
+      "update": "Update Promotion",
+      "code": "Promo Code",
+      "codePlaceholder": "e.g., SUMMER25",
+      "discountType": "Discount Type",
+      "discountValue": "Discount Value",
+      "typePercentage": "Percentage (%)",
+      "typeFixed": "Fixed Amount ($)",
+      "discountPlaceholderPercent": "e.g., 20%",
+      "discountPlaceholderFixed": "e.g., $10",
+      "usageLimit": "Usage Limit",
+      "usageLimitPlaceholder": "Unlimited or number",
+      "event": "Event",
+      "eventPlaceholder": "Select an event",
+      "loadingEvents": "Loading events…",
+      "noEvents": "No events available. Create an event before adding a promotion.",
+      "eventRequired": "Please select an event.",
+      "discountRequired": "Please enter a valid discount value.",
+      "expiryRequired": "Please choose an expiry date.",
+      "createSuccess": "Promotion created successfully.",
+      "createError": "Could not create the promotion. Please try again.",
+      "creating": "Creating…",
+      "editNotAvailable": "Editing is not available yet."
     },
     "pagination": {
       "showing": "Showing 1 to 10 of 500 results"
     }
   },
-  "promotionsAdmin": {
-    "title": "Promotions",
+  "payoutsAdmin": {
+    "title": "Payouts",
     "breadcrumbManagement": "Management",
-    "addPromotion": "Add Promotion",
-    "tableTitle": "Promotions Table",
+    "addPayment": "Add Payment",
+    "exportCsv": "Export CSV",
+    "tableTitle": "Payments Table",
     "search": "Search",
     "filter": "Filter",
+    "filterAll": "All Status",
     "sortBy": "Sort by",
-    "active": "Active",
-    "expired": "Expired",
+    "pending": "Pending",
+    "completed": "Completed",
+    "failed": "Failed",
+    "cancelled": "Cancelled",
+    "refunded": "Refunded",
+    "emptyPayouts": "No payments found",
+    "createFirst": "+ Create your first payment",
     "metrics": {
-      "discountCodes": "Discount Codes Active",
-      "referralLinks": "Referral Links Created",
-      "salesFromPromotions": "Sales from Promotions"
+      "totalPayments": "Total Payments",
+      "totalAmount": "Total Amount",
+      "completedPayments": "Completed Payments"
+    },
+    "statusSummary": {
+      "pending": "Pending Payments",
+      "completed": "Completed Payments",
+      "failed": "Failed Payments"
     },
     "table": {
-      "no": "No",
-      "code": "Code",
-      "discount": "Discount",
-      "used": "Used",
-      "expiryDate": "Expiry Date",
+      "orderId": "Order",
+      "method": "Method",
+      "amount": "Amount",
+      "currency": "Currency",
+      "providerRef": "Provider Ref",
+      "createdAt": "Created At",
       "status": "Status",
-      "actions": "Actions"
+      "actions": "Actions",
+      "view": "View",
+      "edit": "Edit",
+      "delete": "Delete",
+      "deleteConfirm": "Delete payment for order {orderId}?",
+      "deleteSuccess": "Payment deleted successfully.",
+      "deleteError": "Could not delete the payment."
+    },
+    "tableFooter": {
+      "showingRange": "Showing {from} to {to} of {total} payments",
+      "selected": "({count} selected)"
     },
     "pagination": {
-      "showing": "Showing 1 to 10 of 500 results"
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "modal": {
+      "editTitle": "Edit Payment",
+      "cancel": "Cancel",
+      "create": "Create Payment",
+      "update": "Update Payment",
+      "saving": "Saving…",
+      "orderId": "Order ID",
+      "orderIdPlaceholder": "e.g. order-uuid",
+      "method": "Payment Method",
+      "amount": "Amount",
+      "amountPlaceholder": "e.g. 100",
+      "currency": "Currency",
+      "currencyPlaceholder": "e.g. USD",
+      "providerRef": "Provider Reference",
+      "providerRefPlaceholder": "e.g. provider-ref",
+      "orderIdRequired": "Please enter an order ID.",
+      "amountRequired": "Please enter a valid amount.",
+      "createSuccess": "Payment created successfully.",
+      "createError": "Could not create the payment.",
+      "updateSuccess": "Payment updated successfully.",
+      "updateError": "Could not update the payment."
     }
   }
 }
