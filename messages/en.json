@@ -184,6 +184,13 @@
       "users": "Users",
       "events": "Events",
       "tickets": "Tickets",
+      "eventCategories": "Categories",
+      "venues": "Venues",
+      "rooms": "Rooms",
+      "sponsors": "Sponsors",
+      "eventSponsors": "Event sponsors",
+      "ticketTypes": "Ticket types",
+      "manageTickets": "Manage tickets",
       "earnings": "Earnings",
       "reviews": "Reviews",
       "reports": "Reports",
@@ -430,7 +437,8 @@
     "metrics": {
       "published": "Published",
       "draft": "Draft",
-      "rejected": "Rejected"
+      "rejected": "Rejected",
+      "revenue": "Revenue"
     },
     "table": {
       "no": "No",
@@ -447,13 +455,26 @@
       "cancelled": "Cancelled"
     },
     "form": {
+      "subtitle": "Fill in details, translations, Cloudinary media, tickets and sessions.",
       "thumbnail": "Thumbnail",
       "drop": "Drag & Drop your files or",
       "browse": "Browse",
       "title": "Title",
+      "slug": "Slug",
+      "shortDescription": "Summary",
       "description": "Description",
       "location": "Location",
       "date": "Date",
+      "startAt": "Start",
+      "endAt": "End",
+      "timezone": "Timezone",
+      "capacity": "Capacity",
+      "type": "Type",
+      "organizerId": "Organizer",
+      "categoryId": "Category",
+      "venueId": "Venue",
+      "sponsorIds": "Sponsors",
+      "speakerIds": "Speakers",
       "uploadCompleted": "Upload Completed"
     },
     "create": {
@@ -463,6 +484,55 @@
     "update": {
       "title": "Update Event",
       "submit": "Update"
+    },
+    "cancel": "Cancel",
+    "filters": {
+      "all": "All"
+    },
+    "sort": {
+      "date": "Date",
+      "title": "Title",
+      "sales": "Sales"
+    },
+    "actions": {
+      "view": "View",
+      "edit": "Edit",
+      "duplicate": "Duplicate",
+      "delete": "Delete"
+    },
+    "empty": {
+      "events": "No events found",
+      "location": "No venue set",
+      "sponsors": "No sponsors found"
+    },
+    "sections": {
+      "identity": "Identity",
+      "schedule": "Date and capacity",
+      "tickets": "Tickets",
+      "sessions": "Sessions",
+      "media": "Media",
+      "settings": "Settings",
+      "partners": "Sponsors and speakers"
+    },
+    "tickets": {
+      "add": "Add ticket",
+      "name": "Name",
+      "price": "Price",
+      "currency": "Currency",
+      "quantity": "Quantity"
+    },
+    "sessions": {
+      "add": "Add session",
+      "title": "Title",
+      "speakerId": "Speaker",
+      "startAt": "Start",
+      "endAt": "End"
+    },
+    "cloudinary": {
+      "drop": "Upload to Cloudinary",
+      "only": "All files and images go through Cloudinary.",
+      "uploading": "Uploading",
+      "missing": "Configure NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME and NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET."
     }
   },
   "usersAdmin": {

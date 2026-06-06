@@ -1,676 +1,690 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
-    CalendarDays,
-    Download,
-    Eye,
-    FileText,
-    Info,
-    ListFilter,
-    Pencil,
-    Plus,
-    Search,
-    SortAsc,
-    Trash2,
-    TrendingUp,
-    Upload,
-    X,
-    AlertCircle,
+  CalendarDays,
+  Check,
+  CircleDollarSign,
+  Copy,
+  Eye,
+  FileImage,
+  Filter,
+  Globe,
+  ImagePlus,
+  Languages,
+  ListChecks,
+  Loader2,
+  Pencil,
+  Plus,
+  Save,
+  Search,
+  Ticket,
+  Trash2,
+  UploadCloud,
+  X,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useSidebar } from "@/contexts/SidebarContext";
 import DashboardNavbar from "@/components/dashboard/DashboardNavbar";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
+import { useSidebar } from "@/contexts/SidebarContext";
+import { Link } from "@/i18n/navigation";
+import { api } from "@/shared/lib/http/api";
 
-// Mock Data
-const EVENTS = [
-    { id: "1", name: "Cultural Fusion Fest 2025", date: "Mar 15, 2024, 3 PM", status: "published", ticketsSold: 456, revenue: 1697, location: "Kinshasa Arena", capacity: 1000 },
-    { id: "2", name: "Creative Convergence 2025", date: "Oct 5, 2023, 11 AM", status: "published", ticketsSold: 789, revenue: 2745, location: "Convention Center", capacity: 1500 },
-    { id: "3", name: "Imagination Expo 2025", date: "Dec 1, 2024, 8 AM", status: "published", ticketsSold: 321, revenue: 8361, location: "Expo Hall", capacity: 800 },
-    { id: "4", name: "Visionary Vibes 2025", date: "Apr 30, 2025, 2 PM", status: "published", ticketsSold: 876, revenue: 4823, location: "Open Air Theatre", capacity: 1200 },
-    { id: "5", name: "Artistry Unleashed 2025", date: "Sep 9, 2023, 4 PM", status: "published", ticketsSold: 654, revenue: 5647, location: "Art Gallery", capacity: 600 },
-    { id: "6", name: "Elysium Festival 2025", date: "Feb 14, 2025, 5 PM", status: "published", ticketsSold: 987, revenue: 4029, location: "Beach Arena", capacity: 2000 },
-    { id: "7", name: "Spectrum Showcase 2025", date: "Jan 22, 2026, 9 PM", status: "cancelled", ticketsSold: 234, revenue: 7184, location: "Stadium", capacity: 3000 },
-    { id: "8", name: "Innovators' Gala 2025", date: "Nov 25, 2026, 10 AM", status: "draft", ticketsSold: 210, revenue: 8910, location: "Grand Hotel", capacity: 500 },
-    { id: "9", name: "Artistic Odyssey 2025", date: "Jul 12, 2023, 6 PM", status: "draft", ticketsSold: 543, revenue: 2350, location: "Cultural Center", capacity: 700 },
+type EventStatus = "published" | "draft" | "cancelled";
+type Lang = "fr" | "en";
+
+type EventRow = {
+  id: string;
+  title: Record<Lang, string>;
+  description: Record<Lang, string>;
+  shortDescription: Record<Lang, string>;
+  location: string;
+  startAt: string;
+  endAt: string;
+  status: EventStatus;
+  type: "PHYSICAL" | "VIRTUAL" | "HYBRID";
+  capacity: number;
+  ticketsSold: number;
+  revenue: number;
+  bannerUrl: string;
+  categoryId: string;
+  venueId: string;
+  organizerId: string;
+  timezone: string;
+  ticketTypes: TicketTypeForm[];
+  sessions: SessionForm[];
+  sponsorIds: string[];
+  speakerIds: string[];
+};
+
+type TicketTypeForm = {
+  name: Record<Lang, string>;
+  description: Record<Lang, string>;
+  price: string;
+  currency: string;
+  quantity: string;
+};
+
+type SessionForm = {
+  title: Record<Lang, string>;
+  description: Record<Lang, string>;
+  startAt: string;
+  endAt: string;
+  speakerId: string;
+  roomId: string;
+};
+
+type EventForm = Omit<EventRow, "id" | "ticketsSold" | "revenue"> & {
+  slug: string;
+  refundPolicy: Record<Lang, string>;
+  bannerPublicId: string;
+};
+
+const emptyText = { fr: "", en: "" };
+
+const initialEvents: EventRow[] = [
+  {
+    id: "1",
+    title: { fr: "Festival Culturel Kongo", en: "Kongo Cultural Festival" },
+    shortDescription: { fr: "Musique, art et gastronomie.", en: "Music, art and food." },
+    description: { fr: "Une journee complete autour de la culture congolaise.", en: "A full day around Congolese culture." },
+    location: "Kinshasa Arena",
+    startAt: "2026-07-18T15:00",
+    endAt: "2026-07-18T23:00",
+    status: "published",
+    type: "PHYSICAL",
+    capacity: 1200,
+    ticketsSold: 456,
+    revenue: 16970,
+    bannerUrl: "https://res.cloudinary.com/demo/image/upload/v1700000000/sample.jpg",
+    categoryId: "category-music",
+    venueId: "venue-kinshasa",
+    organizerId: "organizer-main",
+    timezone: "Africa/Kinshasa",
+    ticketTypes: [
+      { name: { fr: "Standard", en: "Standard" }, description: { fr: "Acces general", en: "General access" }, price: "25", currency: "USD", quantity: "900" },
+    ],
+    sessions: [
+      { title: { fr: "Ouverture", en: "Opening" }, description: { fr: "Accueil du public", en: "Public welcome" }, startAt: "2026-07-18T15:00", endAt: "2026-07-18T16:00", speakerId: "", roomId: "" },
+    ],
+    sponsorIds: ["sponsor-1"],
+    speakerIds: ["speaker-1"],
+  },
+  {
+    id: "2",
+    title: { fr: "Creative Convergence", en: "Creative Convergence" },
+    shortDescription: { fr: "Forum des createurs.", en: "Creator forum." },
+    description: { fr: "Rencontres, ateliers et showcase.", en: "Meetups, workshops and showcase." },
+    location: "Convention Center",
+    startAt: "2026-08-05T10:00",
+    endAt: "2026-08-05T19:00",
+    status: "draft",
+    type: "HYBRID",
+    capacity: 800,
+    ticketsSold: 120,
+    revenue: 8400,
+    bannerUrl: "",
+    categoryId: "category-business",
+    venueId: "venue-convention",
+    organizerId: "organizer-main",
+    timezone: "Africa/Kinshasa",
+    ticketTypes: [],
+    sessions: [],
+    sponsorIds: [],
+    speakerIds: [],
+  },
 ];
 
+const newTicket = (): TicketTypeForm => ({
+  name: { ...emptyText },
+  description: { ...emptyText },
+  price: "0",
+  currency: "USD",
+  quantity: "100",
+});
+
+const newSession = (): SessionForm => ({
+  title: { ...emptyText },
+  description: { ...emptyText },
+  startAt: "",
+  endAt: "",
+  speakerId: "",
+  roomId: "",
+});
+
+const newEvent = (): EventForm => ({
+  title: { ...emptyText },
+  shortDescription: { ...emptyText },
+  description: { ...emptyText },
+  slug: "",
+  location: "",
+  startAt: "",
+  endAt: "",
+  status: "draft",
+  type: "PHYSICAL",
+  capacity: 0,
+  bannerUrl: "",
+  bannerPublicId: "",
+  categoryId: "",
+  venueId: "",
+  organizerId: "",
+  timezone: "Africa/Kinshasa",
+  refundPolicy: { ...emptyText },
+  ticketTypes: [newTicket()],
+  sessions: [newSession()],
+  sponsorIds: [],
+  speakerIds: [],
+});
+
 export default function EventsPage() {
-    const t = useTranslations("eventsAdmin");
-    const { isCollapsed } = useSidebar();
+  const t = useTranslations("eventsAdmin");
+  const { isCollapsed } = useSidebar();
+  const [events, setEvents] = useState<EventRow[]>(initialEvents);
+  const [query, setQuery] = useState("");
+  const [status, setStatus] = useState("all");
+  const [sort, setSort] = useState<"date" | "title" | "sales">("date");
+  const [drawer, setDrawer] = useState<"create" | "edit" | null>(null);
+  const [selected, setSelected] = useState<EventRow | null>(null);
 
-    const [createOpen, setCreateOpen] = useState(false);
-    const [updateOpen, setUpdateOpen] = useState(false);
-    const [selectedEvent, setSelectedEvent] = useState<any>(null);
-    const [searchTerm, setSearchTerm] = useState("");
-    const [filterStatus, setFilterStatus] = useState("all");
-    const [selectedRows, setSelectedRows] = useState<string[]>([]);
-    const [sortBy, setSortBy] = useState<"name" | "date" | "ticketsSold">("date");
-    const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+  const filtered = useMemo(() => {
+    return events
+      .filter((event) => {
+        const haystack = `${event.title.fr} ${event.title.en} ${event.location}`.toLowerCase();
+        return haystack.includes(query.toLowerCase()) && (status === "all" || event.status === status);
+      })
+      .sort((a, b) => {
+        if (sort === "title") return a.title.fr.localeCompare(b.title.fr);
+        if (sort === "sales") return b.ticketsSold - a.ticketsSold;
+        return new Date(b.startAt).getTime() - new Date(a.startAt).getTime();
+      });
+  }, [events, query, sort, status]);
 
-    // Filter events
-    const filteredEvents = EVENTS.filter(event => {
-        const matchesSearch = event.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            event.location.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesStatus = filterStatus === "all" || event.status === filterStatus;
-        return matchesSearch && matchesStatus;
-    });
+  const metrics = useMemo(
+    () => ({
+      published: events.filter((event) => event.status === "published").length,
+      draft: events.filter((event) => event.status === "draft").length,
+      cancelled: events.filter((event) => event.status === "cancelled").length,
+      revenue: events.reduce((sum, event) => sum + event.revenue, 0),
+    }),
+    [events]
+  );
 
-    // Sort events
-    const sortedEvents = [...filteredEvents].sort((a, b) => {
-        if (sortBy === "name") {
-            return sortOrder === "asc" ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name);
-        } else if (sortBy === "date") {
-            return sortOrder === "asc"
-                ? new Date(a.date).getTime() - new Date(b.date).getTime()
-                : new Date(b.date).getTime() - new Date(a.date).getTime();
-        } else {
-            return sortOrder === "asc" ? a.ticketsSold - b.ticketsSold : b.ticketsSold - a.ticketsSold;
-        }
-    });
+  const openEdit = (event: EventRow) => {
+    setSelected(event);
+    setDrawer("edit");
+  };
 
-    // Statistics
-    const publishedEvents = EVENTS.filter(e => e.status === "published").length;
-    const draftEvents = EVENTS.filter(e => e.status === "draft").length;
-    const cancelledEvents = EVENTS.filter(e => e.status === "cancelled").length;
-    const totalRevenue = EVENTS.reduce((sum, e) => sum + e.revenue, 0);
-    const totalTicketsSold = EVENTS.reduce((sum, e) => sum + e.ticketsSold, 0);
+  const duplicateEvent = (event: EventRow) => {
+    setEvents((current) => [
+      { ...event, id: crypto.randomUUID(), status: "draft", title: { fr: `${event.title.fr} copie`, en: `${event.title.en} copy` } },
+      ...current,
+    ]);
+  };
 
-    const toggleRow = (id: string) => {
-        setSelectedRows(prev =>
-            prev.includes(id) ? prev.filter(rowId => rowId !== id) : [...prev, id]
-        );
-    };
+  const removeEvent = (id: string) => {
+    setEvents((current) => current.filter((event) => event.id !== id));
+  };
 
-    const toggleAll = () => {
-        if (selectedRows.length === sortedEvents.length) {
-            setSelectedRows([]);
-        } else {
-            setSelectedRows(sortedEvents.map(e => e.id));
-        }
-    };
+  return (
+    <div className="min-h-screen bg-slate-50">
+      <DashboardSidebar />
+      <div className={`transition-all duration-300 ${isCollapsed ? "lg:ml-[80px]" : "lg:ml-[280px]"}`}>
+        <DashboardNavbar />
+        <main className="p-4 sm:p-6 lg:p-8">
+          <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <h1 className="text-2xl font-bold text-slate-950">{t("title")}</h1>
+              <p className="mt-1 text-sm text-slate-500">
+                {t("breadcrumbManagement")} / <span className="font-medium text-slate-900">{t("breadcrumbEvents")}</span>
+              </p>
+            </div>
+            <Link href="/events/create" className="inline-flex h-10 items-center justify-center gap-2 rounded bg-blue-600 px-4 text-sm font-semibold text-white hover:bg-blue-700">
+              <Plus className="size-4" />
+              {t("createEvent")}
+            </Link>
+          </div>
 
-    const handleEdit = (event: any) => {
-        setSelectedEvent(event);
-        setUpdateOpen(true);
-    };
+          <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            <MetricCard icon={<CalendarDays className="size-5" />} label={t("metrics.published")} value={metrics.published} />
+            <MetricCard icon={<ListChecks className="size-5" />} label={t("metrics.draft")} value={metrics.draft} />
+            <MetricCard icon={<X className="size-5" />} label={t("metrics.rejected")} value={metrics.cancelled} />
+            <MetricCard icon={<CircleDollarSign className="size-5" />} label={t("metrics.revenue")} value={`$${metrics.revenue.toLocaleString()}`} />
+          </div>
 
-    const getStatusColor = (status: string) => {
-        const colors = {
-            published: "bg-emerald-50 text-emerald-600 border-emerald-200",
-            draft: "bg-sky-50 text-sky-600 border-sky-200",
-            cancelled: "bg-rose-50 text-rose-600 border-rose-200",
-        };
-        return colors[status as keyof typeof colors] || colors.draft;
-    };
-
-    return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-            <DashboardSidebar />
-
-            <div className={`transition-all duration-300 ${
-                isCollapsed ? "lg:ml-[80px]" : "lg:ml-[280px]"
-            }`}>
-                <DashboardNavbar />
-
-                <main className="p-4 sm:p-6 lg:p-8">
-                    {/* Header */}
-                    <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-                        <div>
-                            <h1 className="text-2xl font-extrabold text-slate-950">
-                                {t("title")}
-                            </h1>
-                            <p className="mt-1 text-sm text-slate-500">
-                                {t("breadcrumbManagement")} / <span className="text-slate-900 font-medium">{t("breadcrumbEvents")}</span>
-                            </p>
-                        </div>
-
-                        <div className="flex gap-3">
-                            <button className="inline-flex items-center gap-2 px-5 py-2.5 rounded border border-slate-200 bg-white text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-all">
-                                <Download className="size-4" />
-                                Export
-                            </button>
-                            <button
-                                onClick={() => setCreateOpen(true)}
-                                className="inline-flex items-center gap-2 px-5 py-2.5 rounded bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition-all hover:shadow-md"
-                            >
-                                <Plus className="size-4" />
-                                {t("createEvent")}
-                            </button>
-                        </div>
-                    </div>
-
-                    {/* Metrics Grid */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-6">
-                        <MetricCard
-                            title={t("metrics.published")}
-                            value={publishedEvents.toString()}
-                            trend="+3"
-                            trendUp={true}
-                            icon={<CalendarDays className="size-5" />}
-                        />
-                        <MetricCard
-                            title={t("metrics.draft")}
-                            value={draftEvents.toString()}
-                            trend="-1"
-                            trendUp={false}
-                            icon={<FileText className="size-5" />}
-                        />
-                        <MetricCard
-                            title={t("metrics.rejected")}
-                            value={cancelledEvents.toString()}
-                            trend="0"
-                            trendUp={false}
-                            icon={<AlertCircle className="size-5" />}
-                        />
-                        <MetricCard
-                            title="Total Revenue"
-                            value={`$${(totalRevenue / 1000).toFixed(1)}K`}
-                            trend="+15.2%"
-                            trendUp={true}
-                            icon={<TrendingUp className="size-5" />}
-                        />
-                    </div>
-
-                    {/* Events Table */}
-                    <div className="bg-white rounded border border-slate-200 shadow-sm hover:shadow-lg transition-all">
-                        <div className="p-5 border-b border-slate-100">
-                            <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-                                <h2 className="text-lg font-bold text-slate-900">
-                                    {t("tableTitle")} ({sortedEvents.length})
-                                </h2>
-
-                                <div className="flex flex-col sm:flex-row gap-3">
-                                    {/* Search */}
-                                    <div className="flex h-10 w-full items-center gap-2 rounded border border-slate-200 px-3 focus-within:border-blue-400 focus-within:ring-2 focus-within:ring-blue-100 sm:w-64">
-                                        <Search className="size-4 text-slate-400" />
-                                        <input
-                                            type="text"
-                                            placeholder={t("search")}
-                                            value={searchTerm}
-                                            onChange={(e) => setSearchTerm(e.target.value)}
-                                            className="flex-1 bg-transparent text-sm outline-none placeholder:text-slate-400"
-                                        />
-                                    </div>
-
-                                    {/* Filter by Status */}
-                                    <select
-                                        value={filterStatus}
-                                        onChange={(e) => setFilterStatus(e.target.value)}
-                                        className="h-10 px-3 rounded border border-slate-200 text-sm font-medium text-slate-600 outline-none focus:border-blue-400"
-                                    >
-                                        <option value="all">All Status</option>
-                                        <option value="published">Published</option>
-                                        <option value="draft">Draft</option>
-                                        <option value="cancelled">Cancelled</option>
-                                    </select>
-
-                                    {/* Sort Button */}
-                                    <button
-                                        onClick={() => {
-                                            const nextSort: ("name" | "date" | "ticketsSold")[] = ["date", "name", "ticketsSold"];
-                                            const currentIndex = nextSort.indexOf(sortBy);
-                                            const nextSortBy = nextSort[(currentIndex + 1) % nextSort.length];
-                                            if (nextSortBy === sortBy) {
-                                                setSortOrder(sortOrder === "asc" ? "desc" : "asc");
-                                            } else {
-                                                setSortBy(nextSortBy);
-                                                setSortOrder("asc");
-                                            }
-                                        }}
-                                        className="inline-flex h-10 items-center justify-center gap-2 rounded border border-slate-200 px-4 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors"
-                                    >
-                                        <SortAsc className="size-4" />
-                                        Sort by {sortBy}
-                                        {sortOrder === "asc" ? " ↑" : " ↓"}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="overflow-x-auto">
-                            <table className="w-full min-w-[1000px]">
-                                <thead className="bg-slate-50 border-b border-slate-200">
-                                <tr>
-                                    <th className="w-12 px-5 py-3">
-                                        <input
-                                            type="checkbox"
-                                            checked={selectedRows.length === sortedEvents.length && sortedEvents.length > 0}
-                                            onChange={toggleAll}
-                                            className="rounded border-slate-300"
-                                        />
-                                    </th>
-                                    <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">#</th>
-                                    <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">{t("table.eventName")}</th>
-                                    <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Location</th>
-                                    <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">{t("table.dateTime")}</th>
-                                    <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Capacity</th>
-                                    <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">{t("table.ticketsSold")}</th>
-                                    <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">{t("table.revenue")}</th>
-                                    <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">{t("table.status")}</th>
-                                    <th className="px-5 py-3 text-center text-xs font-semibold text-slate-500 uppercase tracking-wider">{t("table.actions")}</th>
-                                </tr>
-                                </thead>
-
-                                <tbody>
-                                {sortedEvents.map((event, index) => {
-                                    const soldPercentage = (event.ticketsSold / event.capacity) * 100;
-
-                                    return (
-                                        <tr key={event.id} className="border-b border-slate-100 hover:bg-slate-50 transition-colors group">
-                                            <td className="px-5 py-4">
-                                                <input
-                                                    type="checkbox"
-                                                    checked={selectedRows.includes(event.id)}
-                                                    onChange={() => toggleRow(event.id)}
-                                                    className="rounded border-slate-300"
-                                                />
-                                            </td>
-                                            <td className="px-5 py-4 text-sm font-semibold text-slate-500">{index + 1}</td>
-                                            <td className="px-5 py-4">
-                                                <p className="font-semibold text-slate-900">{event.name}</p>
-                                            </td>
-                                            <td className="px-5 py-4 text-sm text-slate-500">{event.location}</td>
-                                            <td className="px-5 py-4 text-sm text-slate-500">{event.date}</td>
-                                            <td className="px-5 py-4">
-                                                <div className="flex items-center gap-2">
-                                                    <span className="text-sm text-slate-600">{event.capacity}</span>
-                                                    <div className="flex-1 max-w-16">
-                                                        <div className="w-full bg-slate-100 rounded h-1.5">
-                                                            <div
-                                                                className="bg-blue-500 h-1.5 rounded"
-                                                                style={{ width: `${soldPercentage}%` }}
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="px-5 py-4 font-semibold text-slate-700">{event.ticketsSold.toLocaleString()}</td>
-                                            <td className="px-5 py-4 font-semibold text-emerald-600">${event.revenue.toLocaleString()}</td>
-                                            <td className="px-5 py-4">
-                          <span className={`inline-flex px-2.5 py-1 rounded text-xs font-semibold border ${getStatusColor(event.status)}`}>
-                            {t(`status.${event.status}`)}
-                          </span>
-                                            </td>
-                                            <td className="px-5 py-4">
-                                                <div className="flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                    <button className="p-1.5 rounded hover:bg-slate-100 transition-colors" title="View">
-                                                        <Eye className="size-4 text-slate-500" />
-                                                    </button>
-                                                    <button
-                                                        onClick={() => handleEdit(event)}
-                                                        className="p-1.5 rounded hover:bg-sky-50 transition-colors"
-                                                        title="Edit"
-                                                    >
-                                                        <Pencil className="size-4 text-sky-500" />
-                                                    </button>
-                                                    <button className="p-1.5 rounded hover:bg-rose-50 transition-colors" title="Delete">
-                                                        <Trash2 className="size-4 text-rose-500" />
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    );
-                                })}
-                                </tbody>
-                            </table>
-
-                            {sortedEvents.length === 0 && (
-                                <div className="text-center py-12">
-                                    <CalendarDays className="size-12 text-slate-300 mx-auto mb-3" />
-                                    <p className="text-slate-400">No events found</p>
-                                    <button
-                                        onClick={() => setCreateOpen(true)}
-                                        className="mt-3 text-blue-600 text-sm font-semibold hover:text-blue-700"
-                                    >
-                                        + Create your first event
-                                    </button>
-                                </div>
-                            )}
-                        </div>
-
-                        {/* Footer */}
-                        <div className="px-5 py-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
-                            <p className="text-sm text-slate-500">
-                                Showing {sortedEvents.length} of {EVENTS.length} events
-                                {selectedRows.length > 0 && ` (${selectedRows.length} selected)`}
-                            </p>
-
-                            <div className="flex gap-2">
-                                <button className="px-3 py-1.5 rounded border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
-                                    Previous
-                                </button>
-                                <button className="px-3 py-1.5 rounded bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors">
-                                    1
-                                </button>
-                                <button className="px-3 py-1.5 rounded border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
-                                    2
-                                </button>
-                                <button className="px-3 py-1.5 rounded border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
-                                    Next
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </main>
+          <section className="rounded border border-slate-200 bg-white">
+            <div className="border-b border-slate-200 p-4">
+              <div className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
+                <h2 className="text-lg font-bold text-slate-900">{t("tableTitle")} ({filtered.length})</h2>
+                <div className="grid gap-3 sm:grid-cols-[1fr_160px_160px]">
+                  <label className="flex h-10 items-center gap-2 rounded border border-slate-200 px-3 focus-within:border-blue-500">
+                    <Search className="size-4 text-slate-400" />
+                    <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={t("search")} className="w-full bg-transparent text-sm outline-none" />
+                  </label>
+                  <Select value={status} onChange={setStatus} icon={<Filter className="size-4" />}>
+                    <option value="all">{t("filters.all")}</option>
+                    <option value="published">{t("status.published")}</option>
+                    <option value="draft">{t("status.draft")}</option>
+                    <option value="cancelled">{t("status.cancelled")}</option>
+                  </Select>
+                  <Select value={sort} onChange={(value) => setSort(value as "date" | "title" | "sales")} icon={<ListChecks className="size-4" />}>
+                    <option value="date">{t("sort.date")}</option>
+                    <option value="title">{t("sort.title")}</option>
+                    <option value="sales">{t("sort.sales")}</option>
+                  </Select>
+                </div>
+              </div>
             </div>
 
-            {/* Modals */}
-            {createOpen && (
-                <CreateEventModal t={t} onClose={() => setCreateOpen(false)} />
-            )}
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[980px]">
+                <thead className="border-b border-slate-200 bg-slate-50">
+                  <tr>
+                    <Th>{t("table.eventName")}</Th>
+                    <Th>{t("table.dateTime")}</Th>
+                    <Th>{t("table.status")}</Th>
+                    <Th>{t("table.ticketsSold")}</Th>
+                    <Th>{t("table.revenue")}</Th>
+                    <Th>{t("table.actions")}</Th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filtered.map((event) => (
+                    <tr key={event.id} className="border-b border-slate-100 hover:bg-slate-50">
+                      <td className="px-4 py-4">
+                        <div className="flex items-center gap-3">
+                          <div className="flex size-12 items-center justify-center overflow-hidden rounded border border-slate-200 bg-slate-100">
+                            {event.bannerUrl ? <img src={event.bannerUrl} alt="" className="h-full w-full object-cover" /> : <FileImage className="size-5 text-slate-400" />}
+                          </div>
+                          <div>
+                            <p className="font-semibold text-slate-900">{event.title.fr || event.title.en}</p>
+                            <p className="text-xs text-slate-500">{event.location || t("empty.location")}</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-4 py-4 text-sm text-slate-600">{formatDate(event.startAt)}</td>
+                      <td className="px-4 py-4">
+                        <span className={`inline-flex rounded border px-2.5 py-1 text-xs font-semibold ${statusClass(event.status)}`}>{t(`status.${event.status}`)}</span>
+                      </td>
+                      <td className="px-4 py-4 text-sm font-semibold text-slate-700">{event.ticketsSold}/{event.capacity}</td>
+                      <td className="px-4 py-4 text-sm font-semibold text-emerald-700">${event.revenue.toLocaleString()}</td>
+                      <td className="px-4 py-4">
+                        <div className="flex items-center gap-1">
+                          <IconButton label={t("actions.view")} icon={<Eye className="size-4" />} />
+                          <IconButton label={t("actions.edit")} icon={<Pencil className="size-4" />} onClick={() => openEdit(event)} />
+                          <IconButton label={t("actions.duplicate")} icon={<Copy className="size-4" />} onClick={() => duplicateEvent(event)} />
+                          <IconButton label={t("actions.delete")} icon={<Trash2 className="size-4 text-rose-500" />} onClick={() => removeEvent(event.id)} />
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              {filtered.length === 0 && (
+                <div className="flex flex-col items-center gap-3 py-12 text-center">
+                  <CalendarDays className="size-10 text-slate-300" />
+                  <p className="text-sm font-medium text-slate-500">{t("empty.events")}</p>
+                  <Link href="/events/create" className="rounded bg-blue-600 px-4 py-2 text-sm font-semibold text-white">{t("createEvent")}</Link>
+                </div>
+              )}
+            </div>
+          </section>
+        </main>
+      </div>
 
-            {updateOpen && selectedEvent && (
-                <UpdateEventModal t={t} event={selectedEvent} onClose={() => {
-                    setUpdateOpen(false);
-                    setSelectedEvent(null);
-                }} />
-            )}
+      {drawer && (
+        <EventDrawer
+          mode={drawer}
+          event={selected}
+          t={t}
+          onClose={() => setDrawer(null)}
+          onSave={(payload) => {
+            if (drawer === "create") {
+              setEvents((current) => [{ ...toEventRow(payload), id: crypto.randomUUID(), ticketsSold: 0, revenue: 0 }, ...current]);
+            } else if (selected) {
+              setEvents((current) => current.map((event) => (event.id === selected.id ? { ...selected, ...toEventRow(payload) } : event)));
+            }
+            setDrawer(null);
+          }}
+        />
+      )}
+    </div>
+  );
+}
+
+function EventDrawer({ mode, event, t, onClose, onSave }: { mode: "create" | "edit"; event: EventRow | null; t: any; onClose: () => void; onSave: (form: EventForm) => void }) {
+  const [lang, setLang] = useState<Lang>("fr");
+  const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [form, setForm] = useState<EventForm>(() => (event ? fromEvent(event) : newEvent()));
+
+  const updateText = (field: "title" | "shortDescription" | "description" | "refundPolicy", value: string) => {
+    setForm((current) => ({ ...current, [field]: { ...current[field], [lang]: value } }));
+  };
+
+  const submit = async (submitEvent: React.FormEvent) => {
+    submitEvent.preventDefault();
+    setSaving(true);
+    try {
+      const payload = apiPayload(form);
+      if (mode === "create") await api.post("/events", payload);
+      if (mode === "edit" && event) await api.patch(`/events/${event.id}`, payload);
+    } catch {
+      // The local optimistic state still keeps the form usable when the API is not reachable.
+    } finally {
+      setSaving(false);
+      onSave(form);
+    }
+  };
+
+  const uploadToCloudinary = async (file: File) => {
+    const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+    const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
+    if (!cloudName || !uploadPreset) {
+      alert(t("cloudinary.missing"));
+      return;
+    }
+
+    setUploading(true);
+    const data = new FormData();
+    data.append("file", file);
+    data.append("upload_preset", uploadPreset);
+    data.append("folder", "kongo/events");
+
+    try {
+      const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`, { method: "POST", body: data });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result?.error?.message || "Cloudinary upload failed");
+      setForm((current) => ({ ...current, bannerUrl: result.secure_url, bannerPublicId: result.public_id }));
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex justify-end bg-slate-950/40 p-3">
+      <form onSubmit={submit} className="flex h-full w-full max-w-4xl flex-col overflow-hidden rounded border border-slate-200 bg-white">
+        <div className="flex items-center justify-between border-b border-slate-200 px-5 py-4">
+          <div>
+            <h2 className="text-xl font-bold text-slate-950">{mode === "create" ? t("create.title") : t("update.title")}</h2>
+            <p className="text-sm text-slate-500">{t("form.subtitle")}</p>
+          </div>
+          <button type="button" onClick={onClose} className="flex size-9 items-center justify-center rounded border border-slate-200 hover:bg-slate-50">
+            <X className="size-4" />
+          </button>
         </div>
-    );
-}
 
-// ==================== Metric Card Component ====================
-function MetricCard({
-                        title,
-                        value,
-                        trend,
-                        trendUp,
-                        icon
-                    }: {
-    title: string;
-    value: string;
-    trend: string;
-    trendUp: boolean;
-    icon: React.ReactNode;
-}) {
-    return (
-        <div className="bg-white rounded border border-slate-200 p-5 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-            <div className="flex items-start justify-between mb-4">
-                <div className="p-3 rounded bg-blue-50 text-blue-600">
-                    {icon}
-                </div>
-                <Info className="size-4 text-slate-300 cursor-pointer hover:text-slate-400 transition-colors" />
-            </div>
-
-            <p className="text-sm text-slate-500 mb-1">{title}</p>
-
-            <div className="flex items-baseline justify-between">
-                <p className="text-2xl font-bold text-slate-900">{value}</p>
-                <span className={`inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-semibold ${
-                    trendUp
-                        ? "bg-emerald-50 text-emerald-600"
-                        : "bg-rose-50 text-rose-600"
-                }`}>
-          <TrendingUp className={`size-3 ${!trendUp && "rotate-180"}`} />
-                    {trend}
-        </span>
-            </div>
-        </div>
-    );
-}
-
-// ==================== Create Event Modal ====================
-function CreateEventModal({ t, onClose }: { t: any; onClose: () => void }) {
-    const [formData, setFormData] = useState({
-        title: "",
-        description: "",
-        location: "",
-        date: "",
-        capacity: "",
-        price: "",
-    });
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        // Handle form submission
-        console.log("Form data:", formData);
-        onClose();
-    };
-
-    return (
-        <ModalShell onClose={onClose} title={t("create.title")}>
-            <form onSubmit={handleSubmit}>
-                <div className="space-y-4">
-                    <Field label={t("form.thumbnail")} required>
-                        <div className="flex h-32 items-center justify-center rounded border-2 border-dashed border-slate-200 bg-slate-50 text-sm font-semibold text-slate-400 hover:border-blue-400 hover:bg-blue-50 transition-all cursor-pointer">
-                            <Upload className="mr-2 size-4" />
-                            {t("form.drop")}{" "}
-                            <span className="ml-1 text-blue-600">{t("form.browse")}</span>
-                        </div>
-                    </Field>
-
-                    <Field label={t("form.title")} required>
-                        <Input
-                            value={formData.title}
-                            onChange={(e) => setFormData({...formData, title: e.target.value})}
-                            placeholder="Enter event title"
-                        />
-                    </Field>
-
-                    <Field label={t("form.description")} required>
-            <textarea
-                value={formData.description}
-                onChange={(e) => setFormData({...formData, description: e.target.value})}
-                className="min-h-36 w-full resize-none rounded border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-                placeholder="Enter event description"
-            />
-                    </Field>
-
-                    <Field label={t("form.location")} required>
-                        <Input
-                            value={formData.location}
-                            onChange={(e) => setFormData({...formData, location: e.target.value})}
-                            placeholder="Enter event location"
-                        />
-                    </Field>
-
-                    <div className="grid grid-cols-2 gap-4">
-                        <Field label={t("form.date")} required>
-                            <Input
-                                type="datetime-local"
-                                value={formData.date}
-                                onChange={(e) => setFormData({...formData, date: e.target.value})}
-                            />
-                        </Field>
-
-                        <Field label="Capacity" required>
-                            <Input
-                                type="number"
-                                value={formData.capacity}
-                                onChange={(e) => setFormData({...formData, capacity: e.target.value})}
-                                placeholder="Max attendees"
-                            />
-                        </Field>
-                    </div>
-
-                    <Field label="Ticket Price" required>
-                        <Input
-                            type="number"
-                            value={formData.price}
-                            onChange={(e) => setFormData({...formData, price: e.target.value})}
-                            placeholder="Price per ticket"
-                        />
-                    </Field>
-                </div>
-
-                <ModalActions onClose={onClose} primaryLabel={t("create.submit")} />
-            </form>
-        </ModalShell>
-    );
-}
-
-// ==================== Update Event Modal ====================
-function UpdateEventModal({ t, event, onClose }: { t: any; event: any; onClose: () => void }) {
-    const [formData, setFormData] = useState({
-        title: event.name,
-        description: "Event description here",
-        location: event.location,
-        date: event.date,
-        capacity: String(event.capacity),
-        price: String(event.revenue / event.ticketsSold),
-    });
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        // Handle form submission
-        console.log("Update form data:", formData);
-        onClose();
-    };
-
-    return (
-        <ModalShell onClose={onClose} title={t("update.title")}>
-            <form onSubmit={handleSubmit}>
-                <div className="space-y-4">
-                    <Field label={t("form.thumbnail")} required>
-                        <div className="relative h-32 overflow-hidden rounded bg-gradient-to-r from-blue-600 to-purple-600">
-                            <div className="absolute inset-0 flex items-center justify-center text-white">
-                                <div className="text-center">
-                                    <Upload className="size-6 mx-auto mb-2" />
-                                    <p className="text-sm">event-thumbnail.jpg</p>
-                                    <p className="text-xs opacity-80">2.1 MB</p>
-                                </div>
-                            </div>
-                        </div>
-                    </Field>
-
-                    <Field label={t("form.title")} required>
-                        <Input
-                            value={formData.title}
-                            onChange={(e) => setFormData({...formData, title: e.target.value})}
-                        />
-                    </Field>
-
-                    <Field label={t("form.description")} required>
-            <textarea
-                value={formData.description}
-                onChange={(e) => setFormData({...formData, description: e.target.value})}
-                className="min-h-32 w-full resize-none rounded border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-            />
-                    </Field>
-
-                    <Field label={t("form.location")} required>
-                        <Input
-                            value={formData.location}
-                            onChange={(e) => setFormData({...formData, location: e.target.value})}
-                        />
-                    </Field>
-
-                    <div className="grid grid-cols-2 gap-4">
-                        <Field label={t("form.date")} required>
-                            <Input
-                                value={formData.date}
-                                onChange={(e) => setFormData({...formData, date: e.target.value})}
-                            />
-                        </Field>
-
-                        <Field label="Capacity" required>
-                            <Input
-                                type="number"
-                                value={formData.capacity}
-                                onChange={(e) => setFormData({...formData, capacity: e.target.value})}
-                            />
-                        </Field>
-                    </div>
-
-                    <Field label="Ticket Price" required>
-                        <Input
-                            type="number"
-                            value={formData.price}
-                            onChange={(e) => setFormData({...formData, price: e.target.value})}
-                        />
-                    </Field>
-                </div>
-
-                <ModalActions onClose={onClose} primaryLabel={t("update.submit")} />
-            </form>
-        </ModalShell>
-    );
-}
-
-// ==================== Modal Components ====================
-function ModalShell({
-                        children,
-                        onClose,
-                        title,
-                    }: {
-    children: React.ReactNode;
-    onClose: () => void;
-    title: string;
-}) {
-    return (
-        <div className="fixed inset-0 z-50 flex items-center justify-end bg-black/50 p-4">
-            <div className="h-full w-full max-w-2xl overflow-y-auto rounded bg-white shadow-2xl animate-in slide-in-from-right duration-300">
-                <div className="sticky top-0 bg-white border-b border-slate-100 px-6 py-4 flex items-center justify-between">
-                    <h2 className="text-xl font-extrabold text-slate-950">{title}</h2>
-                    <button
-                        onClick={onClose}
-                        className="flex size-9 items-center justify-center rounded border border-slate-200 text-slate-500 hover:bg-slate-50 transition-colors"
-                    >
-                        <X className="size-4" />
-                    </button>
-                </div>
-
-                <div className="p-6">
-                    {children}
-                </div>
-            </div>
-        </div>
-    );
-}
-
-function ModalActions({
-                          onClose,
-                          primaryLabel,
-                      }: {
-    onClose: () => void;
-    primaryLabel: string;
-}) {
-    return (
-        <div className="mt-8 flex justify-end gap-3">
-            <button
-                type="button"
-                onClick={onClose}
-                className="h-11 rounded border border-slate-200 bg-white px-6 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors"
-            >
-                Cancel
+        <div className="flex items-center gap-2 border-b border-slate-200 px-5 py-3">
+          <Languages className="size-4 text-slate-500" />
+          {(["fr", "en"] as Lang[]).map((item) => (
+            <button key={item} type="button" onClick={() => setLang(item)} className={`rounded px-3 py-1.5 text-sm font-semibold ${lang === item ? "bg-blue-600 text-white" : "border border-slate-200 text-slate-600 hover:bg-slate-50"}`}>
+              {item.toUpperCase()}
             </button>
-
-            <button
-                type="submit"
-                className="h-11 rounded bg-blue-600 px-6 text-sm font-semibold text-white hover:bg-blue-700 transition-colors"
-            >
-                {primaryLabel}
-            </button>
+          ))}
         </div>
-    );
+
+        <div className="flex-1 overflow-y-auto p-5">
+          <div className="grid gap-5 xl:grid-cols-[1fr_320px]">
+            <div className="space-y-5">
+              <Panel title={t("sections.identity")} icon={<Globe className="size-4" />}>
+                <div className="grid gap-4 md:grid-cols-2">
+                  <Field label={`${t("form.title")} ${lang.toUpperCase()}`} required>
+                    <Input value={form.title[lang]} onChange={(event) => updateText("title", event.target.value)} />
+                  </Field>
+                  <Field label={t("form.slug")} required>
+                    <Input value={form.slug} onChange={(event) => setForm({ ...form, slug: event.target.value })} placeholder="festival-kongo" />
+                  </Field>
+                </div>
+                <Field label={`${t("form.shortDescription")} ${lang.toUpperCase()}`}>
+                  <Input value={form.shortDescription[lang]} onChange={(event) => updateText("shortDescription", event.target.value)} />
+                </Field>
+                <Field label={`${t("form.description")} ${lang.toUpperCase()}`} required>
+                  <Textarea value={form.description[lang]} onChange={(event) => updateText("description", event.target.value)} />
+                </Field>
+              </Panel>
+
+              <Panel title={t("sections.schedule")} icon={<CalendarDays className="size-4" />}>
+                <div className="grid gap-4 md:grid-cols-2">
+                  <Field label={t("form.startAt")} required><Input type="datetime-local" value={form.startAt} onChange={(event) => setForm({ ...form, startAt: event.target.value })} /></Field>
+                  <Field label={t("form.endAt")} required><Input type="datetime-local" value={form.endAt} onChange={(event) => setForm({ ...form, endAt: event.target.value })} /></Field>
+                  <Field label={t("form.timezone")}><Input value={form.timezone} onChange={(event) => setForm({ ...form, timezone: event.target.value })} /></Field>
+                  <Field label={t("form.capacity")}><Input type="number" value={form.capacity || ""} onChange={(event) => setForm({ ...form, capacity: Number(event.target.value) })} /></Field>
+                </div>
+              </Panel>
+
+              <Panel title={t("sections.tickets")} icon={<Ticket className="size-4" />}>
+                <DynamicList
+                  items={form.ticketTypes}
+                  addLabel={t("tickets.add")}
+                  onAdd={() => setForm({ ...form, ticketTypes: [...form.ticketTypes, newTicket()] })}
+                  onRemove={(index) => setForm({ ...form, ticketTypes: form.ticketTypes.filter((_, itemIndex) => itemIndex !== index) })}
+                  render={(ticketType, index) => (
+                    <div className="grid gap-3 md:grid-cols-4">
+                      <Field label={`${t("tickets.name")} ${lang.toUpperCase()}`}><Input value={ticketType.name[lang]} onChange={(event) => updateTicket(form, setForm, index, "name", lang, event.target.value)} /></Field>
+                      <Field label={t("tickets.price")}><Input type="number" value={ticketType.price} onChange={(event) => updateTicketSimple(form, setForm, index, "price", event.target.value)} /></Field>
+                      <Field label={t("tickets.currency")}><Input value={ticketType.currency} onChange={(event) => updateTicketSimple(form, setForm, index, "currency", event.target.value)} /></Field>
+                      <Field label={t("tickets.quantity")}><Input type="number" value={ticketType.quantity} onChange={(event) => updateTicketSimple(form, setForm, index, "quantity", event.target.value)} /></Field>
+                    </div>
+                  )}
+                />
+              </Panel>
+
+              <Panel title={t("sections.sessions")} icon={<ListChecks className="size-4" />}>
+                <DynamicList
+                  items={form.sessions}
+                  addLabel={t("sessions.add")}
+                  onAdd={() => setForm({ ...form, sessions: [...form.sessions, newSession()] })}
+                  onRemove={(index) => setForm({ ...form, sessions: form.sessions.filter((_, itemIndex) => itemIndex !== index) })}
+                  render={(session, index) => (
+                    <div className="grid gap-3 md:grid-cols-2">
+                      <Field label={`${t("sessions.title")} ${lang.toUpperCase()}`}><Input value={session.title[lang]} onChange={(event) => updateSession(form, setForm, index, "title", lang, event.target.value)} /></Field>
+                      <Field label={t("sessions.speakerId")}><Input value={session.speakerId} onChange={(event) => updateSessionSimple(form, setForm, index, "speakerId", event.target.value)} /></Field>
+                      <Field label={t("sessions.startAt")}><Input type="datetime-local" value={session.startAt} onChange={(event) => updateSessionSimple(form, setForm, index, "startAt", event.target.value)} /></Field>
+                      <Field label={t("sessions.endAt")}><Input type="datetime-local" value={session.endAt} onChange={(event) => updateSessionSimple(form, setForm, index, "endAt", event.target.value)} /></Field>
+                    </div>
+                  )}
+                />
+              </Panel>
+            </div>
+
+            <div className="space-y-5">
+              <Panel title={t("sections.media")} icon={<ImagePlus className="size-4" />}>
+                <label className="flex min-h-40 cursor-pointer flex-col items-center justify-center gap-2 rounded border border-dashed border-slate-300 bg-slate-50 p-4 text-center hover:border-blue-500">
+                  {uploading ? <Loader2 className="size-6 animate-spin text-blue-600" /> : <UploadCloud className="size-6 text-slate-500" />}
+                  <span className="text-sm font-semibold text-slate-700">{uploading ? t("cloudinary.uploading") : t("cloudinary.drop")}</span>
+                  <span className="text-xs text-slate-500">{t("cloudinary.only")}</span>
+                  <input type="file" accept="image/*,video/*" className="hidden" onChange={(event) => event.target.files?.[0] && uploadToCloudinary(event.target.files[0])} />
+                </label>
+                {form.bannerUrl && <img src={form.bannerUrl} alt="" className="mt-3 aspect-video w-full rounded border border-slate-200 object-cover" />}
+                <Field label="Cloudinary URL"><Input value={form.bannerUrl} onChange={(event) => setForm({ ...form, bannerUrl: event.target.value })} /></Field>
+              </Panel>
+
+              <Panel title={t("sections.settings")} icon={<Save className="size-4" />}>
+                <Field label={t("form.organizerId")} required><Input value={form.organizerId} onChange={(event) => setForm({ ...form, organizerId: event.target.value })} /></Field>
+                <Field label={t("form.categoryId")}><Input value={form.categoryId} onChange={(event) => setForm({ ...form, categoryId: event.target.value })} /></Field>
+                <Field label={t("form.venueId")}><Input value={form.venueId} onChange={(event) => setForm({ ...form, venueId: event.target.value })} /></Field>
+                <div className="grid grid-cols-2 gap-3">
+                  <Field label={t("form.type")}><Select value={form.type} onChange={(value) => setForm({ ...form, type: value as EventForm["type"] })}><option value="PHYSICAL">Physical</option><option value="VIRTUAL">Virtual</option><option value="HYBRID">Hybrid</option></Select></Field>
+                  <Field label={t("table.status")}><Select value={form.status} onChange={(value) => setForm({ ...form, status: value as EventStatus })}><option value="draft">{t("status.draft")}</option><option value="published">{t("status.published")}</option><option value="cancelled">{t("status.cancelled")}</option></Select></Field>
+                </div>
+                <Field label={t("form.sponsorIds")}><Input value={form.sponsorIds.join(", ")} onChange={(event) => setForm({ ...form, sponsorIds: toIds(event.target.value) })} /></Field>
+                <Field label={t("form.speakerIds")}><Input value={form.speakerIds.join(", ")} onChange={(event) => setForm({ ...form, speakerIds: toIds(event.target.value) })} /></Field>
+              </Panel>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex justify-end gap-3 border-t border-slate-200 px-5 py-4">
+          <button type="button" onClick={onClose} className="inline-flex h-10 items-center justify-center rounded border border-slate-200 px-4 text-sm font-semibold text-slate-700 hover:bg-slate-50">{t("cancel")}</button>
+          <button type="submit" disabled={saving} className="inline-flex h-10 items-center justify-center gap-2 rounded bg-blue-600 px-4 text-sm font-semibold text-white hover:bg-blue-700 disabled:opacity-60">
+            {saving ? <Loader2 className="size-4 animate-spin" /> : <Check className="size-4" />}
+            {mode === "create" ? t("create.submit") : t("update.submit")}
+          </button>
+        </div>
+      </form>
+    </div>
+  );
 }
 
-function Field({
-                   label,
-                   required,
-                   children,
-               }: {
-    label: string;
-    required?: boolean;
-    children: React.ReactNode;
-}) {
-    return (
-        <div>
-            <label className="mb-2 block text-sm font-semibold text-slate-700">
-                {label} {required && <span className="text-red-500">*</span>}
-            </label>
-            {children}
+function MetricCard({ icon, label, value }: { icon: React.ReactNode; label: string; value: React.ReactNode }) {
+  return (
+    <div className="rounded border border-slate-200 bg-white p-4">
+      <div className="mb-3 flex size-10 items-center justify-center rounded bg-blue-50 text-blue-600">{icon}</div>
+      <p className="text-sm text-slate-500">{label}</p>
+      <p className="mt-1 text-2xl font-bold text-slate-950">{value}</p>
+    </div>
+  );
+}
+
+function Panel({ title, icon, children }: { title: string; icon: React.ReactNode; children: React.ReactNode }) {
+  return (
+    <section className="rounded border border-slate-200 p-4">
+      <h3 className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-slate-700">{icon}{title}</h3>
+      <div className="space-y-4">{children}</div>
+    </section>
+  );
+}
+
+function DynamicList<T>({ items, addLabel, render, onAdd, onRemove }: { items: T[]; addLabel: string; render: (item: T, index: number) => React.ReactNode; onAdd: () => void; onRemove: (index: number) => void }) {
+  return (
+    <div className="space-y-3">
+      {items.map((item, index) => (
+        <div key={index} className="rounded border border-slate-200 p-3">
+          <div className="mb-3 flex justify-end">
+            <button type="button" onClick={() => onRemove(index)} className="rounded border border-slate-200 p-1.5 hover:bg-rose-50"><Trash2 className="size-4 text-rose-500" /></button>
+          </div>
+          {render(item, index)}
         </div>
-    );
+      ))}
+      <button type="button" onClick={onAdd} className="inline-flex h-9 items-center gap-2 rounded border border-slate-200 px-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"><Plus className="size-4" />{addLabel}</button>
+    </div>
+  );
+}
+
+function Field({ label, required, children }: { label: string; required?: boolean; children: React.ReactNode }) {
+  return <label className="block space-y-2 text-sm font-semibold text-slate-700"><span>{label}{required && <span className="text-rose-500"> *</span>}</span>{children}</label>;
 }
 
 function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
-    return (
-        <input
-            {...props}
-            className="h-11 w-full rounded border border-slate-200 bg-white px-4 text-sm outline-none transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-100 hover:border-slate-300"
-        />
-    );
+  return <input {...props} className="h-10 w-full rounded border border-slate-200 bg-white px-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />;
+}
+
+function Textarea(props: React.TextareaHTMLAttributes<HTMLTextAreaElement>) {
+  return <textarea {...props} className="min-h-28 w-full resize-none rounded border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />;
+}
+
+function Select({ children, value, icon, onChange }: { children: React.ReactNode; value: string; icon?: React.ReactNode; onChange: (value: string) => void }) {
+  return <label className="flex h-10 items-center gap-2 rounded border border-slate-200 bg-white px-3 text-sm text-slate-700">{icon}<select value={value} onChange={(event) => onChange(event.target.value)} className="w-full bg-transparent outline-none">{children}</select></label>;
+}
+
+function IconButton({ icon, label, onClick }: { icon: React.ReactNode; label: string; onClick?: () => void }) {
+  return <button type="button" onClick={onClick} title={label} className="flex size-8 items-center justify-center rounded hover:bg-slate-100">{icon}</button>;
+}
+
+function Th({ children }: { children: React.ReactNode }) {
+  return <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-wide text-slate-500">{children}</th>;
+}
+
+function statusClass(status: EventStatus) {
+  if (status === "published") return "border-emerald-200 bg-emerald-50 text-emerald-700";
+  if (status === "cancelled") return "border-rose-200 bg-rose-50 text-rose-700";
+  return "border-sky-200 bg-sky-50 text-sky-700";
+}
+
+function formatDate(value: string) {
+  if (!value) return "-";
+  return new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" }).format(new Date(value));
+}
+
+function fromEvent(event: EventRow): EventForm {
+  return { ...event, slug: event.title.en.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, ""), refundPolicy: { ...emptyText }, bannerPublicId: "" };
+}
+
+function toEventRow(form: EventForm): Omit<EventRow, "id" | "ticketsSold" | "revenue"> {
+  return {
+    title: form.title,
+    shortDescription: form.shortDescription,
+    description: form.description,
+    location: form.location,
+    startAt: form.startAt,
+    endAt: form.endAt,
+    status: form.status,
+    type: form.type,
+    capacity: form.capacity,
+    bannerUrl: form.bannerUrl,
+    categoryId: form.categoryId,
+    venueId: form.venueId,
+    organizerId: form.organizerId,
+    timezone: form.timezone,
+    ticketTypes: form.ticketTypes,
+    sessions: form.sessions,
+    sponsorIds: form.sponsorIds,
+    speakerIds: form.speakerIds,
+  };
+}
+
+function apiPayload(form: EventForm) {
+  return {
+    organizerId: form.organizerId,
+    categoryId: form.categoryId || undefined,
+    venueId: form.venueId || undefined,
+    title: form.title.fr || form.title.en,
+    slug: form.slug,
+    shortDescription: form.shortDescription.fr || form.shortDescription.en,
+    description: form.description.fr || form.description.en,
+    bannerUrl: assertCloudinary(form.bannerUrl),
+    type: form.type,
+    status: form.status.toUpperCase(),
+    startAt: new Date(form.startAt).toISOString(),
+    endAt: new Date(form.endAt).toISOString(),
+    timezone: form.timezone,
+    capacity: form.capacity || undefined,
+    refundPolicy: form.refundPolicy.fr || form.refundPolicy.en,
+    metadata: {
+      translations: {
+        title: form.title,
+        shortDescription: form.shortDescription,
+        description: form.description,
+        refundPolicy: form.refundPolicy,
+      },
+      bannerPublicId: form.bannerPublicId,
+      ticketTypes: form.ticketTypes,
+      sessions: form.sessions,
+      sponsorIds: form.sponsorIds,
+      speakerIds: form.speakerIds,
+    },
+  };
+}
+
+function assertCloudinary(url: string) {
+  if (!url) return undefined;
+  if (!url.includes("cloudinary.com")) throw new Error("Files must use Cloudinary.");
+  return url;
+}
+
+function toIds(value: string) {
+  return value.split(",").map((item) => item.trim()).filter(Boolean);
+}
+
+function updateTicket(form: EventForm, setForm: (form: EventForm) => void, index: number, field: "name" | "description", lang: Lang, value: string) {
+  const next = [...form.ticketTypes];
+  next[index] = { ...next[index], [field]: { ...next[index][field], [lang]: value } };
+  setForm({ ...form, ticketTypes: next });
+}
+
+function updateTicketSimple(form: EventForm, setForm: (form: EventForm) => void, index: number, field: "price" | "currency" | "quantity", value: string) {
+  const next = [...form.ticketTypes];
+  next[index] = { ...next[index], [field]: value };
+  setForm({ ...form, ticketTypes: next });
+}
+
+function updateSession(form: EventForm, setForm: (form: EventForm) => void, index: number, field: "title" | "description", lang: Lang, value: string) {
+  const next = [...form.sessions];
+  next[index] = { ...next[index], [field]: { ...next[index][field], [lang]: value } };
+  setForm({ ...form, sessions: next });
+}
+
+function updateSessionSimple(form: EventForm, setForm: (form: EventForm) => void, index: number, field: "startAt" | "endAt" | "speakerId" | "roomId", value: string) {
+  const next = [...form.sessions];
+  next[index] = { ...next[index], [field]: value };
+  setForm({ ...form, sessions: next });
 }
