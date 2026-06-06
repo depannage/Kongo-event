@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   CalendarDays,
   Check,
@@ -26,6 +26,7 @@ import {
 import { useTranslations } from "next-intl";
 import DashboardNavbar from "@/components/dashboard/DashboardNavbar";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
+import RichTextEditor from "@/components/forms/RichTextEditor";
 import { useSidebar } from "@/contexts/SidebarContext";
 import { Link } from "@/i18n/navigation";
 import { api } from "@/shared/lib/http/api";
@@ -82,59 +83,6 @@ type EventForm = Omit<EventRow, "id" | "ticketsSold" | "revenue"> & {
 
 const emptyText = { fr: "", en: "" };
 
-const initialEvents: EventRow[] = [
-  {
-    id: "1",
-    title: { fr: "Festival Culturel Kongo", en: "Kongo Cultural Festival" },
-    shortDescription: { fr: "Musique, art et gastronomie.", en: "Music, art and food." },
-    description: { fr: "Une journee complete autour de la culture congolaise.", en: "A full day around Congolese culture." },
-    location: "Kinshasa Arena",
-    startAt: "2026-07-18T15:00",
-    endAt: "2026-07-18T23:00",
-    status: "published",
-    type: "PHYSICAL",
-    capacity: 1200,
-    ticketsSold: 456,
-    revenue: 16970,
-    bannerUrl: "https://res.cloudinary.com/demo/image/upload/v1700000000/sample.jpg",
-    categoryId: "category-music",
-    venueId: "venue-kinshasa",
-    organizerId: "organizer-main",
-    timezone: "Africa/Kinshasa",
-    ticketTypes: [
-      { name: { fr: "Standard", en: "Standard" }, description: { fr: "Acces general", en: "General access" }, price: "25", currency: "USD", quantity: "900" },
-    ],
-    sessions: [
-      { title: { fr: "Ouverture", en: "Opening" }, description: { fr: "Accueil du public", en: "Public welcome" }, startAt: "2026-07-18T15:00", endAt: "2026-07-18T16:00", speakerId: "", roomId: "" },
-    ],
-    sponsorIds: ["sponsor-1"],
-    speakerIds: ["speaker-1"],
-  },
-  {
-    id: "2",
-    title: { fr: "Creative Convergence", en: "Creative Convergence" },
-    shortDescription: { fr: "Forum des createurs.", en: "Creator forum." },
-    description: { fr: "Rencontres, ateliers et showcase.", en: "Meetups, workshops and showcase." },
-    location: "Convention Center",
-    startAt: "2026-08-05T10:00",
-    endAt: "2026-08-05T19:00",
-    status: "draft",
-    type: "HYBRID",
-    capacity: 800,
-    ticketsSold: 120,
-    revenue: 8400,
-    bannerUrl: "",
-    categoryId: "category-business",
-    venueId: "venue-convention",
-    organizerId: "organizer-main",
-    timezone: "Africa/Kinshasa",
-    ticketTypes: [],
-    sessions: [],
-    sponsorIds: [],
-    speakerIds: [],
-  },
-];
-
 const newTicket = (): TicketTypeForm => ({
   name: { ...emptyText },
   description: { ...emptyText },
@@ -179,12 +127,31 @@ const newEvent = (): EventForm => ({
 export default function EventsPage() {
   const t = useTranslations("eventsAdmin");
   const { isCollapsed } = useSidebar();
-  const [events, setEvents] = useState<EventRow[]>(initialEvents);
+  const [events, setEvents] = useState<EventRow[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState("all");
   const [sort, setSort] = useState<"date" | "title" | "sales">("date");
   const [drawer, setDrawer] = useState<"create" | "edit" | null>(null);
   const [selected, setSelected] = useState<EventRow | null>(null);
+
+  const loadEvents = async () => {
+    setLoading(true);
+    setError("");
+    try {
+      const response = await api.get("/events");
+      setEvents(normalizeEventRows(response.data));
+    } catch (err: any) {
+      setError(err?.response?.data?.message?.[0] ?? err?.response?.data?.message ?? "Unable to load events.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadEvents();
+  }, []);
 
   const filtered = useMemo(() => {
     return events
@@ -214,15 +181,29 @@ export default function EventsPage() {
     setDrawer("edit");
   };
 
-  const duplicateEvent = (event: EventRow) => {
-    setEvents((current) => [
-      { ...event, id: crypto.randomUUID(), status: "draft", title: { fr: `${event.title.fr} copie`, en: `${event.title.en} copy` } },
-      ...current,
-    ]);
+  const duplicateEvent = async (event: EventRow) => {
+    try {
+      const payload = {
+        ...eventListPayload(event),
+        title: `${event.title.fr || event.title.en} copy`,
+        slug: `${event.title.en || event.title.fr}-${Date.now()}`.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, ""),
+        status: "DRAFT",
+      };
+      const response = await api.post("/events", payload);
+      const created = normalizeEventRows({ data: [response.data?.data ?? response.data] })[0];
+      if (created) setEvents((current) => [created, ...current]);
+    } catch (err: any) {
+      setError(err?.response?.data?.message?.[0] ?? err?.response?.data?.message ?? "Unable to duplicate event.");
+    }
   };
 
-  const removeEvent = (id: string) => {
-    setEvents((current) => current.filter((event) => event.id !== id));
+  const removeEvent = async (id: string) => {
+    try {
+      await api.delete(`/events/${id}`);
+      setEvents((current) => current.filter((event) => event.id !== id));
+    } catch (err: any) {
+      setError(err?.response?.data?.message?.[0] ?? err?.response?.data?.message ?? "Unable to delete event.");
+    }
   };
 
   return (
@@ -276,6 +257,7 @@ export default function EventsPage() {
             </div>
 
             <div className="overflow-x-auto">
+              {error && <div className="border-b border-rose-100 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700">{error}</div>}
               <table className="w-full min-w-[980px]">
                 <thead className="border-b border-slate-200 bg-slate-50">
                   <tr>
@@ -288,7 +270,14 @@ export default function EventsPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {filtered.map((event) => (
+                  {loading ? (
+                    <tr>
+                      <td colSpan={6} className="px-4 py-12 text-center text-sm font-semibold text-slate-500">
+                        <Loader2 className="mx-auto mb-2 size-5 animate-spin" />
+                        Loading events
+                      </td>
+                    </tr>
+                  ) : filtered.map((event) => (
                     <tr key={event.id} className="border-b border-slate-100 hover:bg-slate-50">
                       <td className="px-4 py-4">
                         <div className="flex items-center gap-3">
@@ -319,7 +308,7 @@ export default function EventsPage() {
                   ))}
                 </tbody>
               </table>
-              {filtered.length === 0 && (
+              {!loading && filtered.length === 0 && (
                 <div className="flex flex-col items-center gap-3 py-12 text-center">
                   <CalendarDays className="size-10 text-slate-300" />
                   <p className="text-sm font-medium text-slate-500">{t("empty.events")}</p>
@@ -338,12 +327,8 @@ export default function EventsPage() {
           t={t}
           onClose={() => setDrawer(null)}
           onSave={(payload) => {
-            if (drawer === "create") {
-              setEvents((current) => [{ ...toEventRow(payload), id: crypto.randomUUID(), ticketsSold: 0, revenue: 0 }, ...current]);
-            } else if (selected) {
-              setEvents((current) => current.map((event) => (event.id === selected.id ? { ...selected, ...toEventRow(payload) } : event)));
-            }
             setDrawer(null);
+            loadEvents();
           }}
         />
       )}
@@ -435,10 +420,10 @@ function EventDrawer({ mode, event, t, onClose, onSave }: { mode: "create" | "ed
                   </Field>
                 </div>
                 <Field label={`${t("form.shortDescription")} ${lang.toUpperCase()}`}>
-                  <Input value={form.shortDescription[lang]} onChange={(event) => updateText("shortDescription", event.target.value)} />
+                  <RichTextEditor value={form.shortDescription[lang]} onChange={(value) => updateText("shortDescription", value)} minHeight="min-h-28" />
                 </Field>
                 <Field label={`${t("form.description")} ${lang.toUpperCase()}`} required>
-                  <Textarea value={form.description[lang]} onChange={(event) => updateText("description", event.target.value)} />
+                  <RichTextEditor value={form.description[lang]} onChange={(value) => updateText("description", value)} minHeight="min-h-64" />
                 </Field>
               </Panel>
 
@@ -568,10 +553,6 @@ function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
   return <input {...props} className="h-10 w-full rounded border border-slate-200 bg-white px-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />;
 }
 
-function Textarea(props: React.TextareaHTMLAttributes<HTMLTextAreaElement>) {
-  return <textarea {...props} className="min-h-28 w-full resize-none rounded border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />;
-}
-
 function Select({ children, value, icon, onChange }: { children: React.ReactNode; value: string; icon?: React.ReactNode; onChange: (value: string) => void }) {
   return <label className="flex h-10 items-center gap-2 rounded border border-slate-200 bg-white px-3 text-sm text-slate-700">{icon}<select value={value} onChange={(event) => onChange(event.target.value)} className="w-full bg-transparent outline-none">{children}</select></label>;
 }
@@ -593,6 +574,100 @@ function statusClass(status: EventStatus) {
 function formatDate(value: string) {
   if (!value) return "-";
   return new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" }).format(new Date(value));
+}
+
+function normalizeEventRows(data: any): EventRow[] {
+  const rows = Array.isArray(data?.data) ? data.data : Array.isArray(data) ? data : [];
+  return rows.map((row: any) => {
+    const translations = row.metadata?.translations ?? {};
+    const ticketTypes = Array.isArray(row.ticketTypes) ? row.ticketTypes : [];
+    const tickets = Array.isArray(row.tickets) ? row.tickets : [];
+    const mediaFiles = Array.isArray(row.mediaFiles) ? row.mediaFiles : [];
+    const soldTickets = tickets.filter((ticket: any) => ["SOLD", "USED"].includes(String(ticket.status ?? "").toUpperCase())).length;
+    const computedRevenue = ticketTypes.reduce((sum: number, ticketType: any) => {
+      const sold = Array.isArray(ticketType.tickets)
+        ? ticketType.tickets.filter((ticket: any) => ["SOLD", "USED"].includes(String(ticket.status ?? "").toUpperCase())).length
+        : soldTickets;
+      return sum + sold * Number(ticketType.price ?? 0);
+    }, 0);
+
+    return {
+      id: row.id,
+      title: textMap(translations.title, row.title),
+      shortDescription: textMap(translations.shortDescription, row.shortDescription),
+      description: textMap(translations.description, row.description),
+      location: row.venue ? [row.venue.name, row.venue.city, row.venue.country].filter(Boolean).join(", ") : "",
+      startAt: toLocalDateTime(row.startAt),
+      endAt: toLocalDateTime(row.endAt),
+      status: eventStatus(row.status),
+      type: row.type ?? "PHYSICAL",
+      capacity: Number(row.capacity ?? 0),
+      ticketsSold: soldTickets,
+      revenue: computedRevenue,
+      bannerUrl: row.bannerUrl ?? mediaFiles.find((file: any) => String(file.type ?? "").toLowerCase().startsWith("image"))?.url ?? "",
+      categoryId: row.categoryId ?? "",
+      venueId: row.venueId ?? "",
+      organizerId: row.organizerId ?? "",
+      timezone: row.timezone ?? "Africa/Kinshasa",
+      ticketTypes: ticketTypes.map((ticketType: any) => ({
+        name: textMap(undefined, ticketType.name),
+        description: textMap(undefined, ticketType.description),
+        price: String(ticketType.price ?? 0),
+        currency: ticketType.currency ?? "USD",
+        quantity: String(ticketType.quantity ?? 0),
+      })),
+      sessions: Array.isArray(row.sessions)
+        ? row.sessions.map((session: any) => ({
+            title: textMap(undefined, session.title),
+            description: textMap(undefined, session.description),
+            startAt: toLocalDateTime(session.startAt),
+            endAt: toLocalDateTime(session.endAt),
+            speakerId: session.speakerId ?? "",
+            roomId: session.roomId ?? "",
+          }))
+        : [],
+      sponsorIds: Array.isArray(row.sponsors) ? row.sponsors.map((item: any) => item.sponsorId).filter(Boolean) : [],
+      speakerIds: Array.isArray(row.speakers) ? row.speakers.map((item: any) => item.speakerId).filter(Boolean) : [],
+    };
+  });
+}
+
+function textMap(value: any, fallback = ""): Record<Lang, string> {
+  if (value && typeof value === "object") return { fr: value.fr ?? fallback ?? "", en: value.en ?? fallback ?? "" };
+  return { fr: fallback ?? "", en: fallback ?? "" };
+}
+
+function eventStatus(status: string): EventStatus {
+  const normalized = String(status ?? "DRAFT").toLowerCase();
+  if (normalized === "published") return "published";
+  if (normalized === "cancelled" || normalized === "suspended") return "cancelled";
+  return "draft";
+}
+
+function toLocalDateTime(value: string) {
+  if (!value) return "";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+  return date.toISOString().slice(0, 16);
+}
+
+function eventListPayload(event: EventRow) {
+  return {
+    organizerId: event.organizerId,
+    categoryId: event.categoryId || undefined,
+    venueId: event.venueId || undefined,
+    title: event.title.fr || event.title.en,
+    slug: `${event.title.en || event.title.fr}-${event.id}`.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, ""),
+    shortDescription: event.shortDescription.fr || event.shortDescription.en,
+    description: event.description.fr || event.description.en,
+    bannerUrl: event.bannerUrl || undefined,
+    type: event.type,
+    status: event.status.toUpperCase(),
+    startAt: new Date(event.startAt).toISOString(),
+    endAt: new Date(event.endAt).toISOString(),
+    timezone: event.timezone,
+    capacity: event.capacity || undefined,
+  };
 }
 
 function fromEvent(event: EventRow): EventForm {

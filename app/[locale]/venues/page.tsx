@@ -1,25 +1,30 @@
+"use client";
+
 import CrudResourcePage from "@/components/resources/CrudResourcePage";
+import { useTranslations } from "next-intl";
 
 export default function VenuesPage() {
+  const t = useTranslations("resources.venues");
+
   return (
     <CrudResourcePage
-      title="Venues"
-      description="Gerer les lieux utilises par les evenements."
+      title={t("title")}
+      description={t("description")}
       endpoint="/venues"
-      createLabel="Create venue"
+      createLabel={t("create")}
       fields={[
-        { name: "name", label: "Name", required: true },
-        { name: "address", label: "Address" },
-        { name: "city", label: "City" },
-        { name: "country", label: "Country" },
-        { name: "latitude", label: "Latitude", type: "number" },
-        { name: "longitude", label: "Longitude", type: "number" },
+        { name: "name", label: t("fields.name"), required: true },
+        { name: "address", label: t("fields.address") },
+        { name: "city", label: t("fields.city") },
+        { name: "country", label: t("fields.country") },
+        { name: "latitude", label: t("fields.latitude"), type: "number" },
+        { name: "longitude", label: t("fields.longitude"), type: "number" },
       ]}
       columns={[
-        { key: "name", label: "Name" },
-        { key: "city", label: "City" },
-        { key: "country", label: "Country" },
-        { key: "address", label: "Address" },
+        { key: "name", label: t("fields.name") },
+        { key: "city", label: t("fields.city") },
+        { key: "country", label: t("fields.country") },
+        { key: "address", label: t("fields.address") },
       ]}
     />
   );

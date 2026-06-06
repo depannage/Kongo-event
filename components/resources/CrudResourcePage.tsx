@@ -21,7 +21,7 @@ export type ResourceOption = { id: string; name: string };
 export type ResourceField = {
   name: string;
   label: string;
-  type?: "text" | "number" | "url" | "select" | "cloudinary";
+  type?: "text" | "number" | "url" | "select" | "cloudinary" | "checkbox";
   required?: boolean;
   placeholder?: string;
   endpoint?: string;
@@ -72,7 +72,7 @@ export default function CrudResourcePage({ title, description, endpoint, fields,
     Promise.all(
       selectFields.map(async (field) => {
         const response = await api.get(field.endpoint as string);
-        return [field.name, normalizeRows(response.data).map((row: any) => ({ id: row.id, name: row[field.nameKey ?? "name"] ?? row.name ?? row.title ?? row.fullName ?? row.displayName ?? row.id }))] as const;
+        return [field.name, normalizeRows(response.data).map((row: any) => ({ id: row.id, name: optionLabel(row, field.nameKey) }))] as const;
       })
     )
       .then((entries) => {
@@ -228,6 +228,11 @@ export default function CrudResourcePage({ title, description, endpoint, fields,
                       <option value="">-</option>
                       {(options[field.name] ?? []).map((option) => <option key={option.id} value={option.id}>{option.name}</option>)}
                     </Select>
+                  ) : field.type === "checkbox" ? (
+                    <label className="flex h-10 items-center gap-2 rounded border border-slate-200 px-3 text-sm font-semibold text-slate-700">
+                      <input type="checkbox" checked={Boolean(form[field.name])} onChange={(event) => setForm({ ...form, [field.name]: event.target.checked })} className="rounded border-slate-300" />
+                      {field.label}
+                    </label>
                   ) : field.type === "cloudinary" ? (
                     <div className="space-y-2">
                       <label className="flex min-h-28 cursor-pointer flex-col items-center justify-center gap-2 rounded border border-dashed border-slate-300 bg-slate-50 p-4 text-center hover:border-blue-500">
@@ -288,7 +293,25 @@ function cleanPayload(form: Record<string, any>, fields: ResourceField[]) {
 
 function formatValue(value: any) {
   if (value === null || value === undefined || value === "") return "-";
-  if (typeof value === "object") return value.name ?? value.title ?? value.fullName ?? value.displayName ?? value.id ?? "-";
+  if (typeof value === "object") return value.fr ?? value.en ?? value.name ?? displayText(value.title) ?? value.fullName ?? value.displayName ?? value.id ?? "-";
+  return String(value);
+}
+
+function optionLabel(row: any, nameKey?: string) {
+  return displayText(nameKey ? row[nameKey] : undefined)
+    || displayText(row.name)
+    || displayText(row.title)
+    || displayText(row.metadata?.translations?.title)
+    || row.fullName
+    || row.displayName
+    || row.email
+    || row.id;
+}
+
+function displayText(value: any) {
+  if (!value) return "";
+  if (typeof value === "string") return value;
+  if (typeof value === "object") return value.fr ?? value.en ?? value.name ?? value.title ?? "";
   return String(value);
 }
 

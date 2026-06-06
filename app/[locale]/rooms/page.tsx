@@ -1,22 +1,27 @@
+"use client";
+
 import CrudResourcePage from "@/components/resources/CrudResourcePage";
+import { useTranslations } from "next-intl";
 
 export default function RoomsPage() {
+  const t = useTranslations("resources.rooms");
+
   return (
     <CrudResourcePage
-      title="Rooms"
-      description="Gerer les salles liees aux lieux."
+      title={t("title")}
+      description={t("description")}
       endpoint="/rooms"
-      createLabel="Create room"
+      createLabel={t("create")}
       fields={[
-        { name: "venueId", label: "Venue", type: "select", endpoint: "/venues", required: true },
-        { name: "name", label: "Name", required: true },
-        { name: "capacity", label: "Capacity", type: "number" },
+        { name: "venueId", label: t("fields.venue"), type: "select", endpoint: "/venues", required: true },
+        { name: "name", label: t("fields.name"), required: true },
+        { name: "capacity", label: t("fields.capacity"), type: "number" },
       ]}
       columns={[
-        { key: "name", label: "Name" },
-        { key: "venue", label: "Venue" },
-        { key: "capacity", label: "Capacity" },
-        { key: "createdAt", label: "Created" },
+        { key: "name", label: t("fields.name") },
+        { key: "venue", label: t("fields.venue") },
+        { key: "capacity", label: t("fields.capacity") },
+        { key: "createdAt", label: t("fields.createdAt") },
       ]}
     />
   );
