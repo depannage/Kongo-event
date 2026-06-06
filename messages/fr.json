@@ -180,8 +180,11 @@
       "promotions": "Promotions",
       "payouts": "Paiements",
       "users": "Utilisateurs",
+      "organizations": "Organisations",
+      "organizers": "Organisateurs",
       "events": "Événements",
       "tickets": "Tickets",
+      "media": "Médias",
       "eventCategories": "Catégories",
       "venues": "Lieux",
       "rooms": "Salles",
@@ -422,6 +425,133 @@
       }
     }
   },
+  "resources": {
+    "common": {
+      "createdAt": "Créé"
+    },
+    "eventCategories": {
+      "title": "Catégories d’événements",
+      "description": "Créer, modifier et supprimer les catégories d’événements.",
+      "create": "Créer une catégorie",
+      "fields": {
+        "name": "Nom",
+        "slug": "Slug",
+        "createdAt": "Créé"
+      }
+    },
+    "venues": {
+      "title": "Lieux",
+      "description": "Gérer les lieux utilisés par les événements.",
+      "create": "Créer un lieu",
+      "fields": {
+        "name": "Nom",
+        "address": "Adresse",
+        "city": "Ville",
+        "country": "Pays",
+        "latitude": "Latitude",
+        "longitude": "Longitude"
+      }
+    },
+    "rooms": {
+      "title": "Salles",
+      "description": "Gérer les salles liées aux lieux.",
+      "create": "Créer une salle",
+      "fields": {
+        "venue": "Lieu",
+        "name": "Nom",
+        "capacity": "Capacité",
+        "createdAt": "Créé"
+      }
+    },
+    "sponsors": {
+      "title": "Sponsors",
+      "description": "Gérer les sponsors et leurs logos Cloudinary.",
+      "create": "Créer un sponsor",
+      "fields": {
+        "name": "Nom",
+        "logo": "Logo",
+        "website": "Site web",
+        "createdAt": "Créé"
+      }
+    },
+    "eventSponsors": {
+      "title": "Sponsors d’événements",
+      "description": "Attacher et détacher des sponsors aux événements.",
+      "create": "Attacher un sponsor",
+      "fields": {
+        "event": "Événement",
+        "sponsor": "Sponsor",
+        "eventId": "ID événement",
+        "sponsorId": "ID sponsor"
+      }
+    },
+    "media": {
+      "title": "Médias",
+      "description": "Gérer les fichiers médias liés aux événements. Les fichiers passent par Cloudinary.",
+      "create": "Créer un média",
+      "fields": {
+        "event": "Événement",
+        "url": "URL Cloudinary",
+        "type": "Type",
+        "size": "Taille",
+        "createdAt": "Créé"
+      }
+    },
+    "ticketTypes": {
+      "title": "Types de billets",
+      "description": "Gérer les types de billets par événement.",
+      "create": "Créer un type de billet",
+      "fields": {
+        "event": "Événement",
+        "name": "Nom",
+        "description": "Description",
+        "price": "Prix",
+        "currency": "Devise",
+        "quantity": "Quantité",
+        "saleStartAt": "Début de vente",
+        "saleEndAt": "Fin de vente"
+      }
+    },
+    "tickets": {
+      "title": "Tickets",
+      "description": "Gérer les tickets, QR codes et statuts.",
+      "create": "Créer un ticket",
+      "fields": {
+        "event": "Événement",
+        "ticketType": "Type de billet",
+        "userId": "ID utilisateur",
+        "user": "Utilisateur",
+        "code": "Code",
+        "qrCodeUrl": "URL QR code",
+        "status": "Statut"
+      }
+    },
+    "organizations": {
+      "title": "Organisations",
+      "description": "Gérer les organisations multi-tenant.",
+      "create": "Créer une organisation",
+      "fields": {
+        "name": "Nom",
+        "slug": "Slug",
+        "logo": "Logo",
+        "domain": "Domaine",
+        "primaryColor": "Couleur principale",
+        "plan": "Plan"
+      }
+    },
+    "organizers": {
+      "title": "Organisateurs",
+      "description": "Gérer les profils organisateurs.",
+      "create": "Créer un organisateur",
+      "fields": {
+        "user": "Utilisateur",
+        "organization": "Organisation",
+        "displayName": "Nom affiché",
+        "description": "Description",
+        "verified": "Vérifié"
+      }
+    }
+  },
   "eventsAdmin": {
     "title": "Mes événements",
     "breadcrumbManagement": "Gestion",
@@ -530,6 +660,9 @@
       "only": "Tous les fichiers et images passent par Cloudinary.",
       "uploading": "Téléversement en cours",
       "missing": "Configurez NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME et NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET."
+    },
+    "errors": {
+      "organizerRequired": "Choisissez ou créez d'abord un organisateur avant de créer l'événement."
     }
   },
   "usersAdmin": {

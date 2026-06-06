@@ -1,20 +1,25 @@
+"use client";
+
 import CrudResourcePage from "@/components/resources/CrudResourcePage";
+import { useTranslations } from "next-intl";
 
 export default function EventCategoriesPage() {
+  const t = useTranslations("resources.eventCategories");
+
   return (
     <CrudResourcePage
-      title="Event categories"
-      description="Creer, modifier et supprimer les categories d'evenements."
+      title={t("title")}
+      description={t("description")}
       endpoint="/event-categories"
-      createLabel="Create category"
+      createLabel={t("create")}
       fields={[
-        { name: "name", label: "Name", required: true },
-        { name: "slug", label: "Slug", required: true, placeholder: "music-festival" },
+        { name: "name", label: t("fields.name"), required: true },
+        { name: "slug", label: t("fields.slug"), required: true, placeholder: "music-festival" },
       ]}
       columns={[
-        { key: "name", label: "Name" },
-        { key: "slug", label: "Slug" },
-        { key: "createdAt", label: "Created" },
+        { key: "name", label: t("fields.name") },
+        { key: "slug", label: t("fields.slug") },
+        { key: "createdAt", label: t("fields.createdAt") },
       ]}
     />
   );

@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import {
     Calendar,
+    Building2,
     ChevronLeft,
     ChevronRight,
     CircleDollarSign,
@@ -19,8 +20,10 @@ import {
     MapPin,
     DoorOpen,
     Handshake,
+    ImageIcon,
     Link2,
     Users,
+    UserCheck,
     Wallet,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -50,6 +53,8 @@ export default function DashboardSidebar() {
             section: t("management"),
             items: [
                 { icon: Users, label: t("menu.users"), href: "users" },
+                { icon: Building2, label: t("menu.organizations"), href: "organizations" },
+                { icon: UserCheck, label: t("menu.organizers"), href: "organizers" },
                 { icon: Music, label: t("menu.events"), href: "events" },
                 { icon: Ticket, label: t("menu.tickets"), href: "tickets" },
                 { icon: Tags, label: t("menu.eventCategories"), href: "event-categories" },
@@ -57,6 +62,7 @@ export default function DashboardSidebar() {
                 { icon: DoorOpen, label: t("menu.rooms"), href: "rooms" },
                 { icon: Handshake, label: t("menu.sponsors"), href: "sponsors" },
                 { icon: Link2, label: t("menu.eventSponsors"), href: "event-sponsors" },
+                { icon: ImageIcon, label: t("menu.media"), href: "media" },
                 { icon: Ticket, label: t("menu.ticketTypes"), href: "ticket-types" },
                 { icon: Ticket, label: t("menu.manageTickets"), href: "tickets/manage" },
                 { icon: CreditCard, label: t("menu.earnings"), href: "earnings" },
