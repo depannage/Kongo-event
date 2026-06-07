@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CalendarCheck, CircleDollarSign, Plus, Ticket as TicketIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useSidebar } from "@/contexts/SidebarContext";
@@ -17,22 +17,30 @@ import {
   useTicket,
   useTickets,
   useUpdateTicket,
-} from "@/core/hooks/ticket/useTicket";
-import type { CreateTicketPayload, Ticket } from "@/core/types/ticket";
+} from "@/shared/hooks/ticket.hooks.";
+import { useTypeTickets } from "@/shared/hooks/type-ticket.hooks";
+import type { CreateTicketPayload, Ticket } from "@/shared/types/ticket";
 import MetricCard from "@/components/MetricCard";
 import { useTranslations } from "next-intl";
+import { useMe } from "@/shared/hooks/auth.hooks";
+import { api } from "@/shared/lib/http/api";
+import type { AutocompleteOption } from "@/components/ui/autocomplete";
 
 export default function TicketsPage() {
   const { isCollapsed } = useSidebar();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTicket, setEditingTicket] = useState<Ticket | null>(null);
   const [selectedTicketId, setSelectedTicketId] = useState<string | null>(null);
+  const [userOptions, setUserOptions] = useState<AutocompleteOption[]>([]);
+  const [isUsersLoading, setIsUsersLoading] = useState(false);
 
   const ticketsQuery = useTickets();
+  const typeTicketsQuery = useTypeTickets();
   const createTicketMutation = useCreateTicket();
   const updateTicketMutation = useUpdateTicket();
   const deleteTicketMutation = useDeleteTicket();
   const selectedTicketQuery = useTicket(selectedTicketId ?? undefined);
+  const meQuery = useMe();
 
   const tickets = ticketsQuery.data?.items ?? [];
 
@@ -46,6 +54,77 @@ export default function TicketsPage() {
   }, [tickets]);
 
   const t = useTranslations("tickets");
+
+  useEffect(() => {
+    let mounted = true;
+
+    const normalizeUserRows = (rawData: any) => {
+      const rows = Array.isArray(rawData?.data) ? rawData.data : Array.isArray(rawData) ? rawData : [];
+
+      return rows
+        .map((row: any) => ({
+          id: row.id,
+          label:
+            row.fullName ??
+            row.displayName ??
+            row.name ??
+            row.email ??
+            row.phone ??
+            row.id,
+          description: row.email ?? row.phone ?? row.id,
+        }))
+        .filter((row: AutocompleteOption) => Boolean(row.id));
+    };
+
+    const loadUsers = async () => {
+      setIsUsersLoading(true);
+      try {
+        const usersResponse = await api.get("/users");
+        const nextOptions = normalizeUserRows(usersResponse.data);
+        if (mounted) setUserOptions(nextOptions);
+      } catch {
+        try {
+          const organizersResponse = await api.get("/organizers");
+          const nextOptions = normalizeUserRows(organizersResponse.data);
+          if (mounted) setUserOptions(nextOptions);
+        } catch {
+          if (mounted) setUserOptions([]);
+        }
+      } finally {
+        if (mounted) setIsUsersLoading(false);
+      }
+    };
+
+    loadUsers().catch(() => undefined);
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const ticketTypeOptions = useMemo(
+    () =>
+      (typeTicketsQuery.data?.items ?? []).map((item) => ({
+        id: item.id,
+        label: item.name,
+        description: item.eventId,
+      })),
+    [typeTicketsQuery.data]
+  );
+
+  const isConnectedUserOrganizer = Array.isArray(meQuery.data?.roles)
+    ? meQuery.data.roles.some((role: any) =>
+        String(role?.name ?? role?.label ?? role).toUpperCase().includes("ORGANIZER")
+      )
+    : false;
+
+  const connectedUser = isConnectedUserOrganizer && meQuery.data?.id
+    ? {
+        id: meQuery.data.id,
+        label: meQuery.data.fullName ?? meQuery.data.email ?? meQuery.data.id,
+        description: meQuery.data.email ?? meQuery.data.id,
+      }
+    : null;
 
   const handleOpenCreate = () => {
     setEditingTicket(null);
@@ -194,8 +273,8 @@ export default function TicketsPage() {
                 <div className="grid grid-cols-1 gap-3 text-sm sm:grid-cols-2">
                   <DetailItem label="ID" value={selectedTicketQuery.data?.id} />
                   <DetailItem label="Event ID" value={selectedTicketQuery.data?.eventId} />
-                  <DetailItem label="Ticket Type ID" value={selectedTicketQuery.data?.ticketTypeId} />
-                  <DetailItem label="User ID" value={selectedTicketQuery.data?.userId} />
+                  <DetailItem label="Type de ticket" value={selectedTicketQuery.data?.ticketTypeId} />
+                  <DetailItem label="Utilisateur" value={selectedTicketQuery.data?.userId} />
                   <DetailItem label="Code" value={selectedTicketQuery.data?.code} />
                   <DetailItem label="Statut" value={selectedTicketQuery.data?.status} />
                 </div>
@@ -215,6 +294,11 @@ export default function TicketsPage() {
         initialTicket={editingTicket}
         isPending={createTicketMutation.isPending || updateTicketMutation.isPending}
         onSubmit={handleCreateOrUpdate}
+        ticketTypeOptions={ticketTypeOptions}
+        userOptions={userOptions}
+        connectedUser={connectedUser}
+        isTypeTicketsLoading={typeTicketsQuery.isPending}
+        isUsersLoading={isUsersLoading}
       />
     </div>
   );

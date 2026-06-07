@@ -3,7 +3,7 @@
 import { Pencil, Trash2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import type { Ticket } from "@/core/types/ticket";
+import type { Ticket } from "@/shared/types/ticket";
 
 type TicketTableProps = {
   tickets: Ticket[];
@@ -43,7 +43,7 @@ export default function TicketTable({
             <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">#</th>
             <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Code</th>
             <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Event ID</th>
-            <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Ticket Type ID</th>
+            <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Type de ticket</th>
             <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">User ID</th>
             <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Statut</th>
             <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">QR Code</th>

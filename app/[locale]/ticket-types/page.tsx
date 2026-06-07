@@ -5,7 +5,7 @@ export default function TicketTypesPage() {
     <CrudResourcePage
       title="Ticket types"
       description="Gerer les types de billets par evenement."
-      endpoint="/ticket-types"
+      endpoint="/api/v1/ticket-types"
       createLabel="Create ticket type"
       fields={[
         { name: "eventId", label: "Event", type: "select", endpoint: "/events", nameKey: "title", required: true },

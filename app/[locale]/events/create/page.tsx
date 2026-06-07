@@ -21,6 +21,7 @@ import {
 import { useTranslations } from "next-intl";
 import DashboardNavbar from "@/components/dashboard/DashboardNavbar";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
+import Autocomplete, { type AutocompleteOption } from "@/components/ui/autocomplete";
 import { useSidebar } from "@/contexts/SidebarContext";
 import { Link, useRouter } from "@/i18n/navigation";
 import { api } from "@/shared/lib/http/api";
@@ -88,6 +89,7 @@ export default function CreateEventPage() {
   const [form, setForm] = useState<EventForm>(formDefaults);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [organizersLoading, setOrganizersLoading] = useState(false);
   const [sponsorQuery, setSponsorQuery] = useState("");
   const [options, setOptions] = useState({
     sponsors: [] as SelectOption[],
@@ -100,16 +102,22 @@ export default function CreateEventPage() {
   useEffect(() => {
     let mounted = true;
     const load = async () => {
+      setOrganizersLoading(true);
       const [sponsors, speakers, organizers, categories, venues] = await Promise.all([
         loadOptions("/sponsors"),
         loadOptions("/speakers", "fullName"),
-        loadOptions("/organizers", "displayName"),
+        loadOrganizerUsers(),
         loadOptions("/event-categories"),
         loadOptions("/venues"),
       ]);
-      if (mounted) setOptions({ sponsors, speakers, organizers, categories, venues });
+      if (mounted) {
+        setOptions({ sponsors, speakers, organizers, categories, venues });
+        setOrganizersLoading(false);
+      }
     };
-    load().catch(() => undefined);
+    load().catch(() => {
+      if (mounted) setOrganizersLoading(false);
+    });
     return () => {
       mounted = false;
     };
@@ -119,6 +127,16 @@ export default function CreateEventPage() {
     const query = sponsorQuery.toLowerCase();
     return options.sponsors.filter((sponsor) => sponsor.name.toLowerCase().includes(query));
   }, [options.sponsors, sponsorQuery]);
+
+  const organizerAutocompleteOptions = useMemo<AutocompleteOption[]>(
+    () =>
+      options.organizers.map((organizer) => ({
+        id: organizer.id,
+        label: organizer.name,
+        description: organizer.id,
+      })),
+    [options.organizers]
+  );
 
   const setText = (field: "title" | "shortDescription" | "description", value: string) => {
     setForm((current) => ({ ...current, [field]: { ...current[field], [lang]: value } }));
@@ -281,7 +299,16 @@ export default function CreateEventPage() {
                 </Panel>
 
                 <Panel title={t("sections.settings")} icon={<Save className="size-4" />}>
-                  <Field label={t("form.organizerId")} required><Select value={form.organizerId} onChange={(value) => setForm({ ...form, organizerId: value })}><option value="">-</option>{options.organizers.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}</Select></Field>
+                  <Field label={t("form.organizerId")} required>
+                    <Autocomplete
+                      value={form.organizerId}
+                      options={organizerAutocompleteOptions}
+                      isLoading={organizersLoading}
+                      placeholder="Rechercher un organisateur"
+                      emptyText="Aucun organisateur trouve."
+                      onSelect={(option) => setForm({ ...form, organizerId: option.id })}
+                    />
+                  </Field>
                   <Field label={t("form.categoryId")}><Select value={form.categoryId} onChange={(value) => setForm({ ...form, categoryId: value })}><option value="">-</option>{options.categories.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}</Select></Field>
                   <Field label={t("form.venueId")}><Select value={form.venueId} onChange={(value) => setForm({ ...form, venueId: value })}><option value="">-</option>{options.venues.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}</Select></Field>
                   <div className="grid grid-cols-2 gap-3">
@@ -331,6 +358,14 @@ async function loadOptions(endpoint: string, nameKey = "name"): Promise<SelectOp
   const response = await api.get(endpoint);
   const rows = response.data?.data ?? response.data ?? [];
   return rows.map((row: any) => ({ id: row.id, name: row[nameKey] ?? row.name ?? row.title ?? row.email ?? row.id })).filter((row: SelectOption) => row.id);
+}
+
+async function loadOrganizerUsers(): Promise<SelectOption[]> {
+  try {
+    return await loadOptions("/users", "fullName");
+  } catch {
+    return await loadOptions("/organizers", "displayName");
+  }
 }
 
 function eventPayload(form: EventForm) {

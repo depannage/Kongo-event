@@ -1,16 +1,17 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { X } from "lucide-react";
+import { UserCheck, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import Autocomplete, { type AutocompleteOption } from "@/components/ui/autocomplete";
 import {
   ticketInitialValues,
   validateTicketPayload,
   type TicketFormErrors,
   type TicketFormValues,
-} from "@/core/schemas/ticket.schema";
-import { TICKET_STATUSES, type CreateTicketPayload, type Ticket } from "@/core/types/ticket";
+} from "@/shared/schemas/ticket.schema";
+import type { CreateTicketPayload, Ticket } from "@/shared/types/ticket";
 
 type TicketFormModalProps = {
   open: boolean;
@@ -19,18 +20,22 @@ type TicketFormModalProps = {
   isPending?: boolean;
   mode?: "create" | "edit";
   initialTicket?: Ticket | null;
+  ticketTypeOptions?: AutocompleteOption[];
+  userOptions?: AutocompleteOption[];
+  connectedUser?: AutocompleteOption | null;
+  isTypeTicketsLoading?: boolean;
+  isUsersLoading?: boolean;
 };
 
 function normalizeFormValues(ticket?: Ticket | null): TicketFormValues {
-  if (!ticket) return ticketInitialValues;
+  if (!ticket) {
+    return ticketInitialValues;
+  }
 
   return {
     eventId: ticket.eventId ?? "",
     ticketTypeId: ticket.ticketTypeId ?? "",
     userId: ticket.userId ?? "",
-    code: ticket.code ?? "",
-    qrCodeUrl: ticket.qrCodeUrl ?? "",
-    status: ticket.status ?? "PENDING",
   };
 }
 
@@ -41,9 +46,15 @@ export default function TicketFormModal({
   isPending = false,
   mode = "create",
   initialTicket,
+  ticketTypeOptions = [],
+  userOptions = [],
+  connectedUser = null,
+  isTypeTicketsLoading = false,
+  isUsersLoading = false,
 }: TicketFormModalProps) {
   const [values, setValues] = useState<TicketFormValues>(ticketInitialValues);
   const [errors, setErrors] = useState<TicketFormErrors>({});
+  const [useConnectedUser, setUseConnectedUser] = useState(false);
 
   const title = useMemo(
     () => (mode === "create" ? "Créer un ticket" : "Modifier le ticket"),
@@ -52,9 +63,25 @@ export default function TicketFormModal({
 
   useEffect(() => {
     if (!open) return;
-    setValues(normalizeFormValues(initialTicket));
+    const nextValues = normalizeFormValues(initialTicket);
+    const canUseConnectedUser = mode === "create" && Boolean(connectedUser?.id);
+    const isConnected = Boolean(connectedUser?.id) && nextValues.userId === connectedUser?.id;
+
+    setValues(nextValues);
+    setUseConnectedUser(Boolean(initialTicket && isConnected && canUseConnectedUser));
     setErrors({});
-  }, [open, initialTicket]);
+  }, [open, initialTicket, mode, connectedUser]);
+
+  useEffect(() => {
+    if (mode !== "create" || !connectedUser?.id) return;
+    if (!open) return;
+
+    if (useConnectedUser) {
+      setField("userId", connectedUser.id);
+    } else if (values.userId === connectedUser.id) {
+      setField("userId", "");
+    }
+  }, [useConnectedUser, connectedUser, mode, open]);
 
   if (!open) return null;
 
@@ -71,9 +98,6 @@ export default function TicketFormModal({
       eventId: values.eventId.trim(),
       ticketTypeId: values.ticketTypeId.trim(),
       userId: values.userId.trim(),
-      code: values.code.trim(),
-      qrCodeUrl: values.qrCodeUrl.trim(),
-      status: values.status.trim().toUpperCase(),
     };
 
     const validationErrors = validateTicketPayload(nextValues);
@@ -86,7 +110,7 @@ export default function TicketFormModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 p-4 sm:items-center">
-      <div className="w-full max-w-2xl overflow-hidden rounded border border-slate-200 bg-white shadow-2xl">
+      <div className="w-full max-w-2xl overflow-visible rounded border border-slate-200 bg-white shadow-2xl">
         <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4">
           <h2 className="text-xl font-extrabold text-slate-950">{title}</h2>
           <button
@@ -108,52 +132,55 @@ export default function TicketFormModal({
               />
             </Field>
 
-            <Field label="Ticket Type ID" required error={errors.ticketTypeId}>
-              <Input
+            <Field label="Type de ticket" required error={errors.ticketTypeId}>
+              <Autocomplete
                 value={values.ticketTypeId}
-                onChange={(e) => setField("ticketTypeId", e.target.value)}
-                placeholder="tt_..."
+                placeholder="Sélectionnez un type-ticket"
+                options={ticketTypeOptions}
+                isLoading={isTypeTicketsLoading}
+                emptyText="Aucun type-ticket trouvé."
+                onSelect={(option) => {
+                  setField("ticketTypeId", option.id);
+                }}
               />
             </Field>
 
-            <Field label="User ID" required error={errors.userId}>
-              <Input
-                value={values.userId}
-                onChange={(e) => setField("userId", e.target.value)}
-                placeholder="usr_..."
-              />
-            </Field>
+            <Field label="Utilisateur / Organisateur" required error={errors.userId}>
+              {mode === "create" && connectedUser?.id ? (
+                <label className="mb-3 flex cursor-pointer items-center gap-3 rounded-lg border border-blue-100 bg-blue-50/60 px-3 py-2 text-sm text-blue-900">
+                  <input
+                    type="checkbox"
+                    checked={useConnectedUser}
+                    onChange={(event) => setUseConnectedUser(event.target.checked)}
+                    className="size-4 rounded border-blue-300 text-blue-600 focus:ring-blue-500"
+                  />
+                  <UserCheck className="size-4" />
+                  <span>
+                    Utiliser l'utilisateur connecté
+                    <span className="ml-2 font-semibold">({connectedUser.label})</span>
+                  </span>
+                </label>
+              ) : null}
 
-            <Field label="Code" required error={errors.code}>
-              <Input
-                value={values.code}
-                onChange={(e) => setField("code", e.target.value)}
-                placeholder="TICKET-2026-001"
-              />
+              {!useConnectedUser ? (
+                <Autocomplete
+                  value={values.userId}
+                  placeholder="Rechercher et sélectionner un utilisateur"
+                  options={userOptions}
+                  isLoading={isUsersLoading}
+                  emptyText="Aucun utilisateur trouvé."
+                  onSelect={(option) => {
+                    setField("userId", option.id);
+                  }}
+                />
+              ) : (
+                <div className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700">
+                  <span className="font-semibold text-slate-900">{connectedUser?.label}</span>
+                  <span className="ml-2 text-xs text-slate-500">{connectedUser?.id}</span>
+                </div>
+              )}
             </Field>
           </div>
-
-          <Field label="QR Code URL" required error={errors.qrCodeUrl}>
-            <Input
-              value={values.qrCodeUrl}
-              onChange={(e) => setField("qrCodeUrl", e.target.value)}
-              placeholder="https://..."
-            />
-          </Field>
-
-          <Field label="Statut" required error={errors.status}>
-            <select
-              value={values.status}
-              onChange={(e) => setField("status", e.target.value)}
-              className="h-11 w-full rounded border border-input bg-background px-3 text-sm outline-none transition-colors focus:border-ring focus:ring-[3px] focus:ring-ring/30"
-            >
-              {TICKET_STATUSES.map((status) => (
-                <option key={status} value={status}>
-                  {status}
-                </option>
-              ))}
-            </select>
-          </Field>
 
           <div className="flex flex-col-reverse gap-3 border-t border-slate-100 pt-4 sm:flex-row sm:justify-end">
             <Button type="button" variant="outline" onClick={onClose} disabled={isPending}>
