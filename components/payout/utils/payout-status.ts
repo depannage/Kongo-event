@@ -4,6 +4,7 @@ export function normalizePayoutStatus(status: string): PayoutStatus {
     const value = status.toLowerCase();
 
     if (value === "completed" || value === "success") return "completed";
+    if (value === "processing") return "pending";
     if (value === "failed") return "failed";
     if (value === "cancelled" || value === "canceled") return "cancelled";
     if (value === "refunded") return "refunded";

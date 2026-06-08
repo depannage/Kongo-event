@@ -1,10 +1,26 @@
 import type { PaginatedResponse } from "@/shared/types/paginated.types";
 
-export const PAYMENT_STATUSES = ["PENDING", "COMPLETED", "FAILED", "CANCELLED", "REFUNDED"] as const;
+export const PAYMENT_STATUSES = [
+    "PENDING",
+    "PROCESSING",
+    "SUCCESS",
+    "FAILED",
+    "CANCELLED",
+    "REFUNDED",
+] as const;
 
 export type PaymentStatus = (typeof PAYMENT_STATUSES)[number];
 
-export const PAYMENT_METHODS = ["MPESA", "CARD", "BANK_TRANSFER", "CASH", "MOBILE_MONEY"] as const;
+export const PAYMENT_METHODS = [
+    "CARD",
+    "PAYPAL",
+    "STRIPE",
+    "AIRTEL_MONEY",
+    "ORANGE_MONEY",
+    "MPESA",
+    "MANUAL",
+    "WALLET",
+] as const;
 
 export type PaymentMethod = (typeof PAYMENT_METHODS)[number];
 
