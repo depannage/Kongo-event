@@ -170,6 +170,14 @@
     "generateReport": "Générer le rapport",
     "createEvent": "Créer un événement",
     "search": "Rechercher",
+    "from": "Du",
+    "to": "Au",
+    "refresh": "Actualiser",
+    "loadError": "Impossible de charger le tableau de bord.",
+    "noData": "Aucune donnée",
+    "emptyEvents": "Aucun événement trouvé",
+    "emptyUpcoming": "Aucun événement à venir",
+    "learnMore": "En savoir plus",
     "roleOrganizer": "Organisateur",
     "home": "Accueil",
     "management": "Gestion",
@@ -180,8 +188,11 @@
       "promotions": "Promotions",
       "payouts": "Paiements",
       "users": "Utilisateurs",
+      "organizations": "Organisations",
+      "organizers": "Organisateurs",
       "events": "Événements",
       "tickets": "Tickets",
+      "media": "Médias",
       "eventCategories": "Catégories",
       "venues": "Lieux",
       "rooms": "Salles",
@@ -422,6 +433,133 @@
       }
     }
   },
+  "resources": {
+    "common": {
+      "createdAt": "Créé"
+    },
+    "eventCategories": {
+      "title": "Catégories d’événements",
+      "description": "Créer, modifier et supprimer les catégories d’événements.",
+      "create": "Créer une catégorie",
+      "fields": {
+        "name": "Nom",
+        "slug": "Slug",
+        "createdAt": "Créé"
+      }
+    },
+    "venues": {
+      "title": "Lieux",
+      "description": "Gérer les lieux utilisés par les événements.",
+      "create": "Créer un lieu",
+      "fields": {
+        "name": "Nom",
+        "address": "Adresse",
+        "city": "Ville",
+        "country": "Pays",
+        "latitude": "Latitude",
+        "longitude": "Longitude"
+      }
+    },
+    "rooms": {
+      "title": "Salles",
+      "description": "Gérer les salles liées aux lieux.",
+      "create": "Créer une salle",
+      "fields": {
+        "venue": "Lieu",
+        "name": "Nom",
+        "capacity": "Capacité",
+        "createdAt": "Créé"
+      }
+    },
+    "sponsors": {
+      "title": "Sponsors",
+      "description": "Gérer les sponsors et leurs logos Cloudinary.",
+      "create": "Créer un sponsor",
+      "fields": {
+        "name": "Nom",
+        "logo": "Logo",
+        "website": "Site web",
+        "createdAt": "Créé"
+      }
+    },
+    "eventSponsors": {
+      "title": "Sponsors d’événements",
+      "description": "Attacher et détacher des sponsors aux événements.",
+      "create": "Attacher un sponsor",
+      "fields": {
+        "event": "Événement",
+        "sponsor": "Sponsor",
+        "eventId": "ID événement",
+        "sponsorId": "ID sponsor"
+      }
+    },
+    "media": {
+      "title": "Médias",
+      "description": "Gérer les fichiers médias liés aux événements. Les fichiers passent par Cloudinary.",
+      "create": "Créer un média",
+      "fields": {
+        "event": "Événement",
+        "url": "URL Cloudinary",
+        "type": "Type",
+        "size": "Taille",
+        "createdAt": "Créé"
+      }
+    },
+    "ticketTypes": {
+      "title": "Types de billets",
+      "description": "Gérer les types de billets par événement.",
+      "create": "Créer un type de billet",
+      "fields": {
+        "event": "Événement",
+        "name": "Nom",
+        "description": "Description",
+        "price": "Prix",
+        "currency": "Devise",
+        "quantity": "Quantité",
+        "saleStartAt": "Début de vente",
+        "saleEndAt": "Fin de vente"
+      }
+    },
+    "tickets": {
+      "title": "Tickets",
+      "description": "Gérer les tickets, QR codes et statuts.",
+      "create": "Créer un ticket",
+      "fields": {
+        "event": "Événement",
+        "ticketType": "Type de billet",
+        "userId": "ID utilisateur",
+        "user": "Utilisateur",
+        "code": "Code",
+        "qrCodeUrl": "URL QR code",
+        "status": "Statut"
+      }
+    },
+    "organizations": {
+      "title": "Organisations",
+      "description": "Gérer les organisations multi-tenant.",
+      "create": "Créer une organisation",
+      "fields": {
+        "name": "Nom",
+        "slug": "Slug",
+        "logo": "Logo",
+        "domain": "Domaine",
+        "primaryColor": "Couleur principale",
+        "plan": "Plan"
+      }
+    },
+    "organizers": {
+      "title": "Organisateurs",
+      "description": "Gérer les profils organisateurs.",
+      "create": "Créer un organisateur",
+      "fields": {
+        "user": "Utilisateur",
+        "organization": "Organisation",
+        "displayName": "Nom affiché",
+        "description": "Description",
+        "verified": "Vérifié"
+      }
+    }
+  },
   "eventsAdmin": {
     "title": "Mes événements",
     "breadcrumbManagement": "Gestion",
@@ -530,6 +668,9 @@
       "only": "Tous les fichiers et images passent par Cloudinary.",
       "uploading": "Téléversement en cours",
       "missing": "Configurez NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME et NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET."
+    },
+    "errors": {
+      "organizerRequired": "Choisissez ou créez d'abord un organisateur avant de créer l'événement."
     }
   },
   "usersAdmin": {
@@ -644,7 +785,19 @@
     "upcomingTitle": "Événements à venir",
     "upcomingDescription": "Liste des prochains événements programmés",
     "upcoming": "À venir",
-    "draft": "Brouillon"
+    "draft": "Brouillon",
+    "cancelled": "Annulé",
+    "draftTitle": "Brouillons",
+    "draftDescription": "Événements en attente de publication",
+    "totalEvents": "Total événements",
+    "emptyUpcoming": "Aucun événement à venir",
+    "refresh": "Actualiser",
+    "loadError": "Impossible de charger le calendrier.",
+    "date": "Date",
+    "time": "Heure",
+    "location": "Lieu",
+    "description": "Description",
+    "close": "Fermer"
   },
   "promotionsAdmin": {
     "title": "Promotions",
@@ -784,8 +937,13 @@
       "create": "Créer le paiement",
       "update": "Mettre à jour",
       "saving": "Enregistrement…",
+      "order": "Commande",
       "orderId": "ID commande",
+      "orderPlaceholder": "Sélectionner une commande",
       "orderIdPlaceholder": "ex. order-uuid",
+      "loadingOrders": "Chargement des commandes…",
+      "noOrders": "Aucune commande disponible. Créez une commande avant d’ajouter un paiement.",
+      "currentOrder": "commande actuelle",
       "method": "Méthode de paiement",
       "amount": "Montant",
       "amountPlaceholder": "ex. 100",

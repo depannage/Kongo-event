@@ -21,6 +21,7 @@ import {
 import { useTranslations } from "next-intl";
 import DashboardNavbar from "@/components/dashboard/DashboardNavbar";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
+import RichTextEditor from "@/components/forms/RichTextEditor";
 import Autocomplete, { type AutocompleteOption } from "@/components/ui/autocomplete";
 import { useSidebar } from "@/contexts/SidebarContext";
 import { Link, useRouter } from "@/i18n/navigation";
@@ -90,6 +91,7 @@ export default function CreateEventPage() {
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [organizersLoading, setOrganizersLoading] = useState(false);
+  const [error, setError] = useState("");
   const [sponsorQuery, setSponsorQuery] = useState("");
   const [options, setOptions] = useState({
     sponsors: [] as SelectOption[],
@@ -113,6 +115,12 @@ export default function CreateEventPage() {
       if (mounted) {
         setOptions({ sponsors, speakers, organizers, categories, venues });
         setOrganizersLoading(false);
+        setForm((current) => ({
+          ...current,
+          organizerId: current.organizerId || organizers[0]?.id || "",
+          categoryId: current.categoryId || categories[0]?.id || "",
+          venueId: current.venueId || venues[0]?.id || "",
+        }));
       }
     };
     load().catch(() => {
@@ -168,6 +176,11 @@ export default function CreateEventPage() {
 
   const submit = async (event: React.FormEvent) => {
     event.preventDefault();
+    setError("");
+    if (!form.organizerId) {
+      setError(t("errors.organizerRequired"));
+      return;
+    }
     setSaving(true);
     try {
       const created = await api.post("/events", eventPayload(form));
@@ -224,6 +237,11 @@ export default function CreateEventPage() {
             </div>
 
             <div className="grid gap-5 p-5 xl:grid-cols-[minmax(0,1fr)_360px]">
+              {error && (
+                <div className="rounded border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700 xl:col-span-2">
+                  {error}
+                </div>
+              )}
               <div className="space-y-5">
                 <Panel title={t("sections.identity")} icon={<Globe className="size-4" />}>
                   <div className="grid gap-4 md:grid-cols-2">
@@ -235,10 +253,10 @@ export default function CreateEventPage() {
                     </Field>
                   </div>
                   <Field label={`${t("form.shortDescription")} ${lang.toUpperCase()}`}>
-                    <Input value={form.shortDescription[lang]} onChange={(event) => setText("shortDescription", event.target.value)} />
+                    <RichTextEditor value={form.shortDescription[lang]} onChange={(value) => setText("shortDescription", value)} minHeight="min-h-28" />
                   </Field>
                   <Field label={`${t("form.description")} ${lang.toUpperCase()}`} required>
-                    <Textarea value={form.description[lang]} onChange={(event) => setText("description", event.target.value)} />
+                    <RichTextEditor value={form.description[lang]} onChange={(value) => setText("description", value)} minHeight="min-h-64" />
                   </Field>
                 </Panel>
 
@@ -448,10 +466,6 @@ function Field({ label, required, children }: { label: string; required?: boolea
 
 function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
   return <input {...props} className="h-10 w-full rounded border border-slate-200 bg-white px-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />;
-}
-
-function Textarea(props: React.TextareaHTMLAttributes<HTMLTextAreaElement>) {
-  return <textarea {...props} className="min-h-32 w-full resize-none rounded border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />;
 }
 
 function Select({ children, value, onChange }: { children: React.ReactNode; value: string; onChange: (value: string) => void }) {

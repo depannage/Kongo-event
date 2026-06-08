@@ -8,5 +8,6 @@ out
 .DS_Store
 *.log
 .pnpm-store
+next-env.d.ts
 
 .cursorrules

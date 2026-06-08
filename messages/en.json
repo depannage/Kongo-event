@@ -172,6 +172,14 @@
     "generateReport": "Generate Report",
     "createEvent": "Create Event",
     "search": "Search",
+    "from": "From",
+    "to": "To",
+    "refresh": "Refresh",
+    "loadError": "Unable to load dashboard.",
+    "noData": "No data",
+    "emptyEvents": "No events found",
+    "emptyUpcoming": "No upcoming events",
+    "learnMore": "Learn more",
     "roleOrganizer": "Organizer",
     "home": "Home",
     "management": "Management",
@@ -182,8 +190,11 @@
       "promotions": "Promotions",
       "payouts": "Payouts",
       "users": "Users",
+      "organizations": "Organizations",
+      "organizers": "Organizers",
       "events": "Events",
       "tickets": "Tickets",
+      "media": "Media",
       "eventCategories": "Categories",
       "venues": "Venues",
       "rooms": "Rooms",
@@ -425,6 +436,133 @@
       }
     }
   },
+  "resources": {
+    "common": {
+      "createdAt": "Created"
+    },
+    "eventCategories": {
+      "title": "Event categories",
+      "description": "Create, update and delete event categories.",
+      "create": "Create category",
+      "fields": {
+        "name": "Name",
+        "slug": "Slug",
+        "createdAt": "Created"
+      }
+    },
+    "venues": {
+      "title": "Venues",
+      "description": "Manage venues used by events.",
+      "create": "Create venue",
+      "fields": {
+        "name": "Name",
+        "address": "Address",
+        "city": "City",
+        "country": "Country",
+        "latitude": "Latitude",
+        "longitude": "Longitude"
+      }
+    },
+    "rooms": {
+      "title": "Rooms",
+      "description": "Manage rooms linked to venues.",
+      "create": "Create room",
+      "fields": {
+        "venue": "Venue",
+        "name": "Name",
+        "capacity": "Capacity",
+        "createdAt": "Created"
+      }
+    },
+    "sponsors": {
+      "title": "Sponsors",
+      "description": "Manage sponsors and their Cloudinary logos.",
+      "create": "Create sponsor",
+      "fields": {
+        "name": "Name",
+        "logo": "Logo",
+        "website": "Website",
+        "createdAt": "Created"
+      }
+    },
+    "eventSponsors": {
+      "title": "Event sponsors",
+      "description": "Attach and detach sponsors from events.",
+      "create": "Attach sponsor",
+      "fields": {
+        "event": "Event",
+        "sponsor": "Sponsor",
+        "eventId": "Event ID",
+        "sponsorId": "Sponsor ID"
+      }
+    },
+    "media": {
+      "title": "Media",
+      "description": "Manage media files linked to events. Files go through Cloudinary.",
+      "create": "Create media",
+      "fields": {
+        "event": "Event",
+        "url": "Cloudinary URL",
+        "type": "Type",
+        "size": "Size",
+        "createdAt": "Created"
+      }
+    },
+    "ticketTypes": {
+      "title": "Ticket types",
+      "description": "Manage ticket types by event.",
+      "create": "Create ticket type",
+      "fields": {
+        "event": "Event",
+        "name": "Name",
+        "description": "Description",
+        "price": "Price",
+        "currency": "Currency",
+        "quantity": "Quantity",
+        "saleStartAt": "Sale start",
+        "saleEndAt": "Sale end"
+      }
+    },
+    "tickets": {
+      "title": "Tickets",
+      "description": "Manage tickets, QR codes and statuses.",
+      "create": "Create ticket",
+      "fields": {
+        "event": "Event",
+        "ticketType": "Ticket type",
+        "userId": "User ID",
+        "user": "User",
+        "code": "Code",
+        "qrCodeUrl": "QR code URL",
+        "status": "Status"
+      }
+    },
+    "organizations": {
+      "title": "Organizations",
+      "description": "Manage multi-tenant organizations.",
+      "create": "Create organization",
+      "fields": {
+        "name": "Name",
+        "slug": "Slug",
+        "logo": "Logo",
+        "domain": "Domain",
+        "primaryColor": "Primary color",
+        "plan": "Plan"
+      }
+    },
+    "organizers": {
+      "title": "Organizers",
+      "description": "Manage organizer profiles.",
+      "create": "Create organizer",
+      "fields": {
+        "user": "User",
+        "organization": "Organization",
+        "displayName": "Display name",
+        "description": "Description",
+        "verified": "Verified"
+      }
+    }
+  },
   "eventsAdmin": {
     "title": "My Events",
     "breadcrumbManagement": "Management",
@@ -533,6 +671,9 @@
       "only": "All files and images go through Cloudinary.",
       "uploading": "Uploading",
       "missing": "Configure NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME and NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET."
+    },
+    "errors": {
+      "organizerRequired": "Choose or create an organizer before creating the event."
     }
   },
   "usersAdmin": {
@@ -647,7 +788,19 @@
     "upcomingTitle": "Upcoming Events",
     "upcomingDescription": "List of upcoming scheduled events",
     "upcoming": "Upcoming",
-    "draft": "Draft"
+    "draft": "Draft",
+    "cancelled": "Cancelled",
+    "draftTitle": "Drafts",
+    "draftDescription": "Events waiting to be published",
+    "totalEvents": "Total events",
+    "emptyUpcoming": "No upcoming events",
+    "refresh": "Refresh",
+    "loadError": "Unable to load calendar.",
+    "date": "Date",
+    "time": "Time",
+    "location": "Location",
+    "description": "Description",
+    "close": "Close"
   },
   "promotionsAdmin": {
     "title": "Promotions",
@@ -787,8 +940,13 @@
       "create": "Create Payment",
       "update": "Update Payment",
       "saving": "Saving…",
+      "order": "Order",
       "orderId": "Order ID",
+      "orderPlaceholder": "Select an order",
       "orderIdPlaceholder": "e.g. order-uuid",
+      "loadingOrders": "Loading orders…",
+      "noOrders": "No orders available. Create an order before adding a payment.",
+      "currentOrder": "current order",
       "method": "Payment Method",
       "amount": "Amount",
       "amountPlaceholder": "e.g. 100",
