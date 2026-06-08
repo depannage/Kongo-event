@@ -340,6 +340,7 @@ function EventDrawer({ mode, event, t, onClose, onSave }: { mode: "create" | "ed
   const [lang, setLang] = useState<Lang>("fr");
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState("");
   const [form, setForm] = useState<EventForm>(() => (event ? fromEvent(event) : newEvent()));
 
   const updateText = (field: "title" | "shortDescription" | "description" | "refundPolicy", value: string) => {
@@ -349,15 +350,16 @@ function EventDrawer({ mode, event, t, onClose, onSave }: { mode: "create" | "ed
   const submit = async (submitEvent: React.FormEvent) => {
     submitEvent.preventDefault();
     setSaving(true);
+    setError("");
     try {
-      const payload = apiPayload(form);
+      const payload = eventMutationPayload(form);
       if (mode === "create") await api.post("/events", payload);
       if (mode === "edit" && event) await api.patch(`/events/${event.id}`, payload);
-    } catch {
-      // The local optimistic state still keeps the form usable when the API is not reachable.
+      onSave(form);
+    } catch (err: any) {
+      setError(err?.response?.data?.message?.[0] ?? err?.response?.data?.message ?? t("errors.updateFailed"));
     } finally {
       setSaving(false);
-      onSave(form);
     }
   };
 
@@ -409,6 +411,11 @@ function EventDrawer({ mode, event, t, onClose, onSave }: { mode: "create" | "ed
 
         <div className="flex-1 overflow-y-auto p-5">
           <div className="grid gap-5 xl:grid-cols-[1fr_320px]">
+            {error && (
+              <div className="rounded border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700 xl:col-span-2">
+                {error}
+              </div>
+            )}
             <div className="space-y-5">
               <Panel title={t("sections.identity")} icon={<Globe className="size-4" />}>
                 <div className="grid gap-4 md:grid-cols-2">
@@ -697,7 +704,7 @@ function toEventRow(form: EventForm): Omit<EventRow, "id" | "ticketsSold" | "rev
   };
 }
 
-function apiPayload(form: EventForm) {
+function eventMutationPayload(form: EventForm) {
   return {
     organizerId: form.organizerId,
     categoryId: form.categoryId || undefined,
@@ -714,19 +721,6 @@ function apiPayload(form: EventForm) {
     timezone: form.timezone,
     capacity: form.capacity || undefined,
     refundPolicy: form.refundPolicy.fr || form.refundPolicy.en,
-    metadata: {
-      translations: {
-        title: form.title,
-        shortDescription: form.shortDescription,
-        description: form.description,
-        refundPolicy: form.refundPolicy,
-      },
-      bannerPublicId: form.bannerPublicId,
-      ticketTypes: form.ticketTypes,
-      sessions: form.sessions,
-      sponsorIds: form.sponsorIds,
-      speakerIds: form.speakerIds,
-    },
   };
 }
 

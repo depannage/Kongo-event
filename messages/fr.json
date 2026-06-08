@@ -670,7 +670,8 @@
       "missing": "Configurez NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME et NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET."
     },
     "errors": {
-      "organizerRequired": "Choisissez ou créez d'abord un organisateur avant de créer l'événement."
+      "organizerRequired": "Choisissez ou créez d'abord un organisateur avant de créer l'événement.",
+      "updateFailed": "Impossible de modifier l'événement."
     }
   },
   "usersAdmin": {

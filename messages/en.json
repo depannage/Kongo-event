@@ -673,7 +673,8 @@
       "missing": "Configure NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME and NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET."
     },
     "errors": {
-      "organizerRequired": "Choose or create an organizer before creating the event."
+      "organizerRequired": "Choose or create an organizer before creating the event.",
+      "updateFailed": "Unable to update the event."
     }
   },
   "usersAdmin": {
