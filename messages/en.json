@@ -687,24 +687,61 @@
     "filter": "Filter",
     "sortBy": "Sort by",
     "cancel": "Cancel",
+    "filterAllRoles": "All Roles",
+    "filterAllStatus": "All Status",
+    "metrics": {
+      "totalUsers": "Total Users",
+      "activeUsers": "Active Users",
+      "pendingApproval": "Pending Approval"
+    },
+    "roles": {
+      "admin": "Admin",
+      "organizer": "Organizer",
+      "attendee": "Attendee",
+      "admins": "Admins",
+      "organizers": "Organizers",
+      "attendees": "Attendees"
+    },
+    "statuses": {
+      "active": "Active",
+      "pending": "Pending",
+      "banned": "Banned"
+    },
+    "sortFields": {
+      "name": "name",
+      "role": "role",
+      "status": "status"
+    },
     "table": {
       "no": "No",
       "name": "Name",
       "email": "Email",
       "phone": "Phone Number",
+      "joinDate": "Join Date",
       "role": "Role",
       "status": "Status",
-      "actions": "Actions"
+      "actions": "Actions",
+      "view": "View",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "emptyUsers": "No users found",
+    "createFirst": "+ Add your first user",
+    "tableFooter": {
+      "showing": "Showing {count} of {total} users",
+      "selected": "({count} selected)"
     },
     "pagination": {
-      "showing": "Showing 1 to 10 of 500 results"
+      "previous": "Previous",
+      "next": "Next"
     },
     "form": {
       "name": "Name",
       "email": "Email Address",
       "phone": "Phone Number",
       "password": "Password",
-      "role": "Role"
+      "role": "Role",
+      "status": "Status"
     },
     "update": {
       "title": "Update User",
@@ -878,9 +915,6 @@
       "createError": "Could not create the promotion. Please try again.",
       "creating": "Creating…",
       "editNotAvailable": "Editing is not available yet."
-    },
-    "pagination": {
-      "showing": "Showing 1 to 10 of 500 results"
     }
   },
   "payoutsAdmin": {
