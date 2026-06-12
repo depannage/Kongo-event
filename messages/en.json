@@ -878,9 +878,6 @@
       "createError": "Could not create the promotion. Please try again.",
       "creating": "Creating…",
       "editNotAvailable": "Editing is not available yet."
-    },
-    "pagination": {
-      "showing": "Showing 1 to 10 of 500 results"
     }
   },
   "payoutsAdmin": {

@@ -875,9 +875,6 @@
       "createError": "Impossible de créer la promotion. Réessayez.",
       "creating": "Création…",
       "editNotAvailable": "La modification n’est pas encore disponible."
-    },
-    "pagination": {
-      "showing": "Affichage de 1 à 10 sur 500 résultats"
     }
   },
   "payoutsAdmin": {
