@@ -20,6 +20,7 @@ type AutocompleteProps = {
   isLoading?: boolean;
   disabled?: boolean;
   maxItems?: number;
+  showIdFallback?: boolean;
 };
 
 export default function Autocomplete({
@@ -32,6 +33,7 @@ export default function Autocomplete({
   isLoading = false,
   disabled = false,
   maxItems = 8,
+  showIdFallback = true,
 }: AutocompleteProps) {
   const rootRef = useRef<HTMLDivElement | null>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -107,6 +109,7 @@ export default function Autocomplete({
             ) : filteredOptions.length > 0 ? (
               filteredOptions.map((option) => {
                 const isSelected = selectedOption?.id === option.id;
+                const metaText = option.description ?? (showIdFallback ? option.id : undefined);
                 return (
                   <button
                     key={option.id}
@@ -120,7 +123,7 @@ export default function Autocomplete({
                   >
                     <div className="min-w-0">
                       <p className="truncate text-sm font-semibold text-slate-900">{option.label}</p>
-                      <p className="truncate text-xs text-slate-500">{option.description ?? option.id}</p>
+                      {metaText ? <p className="truncate text-xs text-slate-500">{metaText}</p> : null}
                     </div>
                     {isSelected ? <Check className="size-4 shrink-0 text-blue-600" /> : null}
                   </button>

@@ -2,14 +2,14 @@ type SummaryCardsProps = {
   activeTickets: number;
   soldOutTickets: number;
   totalTickets: number;
-  onCreateTicket?: () => void;
+  onCreateTicketType?: () => void;
 };
 
 export default function SummaryCards({
   activeTickets,
   soldOutTickets,
   totalTickets,
-  onCreateTicket,
+  onCreateTicketType,
 }: SummaryCardsProps) {
   const safeTotal = totalTickets > 0 ? totalTickets : 1;
   const activeWidth = (activeTickets / safeTotal) * 100;
@@ -41,7 +41,7 @@ export default function SummaryCards({
         <p className="text-sm text-white/70 mb-4">Créer de nouveaux types de tickets ou modifier les existants</p>
         <button
           type="button"
-          onClick={onCreateTicket}
+          onClick={onCreateTicketType}
           className="px-4 py-2 bg-white/20 rounded text-sm font-semibold hover:bg-white/30 transition-colors"
         >
           + Créer un nouveau type de ticket

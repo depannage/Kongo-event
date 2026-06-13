@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { CalendarCheck, CircleDollarSign, Plus, Ticket as TicketIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useSidebar } from "@/contexts/SidebarContext";
@@ -18,23 +18,24 @@ import {
   useTickets,
   useUpdateTicket,
 } from "@/shared/hooks/ticket.hooks.";
+import { useEvents } from "@/shared/hooks/event.hooks";
 import { useTypeTickets } from "@/shared/hooks/type-ticket.hooks";
 import type { CreateTicketPayload, Ticket } from "@/shared/types/ticket";
 import MetricCard from "@/components/MetricCard";
 import { useTranslations } from "next-intl";
 import { useMe } from "@/shared/hooks/auth.hooks";
-import { api } from "@/shared/lib/http/api";
 import type { AutocompleteOption } from "@/components/ui/autocomplete";
+import { useRouter } from "@/i18n/navigation";
 
 export default function TicketsPage() {
+  const router = useRouter();
   const { isCollapsed } = useSidebar();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTicket, setEditingTicket] = useState<Ticket | null>(null);
   const [selectedTicketId, setSelectedTicketId] = useState<string | null>(null);
-  const [userOptions, setUserOptions] = useState<AutocompleteOption[]>([]);
-  const [isUsersLoading, setIsUsersLoading] = useState(false);
 
   const ticketsQuery = useTickets();
+  const eventsQuery = useEvents();
   const typeTicketsQuery = useTypeTickets();
   const createTicketMutation = useCreateTicket();
   const updateTicketMutation = useUpdateTicket();
@@ -55,70 +56,25 @@ export default function TicketsPage() {
 
   const t = useTranslations("tickets");
 
-  useEffect(() => {
-    let mounted = true;
-
-    const normalizeUserRows = (rawData: any) => {
-      const rows = Array.isArray(rawData?.data) ? rawData.data : Array.isArray(rawData) ? rawData : [];
-
-      return rows
-        .map((row: any) => ({
-          id: row.id,
-          label:
-            row.fullName ??
-            row.displayName ??
-            row.name ??
-            row.email ??
-            row.phone ??
-            row.id,
-          description: row.email ?? row.phone ?? row.id,
-        }))
-        .filter((row: AutocompleteOption) => Boolean(row.id));
-    };
-
-    const loadUsers = async () => {
-      setIsUsersLoading(true);
-      try {
-        const usersResponse = await api.get("/users");
-        const nextOptions = normalizeUserRows(usersResponse.data);
-        if (mounted) setUserOptions(nextOptions);
-      } catch {
-        try {
-          const organizersResponse = await api.get("/organizers");
-          const nextOptions = normalizeUserRows(organizersResponse.data);
-          if (mounted) setUserOptions(nextOptions);
-        } catch {
-          if (mounted) setUserOptions([]);
-        }
-      } finally {
-        if (mounted) setIsUsersLoading(false);
-      }
-    };
-
-    loadUsers().catch(() => undefined);
-
-    return () => {
-      mounted = false;
-    };
-  }, []);
+  const eventOptions = useMemo<AutocompleteOption[]>(
+    () =>
+      (eventsQuery.data?.data ?? []).map((event) => ({
+        id: event.id,
+        label: event.title ?? event.name ?? event.id,
+      })),
+    [eventsQuery.data]
+  );
 
   const ticketTypeOptions = useMemo(
     () =>
       (typeTicketsQuery.data?.items ?? []).map((item) => ({
         id: item.id,
         label: item.name,
-        description: item.eventId,
       })),
     [typeTicketsQuery.data]
   );
 
-  const isConnectedUserOrganizer = Array.isArray(meQuery.data?.roles)
-    ? meQuery.data.roles.some((role: any) =>
-        String(role?.name ?? role?.label ?? role).toUpperCase().includes("ORGANIZER")
-      )
-    : false;
-
-  const connectedUser = isConnectedUserOrganizer && meQuery.data?.id
+  const connectedUser = meQuery.data?.id
     ? {
         id: meQuery.data.id,
         label: meQuery.data.fullName ?? meQuery.data.email ?? meQuery.data.id,
@@ -129,6 +85,10 @@ export default function TicketsPage() {
   const handleOpenCreate = () => {
     setEditingTicket(null);
     setIsModalOpen(true);
+  };
+
+  const handleOpenCreateTicketType = () => {
+    router.push("/ticket-types?create=1");
   };
 
   const handleEdit = (ticket: Ticket) => {
@@ -221,7 +181,7 @@ export default function TicketsPage() {
             activeTickets={metrics.active}
             soldOutTickets={metrics.cancelled}
             totalTickets={metrics.total}
-            onCreateTicket={handleOpenCreate}
+            onCreateTicketType={handleOpenCreateTicketType}
           />
 
           {ticketsQuery.isPending ? (
@@ -294,11 +254,11 @@ export default function TicketsPage() {
         initialTicket={editingTicket}
         isPending={createTicketMutation.isPending || updateTicketMutation.isPending}
         onSubmit={handleCreateOrUpdate}
+        eventOptions={eventOptions}
         ticketTypeOptions={ticketTypeOptions}
-        userOptions={userOptions}
         connectedUser={connectedUser}
+        isEventsLoading={eventsQuery.isPending}
         isTypeTicketsLoading={typeTicketsQuery.isPending}
-        isUsersLoading={isUsersLoading}
       />
     </div>
   );
