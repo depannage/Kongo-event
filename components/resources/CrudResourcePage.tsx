@@ -16,6 +16,7 @@ import DashboardNavbar from "@/components/dashboard/DashboardNavbar";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
 import { useSidebar } from "@/contexts/SidebarContext";
 import { api } from "@/shared/lib/http/api";
+import { useSearchParams } from "next/navigation";
 
 export type ResourceOption = { id: string; name: string };
 export type ResourceField = {
@@ -37,10 +38,22 @@ type Props = {
   createLabel: string;
   idFields?: string[];
   canUpdate?: boolean;
+  openCreateOnLoad?: boolean;
 };
 
-export default function CrudResourcePage({ title, description, endpoint, fields, columns, createLabel, idFields = ["id"], canUpdate = true }: Props) {
+export default function CrudResourcePage({
+  title,
+  description,
+  endpoint,
+  fields,
+  columns,
+  createLabel,
+  idFields = ["id"],
+  canUpdate = true,
+  openCreateOnLoad = false,
+}: Props) {
   const { isCollapsed } = useSidebar();
+  const searchParams = useSearchParams();
   const [rows, setRows] = useState<any[]>([]);
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(true);
@@ -83,6 +96,14 @@ export default function CrudResourcePage({ title, description, endpoint, fields,
       mounted = false;
     };
   }, [fields]);
+
+  useEffect(() => {
+    if (!openCreateOnLoad) return;
+    if (searchParams.get("create") !== "1") return;
+    setEditing(null);
+    setForm(defaultForm(fields));
+    setOpen(true);
+  }, [openCreateOnLoad, searchParams, fields]);
 
   const filteredRows = useMemo(() => {
     const term = query.toLowerCase();

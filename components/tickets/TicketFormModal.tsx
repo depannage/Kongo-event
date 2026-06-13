@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { UserCheck, X } from "lucide-react";
+import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import Autocomplete, { type AutocompleteOption } from "@/components/ui/autocomplete";
 import {
   ticketInitialValues,
@@ -20,11 +19,11 @@ type TicketFormModalProps = {
   isPending?: boolean;
   mode?: "create" | "edit";
   initialTicket?: Ticket | null;
+  eventOptions?: AutocompleteOption[];
   ticketTypeOptions?: AutocompleteOption[];
-  userOptions?: AutocompleteOption[];
   connectedUser?: AutocompleteOption | null;
+  isEventsLoading?: boolean;
   isTypeTicketsLoading?: boolean;
-  isUsersLoading?: boolean;
 };
 
 function normalizeFormValues(ticket?: Ticket | null): TicketFormValues {
@@ -46,15 +45,14 @@ export default function TicketFormModal({
   isPending = false,
   mode = "create",
   initialTicket,
+  eventOptions = [],
   ticketTypeOptions = [],
-  userOptions = [],
   connectedUser = null,
+  isEventsLoading = false,
   isTypeTicketsLoading = false,
-  isUsersLoading = false,
 }: TicketFormModalProps) {
   const [values, setValues] = useState<TicketFormValues>(ticketInitialValues);
   const [errors, setErrors] = useState<TicketFormErrors>({});
-  const [useConnectedUser, setUseConnectedUser] = useState(false);
 
   const title = useMemo(
     () => (mode === "create" ? "Créer un ticket" : "Modifier le ticket"),
@@ -64,24 +62,14 @@ export default function TicketFormModal({
   useEffect(() => {
     if (!open) return;
     const nextValues = normalizeFormValues(initialTicket);
-    const canUseConnectedUser = mode === "create" && Boolean(connectedUser?.id);
-    const isConnected = Boolean(connectedUser?.id) && nextValues.userId === connectedUser?.id;
+
+    if (mode === "create") {
+      nextValues.userId = connectedUser?.id ?? "";
+    }
 
     setValues(nextValues);
-    setUseConnectedUser(Boolean(initialTicket && isConnected && canUseConnectedUser));
     setErrors({});
   }, [open, initialTicket, mode, connectedUser]);
-
-  useEffect(() => {
-    if (mode !== "create" || !connectedUser?.id) return;
-    if (!open) return;
-
-    if (useConnectedUser) {
-      setField("userId", connectedUser.id);
-    } else if (values.userId === connectedUser.id) {
-      setField("userId", "");
-    }
-  }, [useConnectedUser, connectedUser, mode, open]);
 
   if (!open) return null;
 
@@ -124,11 +112,17 @@ export default function TicketFormModal({
 
         <form onSubmit={handleSubmit} className="space-y-4 p-5">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <Field label="Event ID" required error={errors.eventId}>
-              <Input
+            <Field label="Événement" required error={errors.eventId}>
+              <Autocomplete
                 value={values.eventId}
-                onChange={(e) => setField("eventId", e.target.value)}
-                placeholder="evt_..."
+                placeholder="Sélectionnez un événement"
+                options={eventOptions}
+                isLoading={isEventsLoading}
+                emptyText="Aucun événement trouvé."
+                showIdFallback={false}
+                onSelect={(option) => {
+                  setField("eventId", option.id);
+                }}
               />
             </Field>
 
@@ -139,46 +133,11 @@ export default function TicketFormModal({
                 options={ticketTypeOptions}
                 isLoading={isTypeTicketsLoading}
                 emptyText="Aucun type-ticket trouvé."
+                showIdFallback={false}
                 onSelect={(option) => {
                   setField("ticketTypeId", option.id);
                 }}
               />
-            </Field>
-
-            <Field label="Utilisateur / Organisateur" required error={errors.userId}>
-              {mode === "create" && connectedUser?.id ? (
-                <label className="mb-3 flex cursor-pointer items-center gap-3 rounded-lg border border-blue-100 bg-blue-50/60 px-3 py-2 text-sm text-blue-900">
-                  <input
-                    type="checkbox"
-                    checked={useConnectedUser}
-                    onChange={(event) => setUseConnectedUser(event.target.checked)}
-                    className="size-4 rounded border-blue-300 text-blue-600 focus:ring-blue-500"
-                  />
-                  <UserCheck className="size-4" />
-                  <span>
-                    Utiliser l'utilisateur connecté
-                    <span className="ml-2 font-semibold">({connectedUser.label})</span>
-                  </span>
-                </label>
-              ) : null}
-
-              {!useConnectedUser ? (
-                <Autocomplete
-                  value={values.userId}
-                  placeholder="Rechercher et sélectionner un utilisateur"
-                  options={userOptions}
-                  isLoading={isUsersLoading}
-                  emptyText="Aucun utilisateur trouvé."
-                  onSelect={(option) => {
-                    setField("userId", option.id);
-                  }}
-                />
-              ) : (
-                <div className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700">
-                  <span className="font-semibold text-slate-900">{connectedUser?.label}</span>
-                  <span className="ml-2 text-xs text-slate-500">{connectedUser?.id}</span>
-                </div>
-              )}
             </Field>
           </div>
 
