@@ -1,15 +1,16 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CalendarCheck, CircleDollarSign, Plus, Ticket as TicketIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useSidebar } from "@/contexts/SidebarContext";
 import DashboardNavbar from "@/components/dashboard/DashboardNavbar";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import TicketTable from "@/components/tickets/TicketTable";
 import TicketFormModal from "@/components/tickets/TicketFormModal";
+import TicketDetailsModal from "@/components/tickets/TicketDetailsModal";
 import SummaryCards from "@/components/tickets/SummaryCards";
 import {
   useCreateTicket,
@@ -26,6 +27,7 @@ import { useTranslations } from "next-intl";
 import { useMe } from "@/shared/hooks/auth.hooks";
 import type { AutocompleteOption } from "@/components/ui/autocomplete";
 import { useRouter } from "@/i18n/navigation";
+import { api } from "@/shared/lib/http/api";
 
 export default function TicketsPage() {
   const router = useRouter();
@@ -33,6 +35,10 @@ export default function TicketsPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTicket, setEditingTicket] = useState<Ticket | null>(null);
   const [selectedTicketId, setSelectedTicketId] = useState<string | null>(null);
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
+  const [userNameById, setUserNameById] = useState<Record<string, string>>({});
+
+  type UserLabelItem = { id: string; label: string };
 
   const ticketsQuery = useTickets();
   const eventsQuery = useEvents();
@@ -65,6 +71,14 @@ export default function TicketsPage() {
     [eventsQuery.data]
   );
 
+  const eventNameById = useMemo(
+    () =>
+      Object.fromEntries(
+        eventOptions.map((eventOption) => [eventOption.id, eventOption.label] as const)
+      ),
+    [eventOptions]
+  );
+
   const ticketTypeOptions = useMemo(
     () =>
       (typeTicketsQuery.data?.items ?? []).map((item) => ({
@@ -74,6 +88,14 @@ export default function TicketsPage() {
     [typeTicketsQuery.data]
   );
 
+  const ticketTypeNameById = useMemo(
+    () =>
+      Object.fromEntries(
+        ticketTypeOptions.map((ticketTypeOption) => [ticketTypeOption.id, ticketTypeOption.label] as const)
+      ),
+    [ticketTypeOptions]
+  );
+
   const connectedUser = meQuery.data?.id
     ? {
         id: meQuery.data.id,
@@ -81,6 +103,53 @@ export default function TicketsPage() {
         description: meQuery.data.email ?? meQuery.data.id,
       }
     : null;
+
+  useEffect(() => {
+    let mounted = true;
+
+    const normalizeUserRows = (rawData: any) => {
+      const rows = Array.isArray(rawData?.data) ? rawData.data : Array.isArray(rawData) ? rawData : [];
+
+      return rows
+        .map((row: any) => ({
+          id: row.id,
+          label:
+            row.fullName ??
+            row.displayName ??
+            row.name ??
+            row.email ??
+            row.phone ??
+            row.id,
+        }))
+        .filter((row: { id: string; label: string }) => Boolean(row.id));
+    };
+
+    const loadUsers = async () => {
+      try {
+        const usersResponse = await api.get("/users");
+        const users = normalizeUserRows(usersResponse.data) as UserLabelItem[];
+        if (mounted) {
+          setUserNameById(Object.fromEntries(users.map((user) => [user.id, user.label] as const)));
+        }
+      } catch {
+        try {
+          const organizersResponse = await api.get("/organizers");
+          const users = normalizeUserRows(organizersResponse.data) as UserLabelItem[];
+          if (mounted) {
+            setUserNameById(Object.fromEntries(users.map((user) => [user.id, user.label] as const)));
+          }
+        } catch {
+          if (mounted) setUserNameById({});
+        }
+      }
+    };
+
+    loadUsers().catch(() => undefined);
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const handleOpenCreate = () => {
     setEditingTicket(null);
@@ -96,6 +165,11 @@ export default function TicketsPage() {
     setIsModalOpen(true);
   };
 
+  const handleView = (ticket: Ticket) => {
+    setSelectedTicketId(ticket.id);
+    setIsDetailsModalOpen(true);
+  };
+
   const handleCreateOrUpdate = async (payload: CreateTicketPayload) => {
     try {
       if (editingTicket) {
@@ -104,14 +178,14 @@ export default function TicketsPage() {
           payload,
         });
 
-        toast.success("Ticket mis à jour", {
-          description: "Les informations du ticket ont été enregistrées.",
+        toast.success(t("toasts.updated.title"), {
+          description: t("toasts.updated.description"),
         });
       } else {
         await createTicketMutation.mutateAsync(payload);
 
-        toast.success("Ticket créé", {
-          description: "Le ticket a été créé avec succès.",
+        toast.success(t("toasts.created.title"), {
+          description: t("toasts.created.description"),
         });
       }
 
@@ -122,9 +196,9 @@ export default function TicketsPage() {
         error?.response?.data?.message ??
         error?.response?.data?.error ??
         error?.message ??
-        "Une erreur est survenue.";
+        t("toasts.genericError");
 
-      toast.error("Échec de l'enregistrement", {
+      toast.error(t("toasts.saveFailed.title"), {
         description: Array.isArray(message) ? message.join(", ") : message,
       });
     }
@@ -135,17 +209,17 @@ export default function TicketsPage() {
       await deleteTicketMutation.mutateAsync(id);
       if (selectedTicketId === id) setSelectedTicketId(null);
 
-      toast.success("Ticket supprimé", {
-        description: "Le ticket a été supprimé avec succès.",
+      toast.success(t("toasts.deleted.title"), {
+        description: t("toasts.deleted.description"),
       });
     } catch (error: any) {
       const message =
         error?.response?.data?.message ??
         error?.response?.data?.error ??
         error?.message ??
-        "Une erreur est survenue.";
+        t("toasts.genericError");
 
-      toast.error("Suppression impossible", {
+      toast.error(t("toasts.deleteFailed.title"), {
         description: Array.isArray(message) ? message.join(", ") : message,
       });
     }
@@ -161,13 +235,13 @@ export default function TicketsPage() {
         <main className="space-y-6 p-4 sm:p-6 lg:p-8">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div>
-              <h1 className="text-2xl font-extrabold text-slate-950">Tickets</h1>
-              <p className="mt-1 text-sm text-slate-500">Gestion complète des tickets et suivi des statuts.</p>
+              <h1 className="text-2xl font-extrabold text-slate-950">{t("page.title")}</h1>
+              <p className="mt-1 text-sm text-slate-500">{t("page.description")}</p>
             </div>
 
             <Button onClick={handleOpenCreate} className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700">
               <Plus className="size-4" />
-              Créer un ticket
+              {t("page.createTicket")}
             </Button>
           </div>
 
@@ -186,61 +260,25 @@ export default function TicketsPage() {
 
           {ticketsQuery.isPending ? (
             <div className="rounded border border-slate-200 bg-white p-8 text-center text-sm text-slate-500">
-              Chargement des tickets...
+              {t("page.loadingTickets")}
             </div>
           ) : ticketsQuery.isError ? (
             <div className="rounded border border-rose-200 bg-rose-50 p-8 text-center text-sm text-rose-700">
-              Impossible de récupérer les tickets.
+              {t("page.loadTicketsError")}
             </div>
           ) : (
             <TicketTable
               tickets={tickets}
+              eventNameById={eventNameById}
+              ticketTypeNameById={ticketTypeNameById}
+              userNameById={userNameById}
+              onView={handleView}
               onEdit={handleEdit}
               onDelete={handleDelete}
               isDeleting={deleteTicketMutation.isPending}
               deletingId={deleteTicketMutation.variables ?? null}
             />
           )}
-
-          <Card className="rounded border-slate-200">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <TicketIcon className="size-5 text-blue-600" />
-                Détail d'un ticket
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="mb-3 flex flex-wrap gap-2">
-                {tickets.slice(0, 8).map((ticket) => (
-                  <Button
-                    key={ticket.id}
-                    variant={selectedTicketId === ticket.id ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setSelectedTicketId(ticket.id)}
-                  >
-                    {ticket.code}
-                  </Button>
-                ))}
-              </div>
-
-              {!selectedTicketId ? (
-                <p className="text-sm text-slate-500">Sélectionnez un ticket pour afficher ses détails.</p>
-              ) : selectedTicketQuery.isPending ? (
-                <p className="text-sm text-slate-500">Chargement du ticket...</p>
-              ) : selectedTicketQuery.isError ? (
-                <p className="text-sm text-rose-600">Impossible de charger ce ticket.</p>
-              ) : (
-                <div className="grid grid-cols-1 gap-3 text-sm sm:grid-cols-2">
-                  <DetailItem label="ID" value={selectedTicketQuery.data?.id} />
-                  <DetailItem label="Event ID" value={selectedTicketQuery.data?.eventId} />
-                  <DetailItem label="Type de ticket" value={selectedTicketQuery.data?.ticketTypeId} />
-                  <DetailItem label="Utilisateur" value={selectedTicketQuery.data?.userId} />
-                  <DetailItem label="Code" value={selectedTicketQuery.data?.code} />
-                  <DetailItem label="Statut" value={selectedTicketQuery.data?.status} />
-                </div>
-              )}
-            </CardContent>
-          </Card>
         </main>
       </div>
 
@@ -260,15 +298,20 @@ export default function TicketsPage() {
         isEventsLoading={eventsQuery.isPending}
         isTypeTicketsLoading={typeTicketsQuery.isPending}
       />
-    </div>
-  );
-}
 
-function DetailItem({ label, value }: { label: string; value?: string }) {
-  return (
-    <div className="rounded border border-slate-200 bg-slate-50 p-3">
-      <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{label}</p>
-      <p className="mt-1 font-medium text-slate-900">{value ?? "-"}</p>
+      <TicketDetailsModal
+        open={isDetailsModalOpen}
+        onClose={() => {
+          setIsDetailsModalOpen(false);
+          setSelectedTicketId(null);
+        }}
+        isPending={selectedTicketQuery.isPending}
+        isError={selectedTicketQuery.isError}
+        ticket={selectedTicketQuery.data}
+        eventNameById={eventNameById}
+        ticketTypeNameById={ticketTypeNameById}
+        userNameById={userNameById}
+      />
     </div>
   );
 }

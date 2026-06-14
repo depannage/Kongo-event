@@ -17,6 +17,7 @@ import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
 import { useSidebar } from "@/contexts/SidebarContext";
 import { api } from "@/shared/lib/http/api";
 import { useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export type ResourceOption = { id: string; name: string };
 export type ResourceField = {
@@ -52,6 +53,7 @@ export default function CrudResourcePage({
   canUpdate = true,
   openCreateOnLoad = false,
 }: Props) {
+  const t = useTranslations("resourcesCrud");
   const { isCollapsed } = useSidebar();
   const searchParams = useSearchParams();
   const [rows, setRows] = useState<any[]>([]);
@@ -184,7 +186,7 @@ export default function CrudResourcePage({
             <div className="flex gap-3">
               <button onClick={loadRows} className="inline-flex h-10 items-center gap-2 rounded border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 hover:bg-slate-50">
                 <RefreshCw className="size-4" />
-                Refresh
+                {t("actions.refresh")}
               </button>
               <button onClick={startCreate} className="inline-flex h-10 items-center gap-2 rounded bg-blue-600 px-4 text-sm font-semibold text-white hover:bg-blue-700">
                 <Plus className="size-4" />
@@ -197,7 +199,7 @@ export default function CrudResourcePage({
             <div className="border-b border-slate-200 p-4">
               <label className="flex h-10 max-w-md items-center gap-2 rounded border border-slate-200 px-3 focus-within:border-blue-500">
                 <Search className="size-4 text-slate-400" />
-                <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search" className="w-full bg-transparent text-sm outline-none" />
+                <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={t("search.placeholder")} className="w-full bg-transparent text-sm outline-none" />
               </label>
             </div>
 
@@ -206,26 +208,26 @@ export default function CrudResourcePage({
                 <thead className="border-b border-slate-200 bg-slate-50">
                   <tr>
                     {columns.map((column) => <Th key={column.key}>{column.label}</Th>)}
-                    <Th>Actions</Th>
+                    <Th>{t("table.actions")}</Th>
                   </tr>
                 </thead>
                 <tbody>
                   {loading ? (
-                    <tr><td colSpan={columns.length + 1} className="px-4 py-12 text-center text-sm text-slate-500"><Loader2 className="mx-auto mb-2 size-5 animate-spin" />Loading</td></tr>
+                    <tr><td colSpan={columns.length + 1} className="px-4 py-12 text-center text-sm text-slate-500"><Loader2 className="mx-auto mb-2 size-5 animate-spin" />{t("states.loading")}</td></tr>
                   ) : filteredRows.length ? (
                     filteredRows.map((row) => (
                       <tr key={rowKey(row, idFields)} className="border-b border-slate-100 hover:bg-slate-50">
                         {columns.map((column) => <td key={column.key} className="px-4 py-3 text-sm text-slate-700">{formatValue(row[column.key])}</td>)}
                         <td className="px-4 py-3">
                           <div className="flex gap-1">
-                            {canUpdate && <button onClick={() => startEdit(row)} className="flex size-8 items-center justify-center rounded hover:bg-slate-100" title="Edit"><Edit className="size-4" /></button>}
-                            <button onClick={() => remove(row)} className="flex size-8 items-center justify-center rounded hover:bg-rose-50" title="Delete"><Trash2 className="size-4 text-rose-500" /></button>
+                            {canUpdate && <button onClick={() => startEdit(row)} className="flex size-8 items-center justify-center rounded hover:bg-slate-100" title={t("actions.edit")}><Edit className="size-4" /></button>}
+                            <button onClick={() => remove(row)} className="flex size-8 items-center justify-center rounded hover:bg-rose-50" title={t("actions.delete")}><Trash2 className="size-4 text-rose-500" /></button>
                           </div>
                         </td>
                       </tr>
                     ))
                   ) : (
-                    <tr><td colSpan={columns.length + 1} className="px-4 py-12 text-center text-sm text-slate-500">No data</td></tr>
+                    <tr><td colSpan={columns.length + 1} className="px-4 py-12 text-center text-sm text-slate-500">{t("states.noData")}</td></tr>
                   )}
                 </tbody>
               </table>
@@ -238,7 +240,7 @@ export default function CrudResourcePage({
         <div className="fixed inset-0 z-50 flex justify-end bg-slate-950/40 p-3">
           <form onSubmit={submit} className="flex h-full w-full max-w-xl flex-col overflow-hidden rounded border border-slate-200 bg-white">
             <div className="flex items-center justify-between border-b border-slate-200 px-5 py-4">
-              <h2 className="text-xl font-bold text-slate-950">{editing ? "Edit" : createLabel}</h2>
+              <h2 className="text-xl font-bold text-slate-950">{editing ? t("actions.edit") : createLabel}</h2>
               <button type="button" onClick={() => setOpen(false)} className="flex size-9 items-center justify-center rounded border border-slate-200 hover:bg-slate-50"><X className="size-4" /></button>
             </div>
             <div className="flex-1 space-y-4 overflow-y-auto p-5">
@@ -258,7 +260,7 @@ export default function CrudResourcePage({
                     <div className="space-y-2">
                       <label className="flex min-h-28 cursor-pointer flex-col items-center justify-center gap-2 rounded border border-dashed border-slate-300 bg-slate-50 p-4 text-center hover:border-blue-500">
                         {uploading === field.name ? <Loader2 className="size-5 animate-spin text-blue-600" /> : <UploadCloud className="size-5 text-slate-500" />}
-                        <span className="text-sm font-semibold text-slate-700">Upload to Cloudinary</span>
+                        <span className="text-sm font-semibold text-slate-700">{t("upload.cloudinary")}</span>
                         <input type="file" accept="image/*,video/*" className="hidden" onChange={(event) => event.target.files?.[0] && uploadToCloudinary(field, event.target.files[0])} />
                       </label>
                       <Input value={form[field.name] ?? ""} onChange={(event) => setForm({ ...form, [field.name]: event.target.value })} placeholder={field.placeholder} />
@@ -270,10 +272,10 @@ export default function CrudResourcePage({
               ))}
             </div>
             <div className="flex justify-end gap-3 border-t border-slate-200 px-5 py-4">
-              <button type="button" onClick={() => setOpen(false)} className="h-10 rounded border border-slate-200 px-4 text-sm font-semibold text-slate-700 hover:bg-slate-50">Cancel</button>
+              <button type="button" onClick={() => setOpen(false)} className="h-10 rounded border border-slate-200 px-4 text-sm font-semibold text-slate-700 hover:bg-slate-50">{t("actions.cancel")}</button>
               <button disabled={saving} className="inline-flex h-10 items-center gap-2 rounded bg-blue-600 px-4 text-sm font-semibold text-white hover:bg-blue-700 disabled:opacity-60">
                 {saving ? <Loader2 className="size-4 animate-spin" /> : <Check className="size-4" />}
-                Save
+                {t("actions.save")}
               </button>
             </div>
           </form>

@@ -409,13 +409,103 @@
       "checkinsCompleted": "Check-ins Completed",
       "checkinsRemaining": "Check-ins Remaining"
     },
+    "page": {
+      "title": "Tickets",
+      "description": "Complete ticket management and status tracking.",
+      "createTicket": "Create ticket",
+      "loadingTickets": "Loading tickets...",
+      "loadTicketsError": "Unable to retrieve tickets."
+    },
+    "common": {
+      "cancel": "Cancel",
+      "close": "Close",
+      "saving": "Saving..."
+    },
+    "form": {
+      "createTitle": "Create ticket",
+      "editTitle": "Edit ticket",
+      "labels": {
+        "event": "Event",
+        "ticketType": "Ticket type"
+      },
+      "placeholders": {
+        "event": "Select an event",
+        "ticketType": "Select a ticket type"
+      },
+      "empty": {
+        "event": "No event found.",
+        "ticketType": "No ticket type found."
+      },
+      "submitCreate": "Create ticket",
+      "submitEdit": "Update"
+    },
+    "summary": {
+      "statusOverview": "Ticket status overview",
+      "activeTickets": "Active tickets",
+      "soldOutTickets": "Sold out tickets",
+      "quickActions": "Quick actions",
+      "manageTicketsTitle": "Manage tickets",
+      "manageTicketsDescription": "Create new ticket types or edit existing ones",
+      "createTicketType": "+ Create a new ticket type"
+    },
+    "details": {
+      "title": "Ticket details",
+      "loading": "Loading ticket...",
+      "loadError": "Unable to load this ticket.",
+      "noData": "No data.",
+      "qrUnavailable": "QR code unavailable.",
+      "fields": {
+        "code": "Code",
+        "event": "Event",
+        "ticketType": "Ticket type",
+        "user": "User",
+        "status": "Status",
+        "qrCode": "QR Code"
+      }
+    },
+    "toasts": {
+      "genericError": "An error occurred.",
+      "created": {
+        "title": "Ticket created",
+        "description": "The ticket was created successfully."
+      },
+      "updated": {
+        "title": "Ticket updated",
+        "description": "Ticket information has been saved."
+      },
+      "deleted": {
+        "title": "Ticket deleted",
+        "description": "The ticket was deleted successfully."
+      },
+      "saveFailed": {
+        "title": "Save failed"
+      },
+      "deleteFailed": {
+        "title": "Delete failed"
+      }
+    },
     "table": {
       "no": "No",
       "name": "Name",
       "email": "Email",
       "ticketType": "Ticket Type",
       "purchaseDate": "Purchase Date",
-      "checkinStatus": "Check-in Status"
+      "checkinStatus": "Check-in Status",
+      "empty": "No tickets found.",
+      "headers": {
+        "index": "No",
+        "code": "Code",
+        "event": "Event",
+        "ticketType": "Ticket type",
+        "user": "User",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "actions": {
+        "view": "View ticket",
+        "edit": "Edit ticket",
+        "delete": "Delete ticket"
+      }
     },
     "active": "Active",
     "soldOut": "Sold Out",
@@ -434,6 +524,28 @@
         "salesStatus": "Sales Status",
         "visibility": "Visibility"
       }
+    }
+  },
+  "resourcesCrud": {
+    "search": {
+      "placeholder": "Search"
+    },
+    "table": {
+      "actions": "Actions"
+    },
+    "actions": {
+      "refresh": "Refresh",
+      "edit": "Edit",
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "save": "Save"
+    },
+    "states": {
+      "loading": "Loading",
+      "noData": "No data"
+    },
+    "upload": {
+      "cloudinary": "Upload to Cloudinary"
     }
   },
   "resources": {
