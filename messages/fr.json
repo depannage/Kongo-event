@@ -370,7 +370,7 @@
     "emptyTransactions": "Aucune transaction trouvée",
     "metrics": {
       "totalRevenue": "Revenu total",
-      "ticketsSold": "Tickets vendus",
+      "ticketsSold": "Tickets disponibles",
       "refundedAmount": "Montant remboursé",
       "payoutsIssued": "Paiements effectués"
     },
@@ -401,10 +401,85 @@
       "tableTitle": "Table des participants"
     },
     "metrics": {
-      "ticketsSold": "Tickets vendus",
+      "ticketsSold": "Tickets disponibles",
       "revenueGenerated": "Revenu généré",
       "ticketsRemaining": "Tickets restants",
       "checkinsCompleted": "Check-ins effectués"
+    },
+    "page": {
+      "title": "Tickets",
+      "description": "Gestion complète des tickets et suivi des statuts.",
+      "createTicket": "Créer un ticket",
+      "loadingTickets": "Chargement des tickets...",
+      "loadTicketsError": "Impossible de récupérer les tickets."
+    },
+    "common": {
+      "cancel": "Annuler",
+      "close": "Fermer",
+      "saving": "Enregistrement..."
+    },
+    "form": {
+      "createTitle": "Créer un ticket",
+      "editTitle": "Modifier le ticket",
+      "labels": {
+        "event": "Événement",
+        "ticketType": "Type de ticket"
+      },
+      "placeholders": {
+        "event": "Sélectionnez un événement",
+        "ticketType": "Sélectionnez un type-ticket"
+      },
+      "empty": {
+        "event": "Aucun événement trouvé.",
+        "ticketType": "Aucun type-ticket trouvé."
+      },
+      "submitCreate": "Créer le ticket",
+      "submitEdit": "Mettre à jour"
+    },
+    "summary": {
+      "statusOverview": "Aperçu du statut du ticket",
+      "activeTickets": "Tickets actifs",
+      "soldOutTickets": "Tickets épuisés",
+      "quickActions": "Actions rapides",
+      "manageTicketsTitle": "Gérer les tickets",
+      "manageTicketsDescription": "Créer de nouveaux types de tickets ou modifier les existants",
+      "createTicketType": "+ Créer un nouveau type de ticket"
+    },
+    "details": {
+      "title": "Détail du ticket",
+      "loading": "Chargement du ticket...",
+      "loadError": "Impossible de charger ce ticket.",
+      "noData": "Aucune donnée.",
+      "qrUnavailable": "QR code indisponible.",
+      "fields": {
+        "code": "Code",
+        "event": "Événement",
+        "ticketType": "Type de ticket",
+        "user": "Utilisateur",
+        "status": "Statut",
+        "qrCode": "QR Code"
+      }
+    },
+    "toasts": {
+      "genericError": "Une erreur est survenue.",
+      "created": {
+        "title": "Ticket créé",
+        "description": "Le ticket a été créé avec succès."
+      },
+      "updated": {
+        "title": "Ticket mis à jour",
+        "description": "Les informations du ticket ont été enregistrées."
+      },
+      "deleted": {
+        "title": "Ticket supprimé",
+        "description": "Le ticket a été supprimé avec succès."
+      },
+      "saveFailed": {
+        "title": "Échec de l'enregistrement"
+      },
+      "deleteFailed": {
+        "title": "Suppression impossible"
+      }
     },
     "table": {
       "no": "N°",
@@ -412,7 +487,22 @@
       "email": "Email",
       "ticketType": "Type de ticket",
       "purchaseDate": "Date d’achat",
-      "checkinStatus": "Statut check-in"
+      "checkinStatus": "Statut check-in",
+      "empty": "Aucun ticket trouvé.",
+      "headers": {
+        "index": "N°",
+        "code": "Code",
+        "event": "Événement",
+        "ticketType": "Type de ticket",
+        "user": "Utilisateur",
+        "status": "Statut",
+        "actions": "Actions"
+      },
+      "actions": {
+        "view": "Voir ticket",
+        "edit": "Modifier ticket",
+        "delete": "Supprimer ticket"
+      }
     },
     "active": "Actif",
     "soldOut": "Épuisé",
@@ -431,6 +521,28 @@
         "salesStatus": "Statut de vente",
         "visibility": "Visibilité"
       }
+    }
+  },
+  "resourcesCrud": {
+    "search": {
+      "placeholder": "Rechercher"
+    },
+    "table": {
+      "actions": "Actions"
+    },
+    "actions": {
+      "refresh": "Actualiser",
+      "edit": "Modifier",
+      "delete": "Supprimer",
+      "cancel": "Annuler",
+      "save": "Enregistrer"
+    },
+    "states": {
+      "loading": "Chargement",
+      "noData": "Aucune donnée"
+    },
+    "upload": {
+      "cloudinary": "Uploader vers Cloudinary"
     }
   },
   "resources": {
