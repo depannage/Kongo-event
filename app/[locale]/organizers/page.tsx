@@ -2,9 +2,13 @@
 
 import CrudResourcePage from "@/components/resources/CrudResourcePage";
 import { useTranslations } from "next-intl";
+import { useMe } from "@/shared/hooks/auth.hooks";
 
 export default function OrganizersPage() {
   const t = useTranslations("resources.organizers");
+  const meQuery = useMe();
+
+  const connectedUserId = meQuery.data?.id ?? "";
 
   return (
     <CrudResourcePage
@@ -12,8 +16,8 @@ export default function OrganizersPage() {
       description={t("description")}
       endpoint="/organizers"
       createLabel={t("create")}
+      createFixedValues={{ userId: connectedUserId }}
       fields={[
-        { name: "userId", label: t("fields.user"), type: "select", endpoint: "/users", nameKey: "name", required: true },
         { name: "organizationId", label: t("fields.organization"), type: "select", endpoint: "/organizations" },
         { name: "displayName", label: t("fields.displayName"), required: true },
         { name: "description", label: t("fields.description") },

@@ -40,6 +40,7 @@ type Props = {
   idFields?: string[];
   canUpdate?: boolean;
   openCreateOnLoad?: boolean;
+  createFixedValues?: Record<string, any>;
 };
 
 export default function CrudResourcePage({
@@ -52,6 +53,7 @@ export default function CrudResourcePage({
   idFields = ["id"],
   canUpdate = true,
   openCreateOnLoad = false,
+  createFixedValues = {},
 }: Props) {
   const t = useTranslations("resourcesCrud");
   const { isCollapsed } = useSidebar();
@@ -103,9 +105,12 @@ export default function CrudResourcePage({
     if (!openCreateOnLoad) return;
     if (searchParams.get("create") !== "1") return;
     setEditing(null);
-    setForm(defaultForm(fields));
+    setForm({
+      ...defaultForm(fields),
+      ...createFixedValues,
+    });
     setOpen(true);
-  }, [openCreateOnLoad, searchParams, fields]);
+  }, [openCreateOnLoad, searchParams, fields, createFixedValues]);
 
   const filteredRows = useMemo(() => {
     const term = query.toLowerCase();
@@ -114,7 +119,10 @@ export default function CrudResourcePage({
 
   const startCreate = () => {
     setEditing(null);
-    setForm(defaultForm(fields));
+    setForm({
+      ...defaultForm(fields),
+      ...createFixedValues,
+    });
     setOpen(true);
   };
 
@@ -128,7 +136,15 @@ export default function CrudResourcePage({
     event.preventDefault();
     setSaving(true);
     try {
-      const payload = cleanPayload(form, fields);
+      const payload = cleanPayload(
+        editing
+          ? form
+          : {
+              ...form,
+              ...createFixedValues,
+            },
+        fields
+      );
       const path = resourcePath(endpoint, editing, idFields);
       if (editing && path) {
         await api.patch(path, payload);
