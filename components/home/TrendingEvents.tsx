@@ -32,7 +32,7 @@ export default function TrendingEvents({ events }: Props) {
                     <article key={event.id} className="overflow-hidden rounded-xl bg-white shadow-sm">
                         <div className="relative h-40">
                             <Image
-                                src={event.bannerUrl || "/images/trending-1.jpg"}
+                                src={event.bannerUrl || "/images/heroo.png"}
                                 alt={event.title}
                                 fill
                                 className="object-cover"

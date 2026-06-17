@@ -1,4 +1,4 @@
-import { CityPage } from "@/components/website/PageSections";
+import { PublicEventsListPage } from "@/components/website/PublicDataPages";
 
 export default async function Page({
   params,
@@ -8,5 +8,5 @@ export default async function Page({
   const { slug } = await params;
   const city = slug.charAt(0).toUpperCase() + slug.slice(1);
 
-  return <CityPage city={city || "London"} />;
+  return <PublicEventsListPage mode="city" slug={slug} title={city || slug} />;
 }

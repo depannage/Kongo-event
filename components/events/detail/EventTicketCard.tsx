@@ -97,7 +97,7 @@ export default function EventTicketCard({ event }: Props) {
                 </div>
             </div>
 
-            <Link href={getLocalizedHref("/checkout")} className="mt-8 block w-full rounded-xl bg-[#B55A00] px-6 py-4 text-center font-bold text-white transition hover:bg-[#944900]">
+            <Link href={getLocalizedHref(`/checkout?event=${event.slug}`)} className="mt-8 block w-full rounded-xl bg-[#B55A00] px-6 py-4 text-center font-bold text-white transition hover:bg-[#944900]">
                 Buy Tickets Now
             </Link>
 

@@ -1,4 +1,4 @@
-import { CategoryPage } from "@/components/website/PageSections";
+import { PublicEventsListPage } from "@/components/website/PublicDataPages";
 
 export default async function Page({
   params,
@@ -11,5 +11,5 @@ export default async function Page({
     .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
     .join(" ");
 
-  return <CategoryPage name={name || "Rhythms of the Night"} />;
+  return <PublicEventsListPage mode="category" slug={slug} title={name || slug} />;
 }

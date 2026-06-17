@@ -1,5 +1,5 @@
-import { AuthPage } from "@/components/website/PageSections";
+import PortalAuthPage from "@/components/website/PortalAuthPage";
 
 export default function Page() {
-  return <AuthPage />;
+  return <PortalAuthPage />;
 }

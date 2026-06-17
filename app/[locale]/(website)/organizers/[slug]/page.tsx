@@ -1,5 +1,10 @@
-import { OrganizerProfilePage } from "@/components/website/PageSections";
+import { PublicOrganizerPage } from "@/components/website/PublicDataPages";
 
-export default function Page() {
-  return <OrganizerProfilePage />;
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  return <PublicOrganizerPage slug={slug} />;
 }

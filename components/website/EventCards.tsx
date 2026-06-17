@@ -1,15 +1,25 @@
 import Image from "next/image";
 import { Calendar, Heart, MapPin, QrCode } from "lucide-react";
-import { sampleEvents } from "./website-data";
 import { LocalizedLink } from "./LocalizedLink";
+import type { PublicEvent } from "@/shared/types/public-event.types";
+
+function formatDate(date?: string) {
+  if (!date) return "Date à confirmer";
+  return new Intl.DateTimeFormat("fr-FR", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  }).format(new Date(date));
+}
 
 export function EventCard({
   event,
   compact = false,
 }: {
-  event: (typeof sampleEvents)[number];
+  event: PublicEvent;
   compact?: boolean;
 }) {
+  const price = event.minPrice ? `${event.minPrice.toLocaleString("fr-FR")} ${event.currency}` : "Gratuit";
+
   return (
     <LocalizedLink
       href={`/events/${event.slug}`}
@@ -17,28 +27,28 @@ export function EventCard({
     >
       <div className={`relative ${compact ? "h-40" : "h-56"} bg-slate-200`}>
         <Image
-          src={event.image}
+          src={event.bannerUrl || "/images/heroo.png"}
           alt={event.title}
           fill
           className="object-cover transition duration-500 group-hover:scale-105"
         />
         <span className="absolute left-5 top-5 rounded-full bg-white px-4 py-2 text-xs font-extrabold uppercase text-[#005995]">
-          {event.category}
+          {event.category?.name || "Event"}
         </span>
         <span className="absolute right-4 top-4 rounded-full bg-white px-4 py-2 text-sm font-extrabold text-[#005995]">
-          {event.price === "Free" ? "Free" : `From ${event.price}`}
+          {price}
         </span>
       </div>
       <div className="p-6">
         <p className="mb-3 inline-flex rounded-md bg-[#E8F5FD] px-3 py-1 text-sm font-bold text-[#20AEEA]">
-          {event.date}, 2024
+          {formatDate(event.startAt)}
         </p>
         <h3 className="line-clamp-2 text-2xl font-extrabold leading-tight text-slate-950">
           {event.title}
         </h3>
         <p className="mt-4 flex items-center gap-2 text-lg text-slate-600">
           <MapPin className="h-5 w-5" />
-          {event.city}, {event.venue}
+          {[event.venue?.city, event.venue?.name].filter(Boolean).join(", ")}
         </p>
       </div>
     </LocalizedLink>

@@ -47,7 +47,7 @@ export default function FeaturedHighlights({ events }: Props) {
                         className="group relative h-[390px] overflow-hidden rounded-2xl bg-black shadow-xl"
                     >
                         <Image
-                            src={event.bannerUrl || "/images/event-card-1.jpg"}
+                            src={event.bannerUrl || "/images/heroo.png"}
                             alt={event.title}
                             fill
                             className="object-cover transition duration-500 group-hover:scale-105"
