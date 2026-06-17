@@ -13,7 +13,7 @@ import {
   RefreshCw,
   X,
 } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import DashboardNavbar from "@/components/dashboard/DashboardNavbar";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
 import { useSidebar } from "@/contexts/SidebarContext";
@@ -33,18 +33,8 @@ type CalendarEventRow = {
 
 const WEEK_DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-const DATE_LOCALES: Record<string, string> = {
-  fr: "fr-FR",
-  en: "en-US",
-};
-
-function resolveDateLocale(locale: string): string {
-  return DATE_LOCALES[locale] ?? locale;
-}
-
 export default function CalendarsPage() {
   const t = useTranslations("calendarAdmin");
-  const locale = useLocale();
   const { isCollapsed } = useSidebar();
   const [month, setMonth] = useState(monthKey(new Date()));
   const [selectedDate, setSelectedDate] = useState(todayKey());
@@ -54,14 +44,14 @@ export default function CalendarsPage() {
   const [error, setError] = useState("");
 
   const calendarDays = useMemo(() => buildMonthDays(month), [month]);
-  const monthLabel = useMemo(() => formatMonth(month, locale), [month, locale]);
+  const monthLabel = useMemo(() => formatMonth(month), [month]);
 
   const loadCalendar = async () => {
     setLoading(true);
     setError("");
     try {
       const response = await api.get("/dashboard/calendar", { params: { month } });
-      setEvents(normalizeCalendarEvents(response.data, locale));
+      setEvents(normalizeCalendarEvents(response.data));
     } catch (err: any) {
       setError(err?.response?.data?.message?.[0] ?? err?.response?.data?.message ?? t("loadError"));
     } finally {
@@ -71,7 +61,7 @@ export default function CalendarsPage() {
 
   useEffect(() => {
     loadCalendar();
-  }, [month, locale]);
+  }, [month]);
 
   const eventsByDate = useMemo(() => {
     return events.reduce<Record<string, CalendarEventRow[]>>((acc, event) => {
@@ -363,7 +353,7 @@ function EmptyBlock({ label }: { label: string }) {
   );
 }
 
-function normalizeCalendarEvents(data: any, locale: string): CalendarEventRow[] {
+function normalizeCalendarEvents(data: any): CalendarEventRow[] {
   const rows = calendarRows(data);
   return rows.map((row: any) => {
     const start = new Date(row.startAt ?? row.start ?? row.date);
@@ -378,9 +368,9 @@ function normalizeCalendarEvents(data: any, locale: string): CalendarEventRow[] 
       id: row.id,
       title: textValue(row.title),
       description: textValue(row.description),
-      date: Number.isNaN(start.getTime()) ? fullDate : formatDate(start, locale),
+      date: Number.isNaN(start.getTime()) ? fullDate : formatDate(start),
       fullDate,
-      time: Number.isNaN(start.getTime()) ? "-" : `${formatTime(start, locale)} - ${formatTime(end, locale)}`,
+      time: Number.isNaN(start.getTime()) ? "-" : `${formatTime(start)} - ${formatTime(end)}`,
       location: row.location ?? (row.venue ? [row.venue.name, row.venue.city, row.venue.country].filter(Boolean).join(", ") : ""),
       status: eventStatus(row.status),
     };
@@ -458,23 +448,17 @@ function dateKey(date: Date) {
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
 }
 
-function formatMonth(month: string, locale: string) {
+function formatMonth(month: string) {
   const [year, monthNumber] = month.split("-").map(Number);
-  return new Intl.DateTimeFormat(resolveDateLocale(locale), {
-    month: "long",
-    year: "numeric",
-  }).format(new Date(year, monthNumber - 1, 1));
+  return new Intl.DateTimeFormat(undefined, { month: "long", year: "numeric" }).format(new Date(year, monthNumber - 1, 1));
 }
 
-function formatDate(date: Date, locale: string) {
-  return new Intl.DateTimeFormat(resolveDateLocale(locale), { dateStyle: "medium" }).format(date);
+function formatDate(date: Date) {
+  return new Intl.DateTimeFormat(undefined, { dateStyle: "medium" }).format(date);
 }
 
-function formatTime(date: Date, locale: string) {
-  return new Intl.DateTimeFormat(resolveDateLocale(locale), {
-    hour: "2-digit",
-    minute: "2-digit",
-  }).format(date);
+function formatTime(date: Date) {
+  return new Intl.DateTimeFormat(undefined, { hour: "2-digit", minute: "2-digit" }).format(date);
 }
 
 function textValue(value: any) {

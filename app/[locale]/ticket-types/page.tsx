@@ -12,7 +12,6 @@ export default function TicketTypesPage() {
       description={t("description")}
       endpoint="/ticket-types"
       createLabel={t("create")}
-      openCreateOnLoad={true}
       fields={[
         { name: "eventId", label: t("fields.event"), type: "select", endpoint: "/events", nameKey: "title", required: true },
         { name: "name", label: t("fields.name"), required: true },
