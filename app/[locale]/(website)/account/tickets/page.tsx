@@ -1,5 +1,5 @@
-import { MyTicketsPage } from "@/components/website/PageSections";
+import { PortalTicketsPage } from "@/components/website/PortalAccountPages";
 
 export default function Page() {
-  return <MyTicketsPage />;
+  return <PortalTicketsPage />;
 }

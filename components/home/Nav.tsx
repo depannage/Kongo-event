@@ -37,14 +37,14 @@ export default function Navbar() {
                     {/*</Link>*/}
 
                     <Link
-                        href={getLocalizedHref("/auth")}
+                        href={getLocalizedHref("/auth?mode=login")}
                         className="hidden rounded-xl border border-gray-300 px-5 py-3 text-sm font-bold text-gray-700 hover:bg-gray-50 transition-colors md:block"
                     >
                         {t("login")}
                     </Link>
 
                     <Link
-                        href={getLocalizedHref("/auth")}
+                        href={getLocalizedHref("/auth?mode=register")}
                         className="rounded-xl bg-[#0067A8] px-5 py-3 text-sm font-bold text-white hover:bg-[#005690] transition-colors"
                     >
                         {t("signup")}

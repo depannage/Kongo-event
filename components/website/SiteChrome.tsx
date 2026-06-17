@@ -58,7 +58,7 @@ export function WebsiteNav({
 
         <div className="flex items-center gap-3">
           <LocalizedLink
-            href="/auth"
+            href="/auth?mode=login"
             className={`hidden rounded-lg px-5 py-3 text-sm font-bold md:inline-flex ${
               transparent
                 ? "border border-white/30 text-white"
@@ -68,7 +68,7 @@ export function WebsiteNav({
             Log In
           </LocalizedLink>
           <LocalizedLink
-            href="/auth"
+            href="/auth?mode=register"
             className="rounded-lg bg-[#005995] px-6 py-3 text-sm font-bold text-white shadow-sm hover:bg-[#004b7d]"
           >
             Sign up

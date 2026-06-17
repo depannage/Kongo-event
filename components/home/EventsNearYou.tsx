@@ -43,7 +43,7 @@ export default function EventsNearYou({ events }: Props) {
             <div className="grid gap-6 lg:grid-cols-[2fr_1fr]">
                 <article className="relative h-[520px] overflow-hidden rounded-2xl bg-black shadow-xl">
                     <Image
-                        src={main.bannerUrl || "/images/near-main.jpg"}
+                        src={main.bannerUrl || "/images/heroo.png"}
                         alt={main.title}
                         fill
                         className="object-cover"
@@ -76,7 +76,7 @@ export default function EventsNearYou({ events }: Props) {
                             className="relative h-[247px] overflow-hidden rounded-2xl bg-black shadow-lg"
                         >
                             <Image
-                                src={event.bannerUrl || "/images/near-1.jpg"}
+                                src={event.bannerUrl || "/images/heroo.png"}
                                 alt={event.title}
                                 fill
                                 className="object-cover"

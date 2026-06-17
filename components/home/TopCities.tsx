@@ -28,7 +28,7 @@ export default function TopCities({ cities }: Props) {
                     <div key={city.id} className="text-center">
                         <div className="relative mx-auto h-48 w-48 overflow-hidden rounded-full shadow-md">
                             <Image
-                                src={city.image || "/images/city-1.jpg"}
+                                src={city.image || "/images/heroo.png"}
                                 alt={city.name}
                                 fill
                                 className="object-cover"
