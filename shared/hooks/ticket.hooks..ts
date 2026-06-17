@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { ticketService } from "@/core/services/ticket.service";
-import type { CreateTicketPayload, UpdateTicketPayload } from "@/core/types/ticket";
+import { ticketService } from "@/shared/services/ticket.service";
+import type { CreateTicketPayload, UpdateTicketPayload } from "@/shared/types/ticket";
 
 const TICKET_QUERY_KEY = ["tickets"] as const;
 

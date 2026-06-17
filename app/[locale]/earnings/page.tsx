@@ -16,8 +16,9 @@ import {
     CheckCircle,
     Clock,
 } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useSidebar } from "@/contexts/SidebarContext";
+import { formatCurrency, formatNumber } from "@/shared/lib/formatNumber";
 import DashboardNavbar from "@/components/dashboard/DashboardNavbar";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
 
@@ -36,6 +37,7 @@ const EARNINGS = [
 
 export default function EarningsPage() {
     const t = useTranslations("earnings");
+    const locale = useLocale();
     const { isCollapsed } = useSidebar();
 
     const [open, setOpen] = useState(false);
@@ -303,10 +305,10 @@ export default function EarningsPage() {
                                             <p className="font-semibold text-slate-900">{earning.eventName}</p>
                                         </td>
                                         <td className="px-5 py-4 text-sm text-slate-500">{earning.date}</td>
-                                        <td className="px-5 py-4 text-sm text-slate-600">{earning.ticketsSold.toLocaleString()}</td>
-                                        <td className="px-5 py-4 font-semibold text-slate-900">${earning.revenue.toLocaleString()}</td>
-                                        <td className="px-5 py-4 text-sm text-slate-500">${earning.platformFee}</td>
-                                        <td className="px-5 py-4 font-semibold text-emerald-600">${earning.netEarnings.toLocaleString()}</td>
+                                        <td className="px-5 py-4 text-sm text-slate-600">{formatNumber(earning.ticketsSold, locale)}</td>
+                                        <td className="px-5 py-4 font-semibold text-slate-900">{formatCurrency(earning.revenue, locale)}</td>
+                                        <td className="px-5 py-4 text-sm text-slate-500">{formatCurrency(earning.platformFee, locale)}</td>
+                                        <td className="px-5 py-4 font-semibold text-emerald-600">{formatCurrency(earning.netEarnings, locale)}</td>
                                         <td className="px-5 py-4">
                                             <div className="flex items-center gap-1.5">
                                                 {getStatusIcon(earning.status)}

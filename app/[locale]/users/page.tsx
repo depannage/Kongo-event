@@ -125,6 +125,16 @@ export default function UsersPage() {
         }
     };
 
+    const roleLabel = (role: string) => {
+        const key = role.toLowerCase() as "admin" | "organizer" | "attendee";
+        return t(`roles.${key}`);
+    };
+
+    const statusLabel = (status: string) => {
+        const key = status.toLowerCase() as "active" | "pending" | "banned";
+        return t(`statuses.${key}`);
+    };
+
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
             <DashboardSidebar />
@@ -161,19 +171,19 @@ export default function UsersPage() {
                     {/* Stats Cards */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-6">
                         <StatsCard
-                            title="Total Users"
+                            title={t("metrics.totalUsers")}
                             value={totalUsers}
                             icon={<UserCheck className="size-5" />}
                             color="blue"
                         />
                         <StatsCard
-                            title="Active Users"
+                            title={t("metrics.activeUsers")}
                             value={activeUsers}
                             icon={<UserCheck className="size-5" />}
                             color="emerald"
                         />
                         <StatsCard
-                            title="Pending Approval"
+                            title={t("metrics.pendingApproval")}
                             value={pendingUsers}
                             icon={<AlertCircle className="size-5" />}
                             color="amber"
@@ -184,7 +194,7 @@ export default function UsersPage() {
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-6">
                         <div className="bg-white rounded border border-slate-200 p-4">
                             <div className="flex items-center justify-between mb-2">
-                                <span className="text-sm font-medium text-slate-500">Admins</span>
+                                <span className="text-sm font-medium text-slate-500">{t("roles.admins")}</span>
                                 <span className="text-2xl font-bold text-purple-600">{adminUsers}</span>
                             </div>
                             <div className="w-full bg-slate-100 rounded h-2">
@@ -193,7 +203,7 @@ export default function UsersPage() {
                         </div>
                         <div className="bg-white rounded border border-slate-200 p-4">
                             <div className="flex items-center justify-between mb-2">
-                                <span className="text-sm font-medium text-slate-500">Organizers</span>
+                                <span className="text-sm font-medium text-slate-500">{t("roles.organizers")}</span>
                                 <span className="text-2xl font-bold text-blue-600">{organizerUsers}</span>
                             </div>
                             <div className="w-full bg-slate-100 rounded h-2">
@@ -202,7 +212,7 @@ export default function UsersPage() {
                         </div>
                         <div className="bg-white rounded border border-slate-200 p-4">
                             <div className="flex items-center justify-between mb-2">
-                                <span className="text-sm font-medium text-slate-500">Attendees</span>
+                                <span className="text-sm font-medium text-slate-500">{t("roles.attendees")}</span>
                                 <span className="text-2xl font-bold text-green-600">{attendeeUsers}</span>
                             </div>
                             <div className="w-full bg-slate-100 rounded h-2">
@@ -238,10 +248,10 @@ export default function UsersPage() {
                                         onChange={(e) => setFilterRole(e.target.value)}
                                         className="h-10 px-3 rounded border border-slate-200 text-sm font-medium text-slate-600 outline-none focus:border-blue-400"
                                     >
-                                        <option value="all">All Roles</option>
-                                        <option value="admin">Admin</option>
-                                        <option value="organizer">Organizer</option>
-                                        <option value="attendee">Attendee</option>
+                                        <option value="all">{t("filterAllRoles")}</option>
+                                        <option value="admin">{t("roles.admin")}</option>
+                                        <option value="organizer">{t("roles.organizer")}</option>
+                                        <option value="attendee">{t("roles.attendee")}</option>
                                     </select>
 
                                     {/* Filter by Status */}
@@ -250,10 +260,10 @@ export default function UsersPage() {
                                         onChange={(e) => setFilterStatus(e.target.value)}
                                         className="h-10 px-3 rounded border border-slate-200 text-sm font-medium text-slate-600 outline-none focus:border-blue-400"
                                     >
-                                        <option value="all">All Status</option>
-                                        <option value="active">Active</option>
-                                        <option value="pending">Pending</option>
-                                        <option value="banned">Banned</option>
+                                        <option value="all">{t("filterAllStatus")}</option>
+                                        <option value="active">{t("statuses.active")}</option>
+                                        <option value="pending">{t("statuses.pending")}</option>
+                                        <option value="banned">{t("statuses.banned")}</option>
                                     </select>
 
                                     {/* Sort Button */}
@@ -272,7 +282,7 @@ export default function UsersPage() {
                                         className="inline-flex h-10 items-center justify-center gap-2 rounded border border-slate-200 px-4 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors"
                                     >
                                         <SortAsc className="size-4" />
-                                        Sort by {sortBy}
+                                        {t("sortBy")} {t(`sortFields.${sortBy}`)}
                                         {sortOrder === "asc" ? " ↑" : " ↓"}
                                     </button>
                                 </div>
@@ -295,7 +305,7 @@ export default function UsersPage() {
                                     <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">{t("table.name")}</th>
                                     <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">{t("table.email")}</th>
                                     <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">{t("table.phone")}</th>
-                                    <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Join Date</th>
+                                    <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">{t("table.joinDate")}</th>
                                     <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">{t("table.role")}</th>
                                     <th className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">{t("table.status")}</th>
                                     <th className="px-5 py-3 text-center text-xs font-semibold text-slate-500 uppercase tracking-wider">{t("table.actions")}</th>
@@ -327,30 +337,30 @@ export default function UsersPage() {
                                         <td className="px-5 py-4 text-sm text-slate-500">{user.joinDate}</td>
                                         <td className="px-5 py-4">
                         <span className={`inline-flex px-2.5 py-1 rounded text-xs font-semibold border ${getRoleColor(user.role)}`}>
-                          {user.role}
+                          {roleLabel(user.role)}
                         </span>
                                         </td>
                                         <td className="px-5 py-4">
                                             <div className="flex items-center gap-1.5">
                                                 {getStatusIcon(user.status)}
                                                 <span className={`inline-flex px-2.5 py-1 rounded text-xs font-semibold border ${getStatusColor(user.status)}`}>
-                            {user.status}
+                            {statusLabel(user.status)}
                           </span>
                                             </div>
                                         </td>
                                         <td className="px-5 py-4">
                                             <div className="flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                <button className="p-1.5 rounded hover:bg-slate-100 transition-colors" title="View">
+                                                <button className="p-1.5 rounded hover:bg-slate-100 transition-colors" title={t("table.view")}>
                                                     <Eye className="size-4 text-slate-500" />
                                                 </button>
                                                 <button
                                                     onClick={() => handleEdit(user)}
                                                     className="p-1.5 rounded hover:bg-sky-50 transition-colors"
-                                                    title="Edit"
+                                                    title={t("table.edit")}
                                                 >
                                                     <Pencil className="size-4 text-sky-500" />
                                                 </button>
-                                                <button className="p-1.5 rounded hover:bg-rose-50 transition-colors" title="Delete">
+                                                <button className="p-1.5 rounded hover:bg-rose-50 transition-colors" title={t("table.delete")}>
                                                     <Trash2 className="size-4 text-rose-500" />
                                                 </button>
                                             </div>
@@ -363,9 +373,9 @@ export default function UsersPage() {
                             {sortedUsers.length === 0 && (
                                 <div className="text-center py-12">
                                     <UserX className="size-12 text-slate-300 mx-auto mb-3" />
-                                    <p className="text-slate-400">No users found</p>
+                                    <p className="text-slate-400">{t("emptyUsers")}</p>
                                     <button className="mt-3 text-blue-600 text-sm font-semibold hover:text-blue-700">
-                                        + Add your first user
+                                        {t("createFirst")}
                                     </button>
                                 </div>
                             )}
@@ -374,13 +384,14 @@ export default function UsersPage() {
                         {/* Pagination */}
                         <div className="px-5 py-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
                             <p className="text-sm text-slate-500">
-                                Showing {sortedUsers.length} of {USERS.length} users
-                                {selectedRows.length > 0 && ` (${selectedRows.length} selected)`}
+                                {t("tableFooter.showing", { count: sortedUsers.length, total: USERS.length })}
+                                {selectedRows.length > 0 &&
+                                    ` ${t("tableFooter.selected", { count: selectedRows.length })}`}
                             </p>
 
                             <div className="flex gap-2">
                                 <button className="px-3 py-1.5 rounded border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
-                                    Previous
+                                    {t("pagination.previous")}
                                 </button>
                                 <button className="px-3 py-1.5 rounded bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors">
                                     1
@@ -392,7 +403,7 @@ export default function UsersPage() {
                                     3
                                 </button>
                                 <button className="px-3 py-1.5 rounded border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
-                                    Next
+                                    {t("pagination.next")}
                                 </button>
                             </div>
                         </div>
@@ -494,21 +505,21 @@ function UpdateUserModal({ t, user, onClose }: { t: any; user: any; onClose: () 
                                 onChange={(e) => setFormData({...formData, role: e.target.value})}
                                 className="h-11 w-full rounded border border-slate-200 bg-white px-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
                             >
-                                <option value="Admin">Admin</option>
-                                <option value="Organizer">Organizer</option>
-                                <option value="Attendee">Attendee</option>
+                                <option value="Admin">{t("roles.admin")}</option>
+                                <option value="Organizer">{t("roles.organizer")}</option>
+                                <option value="Attendee">{t("roles.attendee")}</option>
                             </select>
                         </Field>
 
-                        <Field label="Status" required>
+                        <Field label={t("form.status")} required>
                             <select
                                 value={formData.status}
                                 onChange={(e) => setFormData({...formData, status: e.target.value})}
                                 className="h-11 w-full rounded border border-slate-200 bg-white px-4 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
                             >
-                                <option value="Active">Active</option>
-                                <option value="Pending">Pending</option>
-                                <option value="Banned">Banned</option>
+                                <option value="Active">{t("statuses.active")}</option>
+                                <option value="Pending">{t("statuses.pending")}</option>
+                                <option value="Banned">{t("statuses.banned")}</option>
                             </select>
                         </Field>
                     </div>

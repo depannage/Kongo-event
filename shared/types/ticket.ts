@@ -18,9 +18,9 @@ export type CreateTicketPayload = {
   eventId: string;
   ticketTypeId: string;
   userId: string;
-  code: string;
-  qrCodeUrl: string;
-  status: TicketStatus;
+  code?: string;
+  qrCodeUrl?: string;
+  status?: TicketStatus;
 };
 
 export type UpdateTicketPayload = Partial<CreateTicketPayload>;

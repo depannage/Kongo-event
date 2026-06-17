@@ -5,7 +5,7 @@ import type {
   CreateTicketPayload,
   Ticket,
   UpdateTicketPayload,
-} from "@/core/types/ticket";
+} from "@/shared/types/ticket";
 
 const BASE_PATH = "/tickets";
 
