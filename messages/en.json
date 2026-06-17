@@ -957,5 +957,113 @@
       "updateSuccess": "Payment updated successfully.",
       "updateError": "Could not update the payment."
     }
+  },
+
+  "navigation": {
+    "brand": "Kongo Event",
+    "discover": "Discover",
+    "help": "Help",
+    "organizer": "Organizer",
+    "login": "Log In",
+    "signup": "Sign up"
+  },
+  "home": {
+    "hero": {
+      "titleFirst": "Unforgettable Experiences",
+      "titleSecond": "Starts Here",
+      "subtitle": "Discover, book, and experience the most exclusive events in your city. From music festivals to intimate workshops.",
+      "searchPlaceholder": "Search event name...",
+      "location": "Location",
+      "date": "Date"
+    },
+    "featured": {
+      "title": "Featured Highlights",
+      "subtitle": "The handpicked experiences you can't miss."
+    },
+    "trending": {
+      "title": "Trending Right Now"
+    },
+    "categories": {
+      "title": "Browse by Category",
+      "subtitle": "Find the perfect event for your mood.",
+      "music": "Music",
+      "food": "Food & Drink",
+      "art": "Art",
+      "sports": "Sports",
+      "entertainment": "Entertainment",
+      "business": "Business"
+    },
+    "nearby": {
+      "title": "Events Near You",
+      "viewAll": "View All →",
+      "getTickets": "Get Tickets"
+    },
+    "cities": {
+      "title": "Top Cities",
+      "events": "Events"
+    },
+    "newsletter": {
+      "title": "Never Miss a Moment",
+      "subtitle": "Get curated event recommendations and early access tickets delivered straight to your inbox.",
+      "placeholder": "Enter your email",
+      "button": "Subscribe Now",
+      "terms": "By subscribing, you agree to our Terms and Privacy Policy."
+    },
+    "testimonials": {
+      "title": "What Our Community Says"
+    }
+  },
+  "footer": {
+    "brand": "Kongo Event",
+    "description": "Connecting curious minds with the most extraordinary live experiences around the globe.",
+    "company": {
+      "title": "Company",
+      "about": "About Us",
+      "careers": "Careers",
+      "press": "Press",
+      "partners": "Partners"
+    },
+    "explore": {
+      "title": "Explore",
+      "music": "Music Events",
+      "art": "Art Shows",
+      "tech": "Tech Summits",
+      "nightlife": "Nightlife"
+    },
+    "resources": {
+      "title": "Resources",
+      "help": "Help Center",
+      "terms": "Terms of Service",
+      "privacy": "Privacy Policy",
+      "cookies": "Cookie Settings"
+    },
+    "copyright": "© 2024 Kongo Event. All rights reserved."
+  },
+  "discover": {
+    "title": "Discover Extraordinary Events",
+    "searchPlaceholder": "Search events, organizers, or keywords",
+    "location": "Location",
+    "searchButton": "Search",
+    "showing": "Showing",
+    "events": "events",
+    "relevance": "Relevance",
+    "categories": "Categories",
+    "all": "All",
+    "date": "Date",
+    "anytime": "Anytime",
+    "today": "Today",
+    "thisWeekend": "This Weekend",
+    "nextWeek": "Next Week",
+    "priceRange": "Price Range",
+    "free": "Free",
+    "distance": "Distance",
+    "within10": "Within 10 miles",
+    "within25": "Within 25 miles",
+    "within50": "Within 50 miles",
+    "anywhere": "Anywhere",
+    "resetFilters": "Reset Filters",
+    "loading": "Loading events...",
+    "error": "Unable to load events.",
+    "empty": "No events found."
   }
 }

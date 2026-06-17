@@ -954,5 +954,112 @@
       "updateSuccess": "Paiement mis à jour avec succès.",
       "updateError": "Impossible de mettre à jour le paiement."
     }
+  },
+  "navigation": {
+    "brand": "Kongo Event",
+    "discover": "Découvrir",
+    "help": "Aide",
+    "organizer": "Organisateur",
+    "login": "Connexion",
+    "signup": "S'inscrire"
+  },
+  "home": {
+    "hero": {
+      "titleFirst": "Des expériences inoubliables",
+      "titleSecond": "commencent ici",
+      "subtitle": "Découvrez, réservez et vivez les événements les plus exclusifs de votre ville. Des festivals de musique aux ateliers privés.",
+      "searchPlaceholder": "Rechercher un événement...",
+      "location": "Lieu",
+      "date": "Date"
+    },
+    "featured": {
+      "title": "Événements à la une",
+      "subtitle": "Les expériences sélectionnées à ne pas manquer."
+    },
+    "trending": {
+      "title": "Tendances du moment"
+    },
+    "categories": {
+      "title": "Explorer par catégorie",
+      "subtitle": "Trouvez l'événement parfait selon votre envie.",
+      "music": "Musique",
+      "food": "Cuisine & Boissons",
+      "art": "Art",
+      "sports": "Sport",
+      "entertainment": "Divertissement",
+      "business": "Business"
+    },
+    "nearby": {
+      "title": "Événements près de vous",
+      "viewAll": "Tout voir →",
+      "getTickets": "Obtenir des billets"
+    },
+    "cities": {
+      "title": "Villes populaires",
+      "events": "Événements"
+    },
+    "newsletter": {
+      "title": "Ne manquez aucun moment",
+      "subtitle": "Recevez des recommandations d'événements et un accès anticipé aux billets directement dans votre boîte mail.",
+      "placeholder": "Entrez votre email",
+      "button": "S'abonner",
+      "terms": "En vous abonnant, vous acceptez nos conditions et notre politique de confidentialité."
+    },
+    "testimonials": {
+      "title": "Ce que dit notre communauté"
+    }
+  },
+  "footer": {
+    "brand": "Kongo Event",
+    "description": "Nous connectons les esprits curieux aux expériences live les plus extraordinaires à travers le monde.",
+    "company": {
+      "title": "Entreprise",
+      "about": "À propos",
+      "careers": "Carrières",
+      "press": "Presse",
+      "partners": "Partenaires"
+    },
+    "explore": {
+      "title": "Explorer",
+      "music": "Événements musicaux",
+      "art": "Expositions d'art",
+      "tech": "Sommets tech",
+      "nightlife": "Vie nocturne"
+    },
+    "resources": {
+      "title": "Ressources",
+      "help": "Centre d'aide",
+      "terms": "Conditions d'utilisation",
+      "privacy": "Politique de confidentialité",
+      "cookies": "Paramètres des cookies"
+    },
+    "copyright": "© 2024 Kongo Event. Tous droits réservés."
+  },
+  "discover": {
+    "title": "Découvrez des événements extraordinaires",
+    "searchPlaceholder": "Rechercher des événements, organisateurs ou mots-clés",
+    "location": "Lieu",
+    "searchButton": "Rechercher",
+    "showing": "Affichage de",
+    "events": "événements",
+    "relevance": "Pertinence",
+    "categories": "Catégories",
+    "all": "Tous",
+    "date": "Date",
+    "anytime": "À tout moment",
+    "today": "Aujourd'hui",
+    "thisWeekend": "Ce week-end",
+    "nextWeek": "Semaine prochaine",
+    "priceRange": "Fourchette de prix",
+    "free": "Gratuit",
+    "distance": "Distance",
+    "within10": "Dans un rayon de 10 miles",
+    "within25": "Dans un rayon de 25 miles",
+    "within50": "Dans un rayon de 50 miles",
+    "anywhere": "Partout",
+    "resetFilters": "Réinitialiser les filtres",
+    "loading": "Chargement des événements...",
+    "error": "Impossible de charger les événements.",
+    "empty": "Aucun événement trouvé."
   }
 }
