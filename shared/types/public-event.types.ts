@@ -34,6 +34,7 @@ export type PublicEvent = {
     title: string;
     slug: string;
     shortDescription: string;
+    description?: string | null;
     bannerUrl: string;
     type: "PHYSICAL" | "ONLINE" | "HYBRID";
     startAt: string;

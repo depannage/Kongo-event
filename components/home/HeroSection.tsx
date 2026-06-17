@@ -13,10 +13,12 @@ import {
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useSearch } from "@/shared/hooks/search.hooks";
+import { useLocalizedPath } from "@/shared/hooks/useLocalizedPath";
 
 export default function HeroSection() {
     const t = useTranslations("home.hero");
     const router = useRouter();
+    const { getLocalizedHref } = useLocalizedPath();
 
     const [q, setQ] = useState("");
     const [location, setLocation] = useState("");
@@ -45,11 +47,11 @@ export default function HeroSection() {
         if (location.trim()) params.set("location", location.trim());
         if (date.trim()) params.set("date", date.trim());
 
-        router.push(`/search?${params.toString()}`);
+        router.push(getLocalizedHref(`/discover?${params.toString()}`));
     };
 
     return (
-        <section className="relative min-h-[760px] overflow-hidden bg-black text-white">
+        <section className="relative z-30 min-h-[760px] overflow-visible bg-black text-white">
             <Image
                 src="/images/heroo.png"
                 alt="Kongo Event"
@@ -58,8 +60,10 @@ export default function HeroSection() {
                 className="object-cover object-center"
             />
 
-            <div className="absolute inset-0 bg-black/45" />
-            <div className="absolute bottom-0 left-0 right-0 h-[360px] bg-gradient-to-t from-[#F5F7FC] via-[#F5F7FC]/80 to-transparent" />
+            <div className="absolute inset-0 overflow-hidden">
+                <div className="absolute inset-0 bg-black/45" />
+                <div className="absolute bottom-0 left-0 right-0 h-[360px] bg-gradient-to-t from-[#F5F7FC] via-[#F5F7FC]/80 to-transparent" />
+            </div>
 
             <motion.div
                 initial={{ opacity: 0, y: 28 }}
@@ -91,9 +95,9 @@ export default function HeroSection() {
                     initial={{ opacity: 0, y: 18, scale: 0.98 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     transition={{ duration: 0.65, delay: 0.25 }}
-                    className="relative mt-14 w-full max-w-5xl"
+                    className="relative z-50 mt-14 w-full max-w-5xl"
                 >
-                    <div className="flex items-center rounded-full bg-white/85 p-4 shadow-2xl backdrop-blur-xl">
+                    <div className="relative z-50 flex items-center rounded-full bg-white/95 p-4 shadow-2xl backdrop-blur-xl">
                         <div className="flex flex-1 items-center gap-4 px-4 text-gray-600">
                             <Search className="h-5 w-5 shrink-0 text-[#0067A8]" />
 
@@ -148,12 +152,12 @@ export default function HeroSection() {
                         <motion.div
                             initial={{ opacity: 0, y: 12 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="absolute left-0 right-0 top-[82px] z-30 mx-auto max-w-3xl overflow-hidden rounded-2xl bg-white text-left shadow-2xl"
+                            className="absolute left-4 right-4 top-[82px] z-[80] mx-auto max-h-[360px] max-w-3xl overflow-y-auto rounded-2xl border border-slate-100 bg-white text-left shadow-2xl md:left-0 md:right-0"
                         >
                             {results.map((event) => (
                                 <button
                                     key={event.id}
-                                    onClick={() => router.push(`/events/${event.slug}`)}
+                                    onClick={() => router.push(getLocalizedHref(`/events/${event.slug}`))}
                                     className="flex w-full items-center gap-4 border-b px-5 py-4 text-left transition hover:bg-gray-50"
                                 >
                                     <div className="relative h-14 w-14 overflow-hidden rounded-xl bg-gray-200">

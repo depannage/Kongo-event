@@ -1,8 +1,11 @@
+"use client";
+
 import Image from "next/image";
 import { MapPin } from "lucide-react";
 
 import {PublicEvent} from "@/shared/types/public-event.types";
 import Link from "next/link";
+import { useLocalizedPath } from "@/shared/hooks/useLocalizedPath";
 
 
 type Props = {
@@ -17,6 +20,8 @@ function formatDate(date: string) {
 }
 
 export default function RelatedEvents({ events }: Props) {
+    const { getLocalizedHref } = useLocalizedPath();
+
     if (!events.length) return null;
 
     return (
@@ -32,7 +37,7 @@ export default function RelatedEvents({ events }: Props) {
                         </h2>
                     </div>
 
-                    <Link href="/discover" className="text-sm font-bold text-[#0067A8]">
+                    <Link href={getLocalizedHref("/discover")} className="text-sm font-bold text-[#0067A8]">
                         View All →
                     </Link>
                 </div>
@@ -41,7 +46,7 @@ export default function RelatedEvents({ events }: Props) {
                     {events.map((event) => (
                         <Link
                             key={event.id}
-                            href={`/events/${event.slug}`}
+                            href={getLocalizedHref(`/events/${event.slug}`)}
                             className="overflow-hidden rounded-2xl bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
                         >
                             <div className="relative h-52">
