@@ -73,6 +73,7 @@ export default function HomeContent() {
             <EventsNearYou events={events.slice(0, 3)} />
             <TopCities cities={cities} />
             <NewsletterSection />
+            <Footer />
         </>
     );
 }

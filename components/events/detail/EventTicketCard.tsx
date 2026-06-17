@@ -1,7 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { Calendar, Heart, Info, MapPin, Share2 } from "lucide-react";
 import {PublicEvent, PublicTicketType} from "@/shared/types/public-event.types";
+import { useLocalizedPath } from "@/shared/hooks/useLocalizedPath";
 
 
 type Props = {
@@ -32,6 +34,7 @@ function formatDateRange(startAt: string, endAt: string) {
 }
 
 export default function EventTicketCard({ event }: Props) {
+    const { getLocalizedHref } = useLocalizedPath();
     const tickets = event.ticketTypes ?? [];
 
     const lowestTicket = tickets.reduce<PublicTicketType | null>((lowest, item) => {
@@ -94,9 +97,9 @@ export default function EventTicketCard({ event }: Props) {
                 </div>
             </div>
 
-            <button className="mt-8 w-full rounded-xl bg-[#B55A00] px-6 py-4 font-bold text-white transition hover:bg-[#944900]">
+            <Link href={getLocalizedHref("/checkout")} className="mt-8 block w-full rounded-xl bg-[#B55A00] px-6 py-4 text-center font-bold text-white transition hover:bg-[#944900]">
                 Buy Tickets Now
-            </button>
+            </Link>
 
             <p className="mt-5 text-center text-xs text-gray-500">
                 No booking fees. Cancel up to 48h before.

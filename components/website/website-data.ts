@@ -1,0 +1,162 @@
+import {
+  Award,
+  Briefcase,
+  CalendarDays,
+  Drama,
+  Heart,
+  Music,
+  Palette,
+  ShieldCheck,
+  Ticket,
+  Utensils,
+} from "lucide-react";
+
+export const websiteImages = {
+  hero: "/images/heroo.png",
+  stage: "/images/heroo.png",
+  city: "/images/heroo.png",
+  venue: "/images/heroo.png",
+  map: "/images/heroo.png",
+  portrait: "/images/logo.jpeg",
+};
+
+export const sampleEvents = [
+  {
+    id: "neo-horizon",
+    title: "Neo Horizon 2024",
+    slug: "neo-horizon-2024",
+    category: "Music Festival",
+    city: "Kinshasa",
+    venue: "Downtown Pavilion",
+    date: "Aug 24",
+    time: "8:00 PM",
+    price: "$45.00",
+    image: websiteImages.stage,
+  },
+  {
+    id: "global-innovation",
+    title: "Global Innovation Summit",
+    slug: "global-innovation-summit",
+    category: "Technology",
+    city: "Kinshasa",
+    venue: "Convention Center",
+    date: "Sept 12",
+    time: "10:00 AM",
+    price: "$149.00",
+    image: websiteImages.hero,
+  },
+  {
+    id: "street-food",
+    title: "Street Food World Tour",
+    slug: "street-food-world-tour",
+    category: "Culinary",
+    city: "Gombe",
+    venue: "River Market",
+    date: "Tomorrow",
+    time: "6:00 PM",
+    price: "$30.00",
+    image: websiteImages.stage,
+  },
+  {
+    id: "modernist",
+    title: "Modernist Visions Expo",
+    slug: "modernist-visions-expo",
+    category: "Art",
+    city: "Kinshasa",
+    venue: "Modern Arts Park",
+    date: "Saturday",
+    time: "10:00 AM",
+    price: "Free",
+    image: websiteImages.venue,
+  },
+  {
+    id: "summer-fair",
+    title: "Summer Fair 2024",
+    slug: "summer-fair-2024",
+    category: "Community",
+    city: "Limete",
+    venue: "Green Field",
+    date: "Aug 28",
+    time: "11:00 AM",
+    price: "$15.00",
+    image: websiteImages.city,
+  },
+  {
+    id: "nebula",
+    title: "Nebula: Global Contemporary Music & Arts Festival 2024",
+    slug: "nebula-global-contemporary-music-arts-festival-2024",
+    category: "Music",
+    city: "Kinshasa",
+    venue: "Modern Arts Park",
+    date: "Nov 14",
+    time: "4:00 PM",
+    price: "$149",
+    image: websiteImages.hero,
+  },
+];
+
+export const categories = [
+  { name: "Music", slug: "music", icon: Music },
+  { name: "Food & Drink", slug: "food-drink", icon: Utensils },
+  { name: "Art", slug: "art", icon: Palette },
+  { name: "Sports", slug: "sports", icon: Award },
+  { name: "Entertainment", slug: "entertainment", icon: Drama },
+  { name: "Business", slug: "business", icon: Briefcase },
+];
+
+export const faqs = [
+  {
+    title: "Buying Tickets",
+    icon: Ticket,
+    tone: "blue",
+    questions: [
+      "How do I receive my tickets after purchase?",
+      "Can I pay using multiple methods?",
+      "Do I need to print my tickets?",
+    ],
+  },
+  {
+    title: "Selling Events",
+    icon: CalendarDays,
+    tone: "amber",
+    questions: [
+      "How much does it cost to list an event?",
+      "When do I receive my event payouts?",
+    ],
+  },
+  {
+    title: "Account & Security",
+    icon: ShieldCheck,
+    tone: "blue",
+    questions: ["How do I enable Two-Factor Authentication (2FA)?"],
+  },
+  {
+    title: "Refunds & Cancellations",
+    icon: Heart,
+    tone: "red",
+    questions: ["What is the refund policy for cancelled events?"],
+  },
+];
+
+export const accountTickets = [
+  {
+    id: "ticket-1",
+    title: "Neo-Pulse Electronic Summit 2024",
+    category: "Music Festival",
+    status: "Confirmed",
+    date: "Oct 24, 2024",
+    time: "8:00 PM",
+    venue: "The Glass Arena, Berlin",
+    image: websiteImages.hero,
+  },
+  {
+    id: "ticket-2",
+    title: "Global Tech Innovators Summit",
+    category: "Conference",
+    status: "Paid",
+    date: "Nov 12, 2024",
+    time: "09:00 AM",
+    venue: "Innovation Hub, Singapore",
+    image: websiteImages.venue,
+  },
+];

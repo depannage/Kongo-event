@@ -1,7 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import { MapPin } from "lucide-react";
 import type { PublicEvent } from "@/shared/types/public-event.types";
 import Link from "next/link";
+import { useLocalizedPath } from "@/shared/hooks/useLocalizedPath";
 
 type Props = {
     event: PublicEvent;
@@ -16,9 +19,11 @@ function formatDate(date: string) {
 }
 
 export default function DiscoverEventCard({ event }: Props) {
+    const { getLocalizedHref } = useLocalizedPath();
+
     return (
         <Link
-            href={`/events/${event.slug}`}
+            href={getLocalizedHref(`/events/${event.slug}`)}
             className="group overflow-hidden rounded-2xl bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
         >
             <div className="relative h-44 overflow-hidden">

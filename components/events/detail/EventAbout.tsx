@@ -1,4 +1,5 @@
 import {PublicEvent} from "@/shared/types/public-event.types";
+import RichTextContent from "@/components/website/RichTextContent";
 
 
 type Props = {
@@ -6,13 +7,16 @@ type Props = {
 };
 
 export default function EventAbout({ event }: Props) {
+    const description = event.description || event.shortDescription;
+
     return (
         <section className="py-8">
             <h2 className="mb-6 font-bold text-[#131827]">About This Event</h2>
 
-            <p className="max-w-3xl leading-8 text-gray-600">
-                {event.shortDescription || "No description available for this event."}
-            </p>
+            <RichTextContent
+                html={description}
+                fallback="No description available for this event."
+            />
 
             <ul className="mt-8 space-y-3 text-gray-700">
                 <li>Category: {event.category?.name}</li>

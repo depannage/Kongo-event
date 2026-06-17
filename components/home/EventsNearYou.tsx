@@ -1,7 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import type { PublicEvent } from "@/shared/types/public-event.types";
 import Link from "next/link";
+import { useLocalizedPath } from "@/shared/hooks/useLocalizedPath";
 
 type Props = {
     events: PublicEvent[];
@@ -18,6 +21,7 @@ function formatDate(date?: string) {
 
 export default function EventsNearYou({ events }: Props) {
     const t = useTranslations("home.nearby");
+    const { getLocalizedHref } = useLocalizedPath();
 
     if (!events.length) return null;
 
@@ -31,7 +35,7 @@ export default function EventsNearYou({ events }: Props) {
                     {t("title")}
                 </h2>
 
-                <Link href="/events" className="text-sm font-bold text-[#0067A8]">
+                <Link href={getLocalizedHref("/discover")} className="text-sm font-bold text-[#0067A8]">
                     {t("viewAll")}
                 </Link>
             </div>
@@ -57,7 +61,7 @@ export default function EventsNearYou({ events }: Props) {
                         </p>
 
                         <Link
-                            href={`/events/${main.slug}`}
+                            href={getLocalizedHref(`/events/${main.slug}`)}
                             className="mt-6 inline-flex rounded-lg bg-white px-5 py-3 text-sm font-bold text-[#131827]"
                         >
                             {t("getTickets")}
