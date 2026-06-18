@@ -3,7 +3,8 @@ import {
     GetPublicEventsParams,
     PublicEvent,
     PublicEventsResponse, PublicHeroPhoto,
-    PublicPromotion
+    PublicPromotion,
+    PublicReviewsResponse
 } from "@/shared/types/public-event.types";
 
 
@@ -64,5 +65,17 @@ export const publicService = {
         } as any);
 
         return res.data?.data ?? res.data;
+    },
+
+    async getEventReviews(slug: string, params?: { page?: number; limit?: number }): Promise<PublicReviewsResponse> {
+        const searchParams = new URLSearchParams();
+        if (params?.page) searchParams.set("page", String(params.page));
+        if (params?.limit) searchParams.set("limit", String(params.limit));
+        const query = searchParams.toString();
+        const res = await api.get(`/public/events/${encodeURIComponent(slug)}/reviews${query ? `?${query}` : ""}`, {
+            skipAuth: true,
+        } as any);
+
+        return res.data;
     },
 };
