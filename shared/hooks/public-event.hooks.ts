@@ -59,3 +59,12 @@ export function useGetPublicHeroPhotos() {
         staleTime: 60 * 1000,
     });
 }
+
+export function useGetPublicEventReviews(slug?: string) {
+    return useQuery({
+        queryKey: ["public-event-reviews", slug],
+        queryFn: () => publicService.getEventReviews(slug as string, { page: 1, limit: 10 }),
+        enabled: !!slug,
+        staleTime: 60 * 1000,
+    });
+}

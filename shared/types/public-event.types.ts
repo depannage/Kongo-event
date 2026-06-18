@@ -79,6 +79,29 @@ export type PublicHeroPhoto = {
     eventSlug?: string | null;
 };
 
+export type PublicReview = {
+    id: string;
+    attendeeName: string;
+    attendeeEmail?: string | null;
+    eventName: string;
+    rating: number;
+    title?: string | null;
+    comment: string;
+    reviewText: string;
+    visibility: "public" | "hidden";
+    helpful: number;
+    date: string;
+    createdAt: string;
+};
+
+export type PublicReviewsResponse = {
+    data: PublicReview[];
+    page: number;
+    limit: number;
+    total: number;
+    pages: number;
+};
+
 export type GetPublicEventsParams = {
     page?: number;
     limit?: number;
