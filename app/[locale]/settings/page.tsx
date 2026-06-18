@@ -12,6 +12,7 @@ import {
     Globe2,
     LinkIcon,
     LockKeyhole,
+    PackageCheck,
     Save,
     ShieldCheck,
     UserRound,
@@ -24,6 +25,7 @@ import { api } from "@/shared/lib/http/api";
 
 type SettingsTab =
     | "general"
+    | "modules"
     | "plan"
     | "account"
     | "billing"
@@ -41,6 +43,7 @@ export default function SettingsPage() {
     const tabs = useMemo(
         () => [
             { key: "general" as const, label: t("tabs.general") },
+            { key: "modules" as const, label: t("tabs.modules") },
             { key: "plan" as const, label: t("tabs.plan") },
             { key: "account" as const, label: t("tabs.account") },
             { key: "billing" as const, label: t("tabs.billing") },
@@ -112,6 +115,7 @@ export default function SettingsPage() {
                             {/* Content */}
                             <section className="min-h-[600px] p-5 lg:p-8">
                                 {activeTab === "general" && <GeneralSection t={t} />}
+                                {activeTab === "modules" && <ModulesSection t={t} />}
                                 {activeTab === "plan" && <PlanSection t={t} />}
                                 {activeTab === "account" && <AccountSection t={t} />}
                                 {activeTab === "billing" && <BillingSection t={t} />}
@@ -210,6 +214,154 @@ function Select({
             <ChevronDown className="pointer-events-none absolute right-4 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
         </div>
     );
+}
+
+// ==================== Modules Section ====================
+type ModuleSettings = {
+    events: boolean;
+    ticketing: boolean;
+    marketplace: boolean;
+    buses: boolean;
+    flights: boolean;
+    vouchers: boolean;
+    stay: boolean;
+    sponsors: boolean;
+    reports: boolean;
+    payouts: boolean;
+    reviews: boolean;
+};
+
+const defaultModuleSettings: ModuleSettings = {
+    events: true,
+    ticketing: true,
+    marketplace: false,
+    buses: false,
+    flights: false,
+    vouchers: false,
+    stay: false,
+    sponsors: false,
+    reports: true,
+    payouts: true,
+    reviews: false,
+};
+
+function ModulesSection({ t }: { t: any }) {
+    const [modules, setModules] = useState<ModuleSettings>(defaultModuleSettings);
+    const [loading, setLoading] = useState(true);
+    const [saving, setSaving] = useState(false);
+    const [message, setMessage] = useState("");
+    const [error, setError] = useState("");
+
+    useEffect(() => {
+        let mounted = true;
+        api.get("/settings/me/modules")
+            .then((response) => {
+                if (!mounted) return;
+                setModules({ ...defaultModuleSettings, ...pickModuleSettings(response.data) });
+            })
+            .catch(() => {
+                if (mounted) setError(t("modules.loadError"));
+            })
+            .finally(() => {
+                if (mounted) setLoading(false);
+            });
+
+        return () => {
+            mounted = false;
+        };
+    }, [t]);
+
+    const toggle = (key: keyof ModuleSettings) => {
+        setMessage("");
+        setError("");
+        setModules((current) => ({ ...current, [key]: !current[key] }));
+    };
+
+    const save = async () => {
+        setSaving(true);
+        setMessage("");
+        setError("");
+        try {
+            const response = await api.patch("/settings/me/modules", modules);
+            setModules({ ...defaultModuleSettings, ...pickModuleSettings(response.data) });
+            window.dispatchEvent(new CustomEvent("kongo:modules-updated", { detail: modules }));
+            setMessage(t("modules.saveSuccess"));
+        } catch {
+            setError(t("modules.saveError"));
+        } finally {
+            setSaving(false);
+        }
+    };
+
+    const items: Array<{ key: keyof ModuleSettings; title: string; description: string }> = [
+        { key: "events", title: t("modules.items.events.title"), description: t("modules.items.events.description") },
+        { key: "ticketing", title: t("modules.items.ticketing.title"), description: t("modules.items.ticketing.description") },
+        { key: "marketplace", title: t("modules.items.marketplace.title"), description: t("modules.items.marketplace.description") },
+        { key: "buses", title: t("modules.items.buses.title"), description: t("modules.items.buses.description") },
+        { key: "flights", title: t("modules.items.flights.title"), description: t("modules.items.flights.description") },
+        { key: "vouchers", title: t("modules.items.vouchers.title"), description: t("modules.items.vouchers.description") },
+        { key: "stay", title: t("modules.items.stay.title"), description: t("modules.items.stay.description") },
+        { key: "sponsors", title: t("modules.items.sponsors.title"), description: t("modules.items.sponsors.description") },
+        { key: "reports", title: t("modules.items.reports.title"), description: t("modules.items.reports.description") },
+        { key: "payouts", title: t("modules.items.payouts.title"), description: t("modules.items.payouts.description") },
+        { key: "reviews", title: t("modules.items.reviews.title"), description: t("modules.items.reviews.description") },
+    ];
+
+    return (
+        <div>
+            <SectionHeader
+                icon={<PackageCheck className="size-5" />}
+                title={t("modules.title")}
+                description={t("modules.description")}
+            />
+
+            <div className="space-y-5">
+                {loading && <StatusBox>{t("modules.loading")}</StatusBox>}
+                {message && <StatusBox tone="success">{message}</StatusBox>}
+                {error && <StatusBox tone="error">{error}</StatusBox>}
+
+                <div className="grid gap-4 md:grid-cols-2">
+                    {items.map((item) => (
+                        <div key={item.key} className="flex items-start justify-between gap-4 rounded border border-slate-200 bg-white p-4">
+                            <div>
+                                <h3 className="font-extrabold text-slate-900">{item.title}</h3>
+                                <p className="mt-1 text-sm leading-6 text-slate-500">{item.description}</p>
+                            </div>
+                            <Toggle enabled={modules[item.key]} onChange={() => toggle(item.key)} />
+                        </div>
+                    ))}
+                </div>
+
+                <button
+                    type="button"
+                    onClick={save}
+                    disabled={loading || saving}
+                    className="inline-flex items-center gap-2 rounded bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition-all hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                    <Save className="size-4" />
+                    {saving ? t("modules.saving") : t("modules.save")}
+                </button>
+            </div>
+        </div>
+    );
+}
+
+function pickModuleSettings(data: any): Partial<ModuleSettings> {
+    return Object.fromEntries(
+        Object.keys(defaultModuleSettings)
+            .filter((key) => typeof data?.[key] === "boolean")
+            .map((key) => [key, data[key]])
+    ) as Partial<ModuleSettings>;
+}
+
+function StatusBox({ children, tone = "neutral" }: { children: React.ReactNode; tone?: "neutral" | "success" | "error" }) {
+    const classes = {
+        neutral: "border-slate-200 bg-slate-50 text-slate-600",
+        success: "border-emerald-200 bg-emerald-50 text-emerald-700",
+        error: "border-rose-200 bg-rose-50 text-rose-700",
+    };
+
+    return <div className={`rounded border p-4 text-sm font-semibold ${classes[tone]}`}>{children}</div>;
 }
 
 // ==================== General Section ====================

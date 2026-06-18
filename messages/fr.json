@@ -199,6 +199,10 @@
       "sponsors": "Sponsors",
       "eventSponsors": "Sponsors événements",
       "ticketTypes": "Types de billets",
+      "busRoutes": "Trajets bus",
+      "flightOffers": "Offres de vols",
+      "voucherOffers": "Offres vouchers",
+      "stayOffers": "Offres séjours",
       "manageTickets": "Gestion tickets",
       "earnings": "Revenus",
       "reviews": "Avis",
@@ -230,6 +234,7 @@
     "save": "Enregistrer",
     "tabs": {
       "general": "Général",
+      "modules": "Modules",
       "plan": "Plan & Tarification",
       "account": "Mon compte",
       "billing": "Paiement & Facturation",
@@ -238,6 +243,62 @@
       "language": "Temps & Langue",
       "password": "Mot de passe",
       "notifications": "Notifications"
+    },
+    "modules": {
+      "title": "Modules de l’entreprise",
+      "description": "Choisissez uniquement les fonctionnalités utiles à votre activité. Le menu et l’expérience admin s’adaptent automatiquement.",
+      "loading": "Chargement des modules...",
+      "loadError": "Impossible de charger les modules.",
+      "save": "Enregistrer les modules",
+      "saving": "Enregistrement...",
+      "saveSuccess": "Modules enregistrés.",
+      "saveError": "Impossible d’enregistrer les modules.",
+      "items": {
+        "events": {
+          "title": "Événements",
+          "description": "Création et gestion des événements, lieux, salles et catégories."
+        },
+        "ticketing": {
+          "title": "Billetterie",
+          "description": "Types de billets, ventes, tickets clients et contrôle de disponibilité."
+        },
+        "marketplace": {
+          "title": "Marketplace",
+          "description": "Articles, packs et produits associés aux événements."
+        },
+        "buses": {
+          "title": "Bus",
+          "description": "Gestion des trajets et offres de transport par bus."
+        },
+        "flights": {
+          "title": "Vols",
+          "description": "Gestion des offres de billets d’avion et intégrations fournisseurs."
+        },
+        "vouchers": {
+          "title": "Vouchers",
+          "description": "Gestion des coupons, deals et offres partenaires."
+        },
+        "stay": {
+          "title": "Séjours",
+          "description": "Gestion des hôtels, chambres et offres d’hébergement."
+        },
+        "sponsors": {
+          "title": "Sponsors",
+          "description": "Sponsors et associations sponsors-événements."
+        },
+        "reports": {
+          "title": "Rapports",
+          "description": "Statistiques, rapports financiers et export de données."
+        },
+        "payouts": {
+          "title": "Paiements sortants",
+          "description": "Revenus, retraits et compte de réception."
+        },
+        "reviews": {
+          "title": "Avis",
+          "description": "Retours clients, évaluations et suivi qualité."
+        }
+      }
     },
     "general": {
       "title": "Général",

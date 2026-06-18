@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
     Calendar,
@@ -35,6 +35,34 @@ import { useSidebar } from "@/contexts/SidebarContext";
 
 import Image from "next/image";
 import {useLocalizedPath} from "@/shared/hooks/useLocalizedPath";
+import { api } from "@/shared/lib/http/api";
+
+type ModuleKey =
+    | "events"
+    | "ticketing"
+    | "marketplace"
+    | "buses"
+    | "flights"
+    | "vouchers"
+    | "stay"
+    | "sponsors"
+    | "reports"
+    | "payouts"
+    | "reviews";
+
+const defaultModules: Record<ModuleKey, boolean> = {
+    events: true,
+    ticketing: true,
+    marketplace: false,
+    buses: false,
+    flights: false,
+    vouchers: false,
+    stay: false,
+    sponsors: false,
+    reports: true,
+    payouts: true,
+    reviews: false,
+};
 
 
 export default function DashboardSidebar() {
@@ -42,6 +70,28 @@ export default function DashboardSidebar() {
     const { isCollapsed, toggleSidebar } = useSidebar();
     const { getLocalizedHref, isActive } = useLocalizedPath();
     const [searchTerm, setSearchTerm] = useState("");
+    const [modules, setModules] = useState(defaultModules);
+
+    useEffect(() => {
+        let mounted = true;
+        api.get("/settings/me/modules")
+            .then((response) => {
+                if (!mounted) return;
+                setModules({ ...defaultModules, ...pickModules(response.data) });
+            })
+            .catch(() => undefined);
+
+        const onUpdated = (event: Event) => {
+            const detail = (event as CustomEvent).detail;
+            setModules((current) => ({ ...current, ...pickModules(detail) }));
+        };
+
+        window.addEventListener("kongo:modules-updated", onUpdated);
+        return () => {
+            mounted = false;
+            window.removeEventListener("kongo:modules-updated", onUpdated);
+        };
+    }, []);
 
     const menuItems = [
         {
@@ -49,8 +99,8 @@ export default function DashboardSidebar() {
             items: [
                 { icon: LayoutDashboard, label: t("menu.dashboard"), href: "overview" },
                 { icon: Calendar, label: t("menu.calendars"), href: "calendars" },
-                { icon: CircleDollarSign, label: t("menu.promotions"), href: "promotions" },
-                { icon: Wallet, label: t("menu.payouts"), href: "payouts" },
+                { icon: CircleDollarSign, label: t("menu.promotions"), href: "promotions", module: "events" },
+                { icon: Wallet, label: t("menu.payouts"), href: "payouts", module: "payouts" },
             ]
         },
         {
@@ -59,28 +109,28 @@ export default function DashboardSidebar() {
                 { icon: Users, label: t("menu.users"), href: "users" },
                 { icon: Building2, label: t("menu.organizations"), href: "organizations" },
                 { icon: UserCheck, label: t("menu.organizers"), href: "organizers" },
-                { icon: Music, label: t("menu.events"), href: "events" },
-                { icon: Ticket, label: t("menu.tickets"), href: "tickets" },
-                { icon: Tags, label: t("menu.eventCategories"), href: "event-categories" },
-                { icon: MapPin, label: t("menu.venues"), href: "venues" },
-                { icon: DoorOpen, label: t("menu.rooms"), href: "rooms" },
-                { icon: Handshake, label: t("menu.sponsors"), href: "sponsors" },
-                { icon: Link2, label: t("menu.eventSponsors"), href: "event-sponsors" },
+                { icon: Music, label: t("menu.events"), href: "events", module: "events" },
+                { icon: Ticket, label: t("menu.tickets"), href: "tickets", module: "ticketing" },
+                { icon: Tags, label: t("menu.eventCategories"), href: "event-categories", module: "events" },
+                { icon: MapPin, label: t("menu.venues"), href: "venues", module: "events" },
+                { icon: DoorOpen, label: t("menu.rooms"), href: "rooms", module: "events" },
+                { icon: Handshake, label: t("menu.sponsors"), href: "sponsors", module: "sponsors" },
+                { icon: Link2, label: t("menu.eventSponsors"), href: "event-sponsors", module: "sponsors" },
                 { icon: ImageIcon, label: t("menu.media"), href: "media" },
-                { icon: Ticket, label: t("menu.ticketTypes"), href: "ticket-types" },
-                { icon: Bus, label: "Bus routes", href: "bus-routes" },
-                { icon: Plane, label: "Flight offers", href: "flight-offers" },
-                { icon: BadgePercent, label: "Voucher offers", href: "voucher-offers" },
-                { icon: Hotel, label: "Stay offers", href: "stay-offers" },
-                { icon: Ticket, label: t("menu.manageTickets"), href: "tickets/manage" },
-                { icon: CreditCard, label: t("menu.earnings"), href: "earnings" },
-                { icon: MessageCircle, label: t("menu.reviews"), href: "reviews" },
+                { icon: Ticket, label: t("menu.ticketTypes"), href: "ticket-types", module: "ticketing" },
+                { icon: Bus, label: t("menu.busRoutes"), href: "bus-routes", module: "buses" },
+                { icon: Plane, label: t("menu.flightOffers"), href: "flight-offers", module: "flights" },
+                { icon: BadgePercent, label: t("menu.voucherOffers"), href: "voucher-offers", module: "vouchers" },
+                { icon: Hotel, label: t("menu.stayOffers"), href: "stay-offers", module: "stay" },
+                { icon: Ticket, label: t("menu.manageTickets"), href: "tickets/manage", module: "ticketing" },
+                { icon: CreditCard, label: t("menu.earnings"), href: "earnings", module: "payouts" },
+                { icon: MessageCircle, label: t("menu.reviews"), href: "reviews", module: "reviews" },
             ]
         },
         {
             section: t("other"),
             items: [
-                { icon: SlidersHorizontal, label: t("menu.reports"), href: "reports" },
+                { icon: SlidersHorizontal, label: t("menu.reports"), href: "reports", module: "reports" },
                 { icon: Settings, label: t("menu.settings"), href: "settings" },
             ]
         },
@@ -89,6 +139,7 @@ export default function DashboardSidebar() {
     const filteredMenuItems = menuItems.map(section => ({
         ...section,
         items: section.items.filter(item =>
+            (!("module" in item) || modules[item.module as ModuleKey]) &&
             item.label.toLowerCase().includes(searchTerm.toLowerCase())
         )
     })).filter(section => section.items.length > 0);
@@ -182,4 +233,12 @@ export default function DashboardSidebar() {
             </div>
         </aside>
     );
+}
+
+function pickModules(data: any): Partial<Record<ModuleKey, boolean>> {
+    return Object.fromEntries(
+        Object.keys(defaultModules)
+            .filter((key) => typeof data?.[key] === "boolean")
+            .map((key) => [key, data[key]])
+    ) as Partial<Record<ModuleKey, boolean>>;
 }
