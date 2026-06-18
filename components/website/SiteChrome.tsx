@@ -5,6 +5,7 @@ import {
   Share2,
   Users,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { LocalizedLink } from "./LocalizedLink";
 import { BrandLogo } from "./BrandLogo";
 
@@ -18,6 +19,16 @@ export function WebsiteNav({
   tone?: NavTone;
 }) {
   const transparent = tone === "transparent";
+  const t = useTranslations("navigation");
+  const navItems = [
+    [t("home"), "/"],
+    [t("events"), "/discover"],
+    [t("marketplace"), "/marketplace"],
+    [t("buses"), "/buses"],
+    [t("flights"), "/flights"],
+    [t("vouchers"), "/vouchers"],
+    [t("stay"), "/stay"],
+  ];
 
   return (
     <header
@@ -32,26 +43,20 @@ export function WebsiteNav({
           <BrandLogo tone={transparent ? "light" : "dark"} size="sm" />
         </LocalizedLink>
 
-        <nav className="hidden items-center gap-8 text-sm font-bold md:flex">
-          {["Discover", "Help", "Organizer"].map((item) => (
+        <nav className="hidden items-center gap-5 text-sm font-bold md:flex">
+          {navItems.map(([label, href]) => (
             <LocalizedLink
-              key={item}
-              href={
-                item === "Discover"
-                  ? "/discover"
-                  : item === "Help"
-                    ? "/help"
-                    : "/organizers/vanguard-productions"
-              }
+              key={href}
+              href={href}
               className={`pb-2 ${
-                active === item
+                active === label
                   ? "border-b-2 border-[#005995] text-[#005995]"
                   : transparent
                     ? "text-white/90"
                     : "text-slate-700"
               }`}
-            >
-              {item}
+          >
+              {label}
             </LocalizedLink>
           ))}
         </nav>
@@ -110,6 +115,11 @@ export function WebsiteFooter() {
           title="Explore"
           links={[
             ["Popular Events", "/discover"],
+            ["Marketplace", "/marketplace"],
+            ["Buses", "/buses"],
+            ["Flights", "/flights"],
+            ["Vouchers", "/vouchers"],
+            ["Stay", "/stay"],
             ["Organizers", "/organizers/vanguard-productions"],
             ["Cities", "/city/london"],
           ]}
