@@ -11,8 +11,8 @@ import DiscoverEventsGrid from "@/components/discover/DiscoverEventsGrid";
 import DiscoverPagination from "@/components/discover/DiscoverPagination";
 
 import { useGetPublicEvents } from "@/shared/hooks/public-event.hooks";
-import { useSearch } from "@/shared/hooks/search.hooks";
 import type { PublicEvent } from "@/shared/types/public-event.types";
+import type { DateFilter } from "@/components/discover/DiscoverFilters";
 
 export default function DiscoverPage() {
     const t = useTranslations("discover");
@@ -21,44 +21,24 @@ export default function DiscoverPage() {
     const [q, setQ] = useState("");
     const [city, setCity] = useState("");
     const [category, setCategory] = useState("");
-
-    const hasSearch = q.trim().length >= 2;
+    const [dateFilter, setDateFilter] = useState<DateFilter>("");
+    const [maxPrice, setMaxPrice] = useState<number | undefined>();
+    const [distance, setDistance] = useState<number | undefined>(10);
 
     const publicEventsQuery = useGetPublicEvents({
         page,
         limit: 12,
+        q: q.trim() || undefined,
+        city: city.trim() || undefined,
+        category: category || undefined,
+        dateFilter: dateFilter || undefined,
+        maxPrice,
+        distance,
     });
 
-    const searchQuery = useSearch(
-        {
-            q,
-            type: "events",
-            page,
-            limit: 12,
-        },
-        hasSearch
-    );
-
-    const rawEvents: PublicEvent[] = hasSearch
-        ? searchQuery.data?.results?.events?.data ?? []
-        : publicEventsQuery.data?.events ?? [];
-
-    const isLoading = hasSearch ? searchQuery.isLoading : publicEventsQuery.isLoading;
-    const isError = hasSearch ? searchQuery.isError : publicEventsQuery.isError;
-
-    const filteredEvents = useMemo(() => {
-        return rawEvents.filter((event) => {
-            const matchCity = city
-                ? event.venue?.city?.toLowerCase().includes(city.toLowerCase())
-                : true;
-
-            const matchCategory = category
-                ? event.category?.slug === category || event.category?.id === category
-                : true;
-
-            return matchCity && matchCategory;
-        });
-    }, [rawEvents, city, category]);
+    const events: PublicEvent[] = publicEventsQuery.data?.events ?? [];
+    const isLoading = publicEventsQuery.isLoading;
+    const isError = publicEventsQuery.isError;
 
     const categories = useMemo(() => {
         const allEvents = publicEventsQuery.data?.events ?? [];
@@ -73,13 +53,8 @@ export default function DiscoverPage() {
         return Array.from(map.values()).filter(Boolean);
     }, [publicEventsQuery.data?.events]);
 
-    const total = hasSearch
-        ? searchQuery.data?.results?.events?.total ?? filteredEvents.length
-        : publicEventsQuery.data?.total ?? filteredEvents.length;
-
-    const pages = hasSearch
-        ? Math.max(1, Math.ceil(total / 12))
-        : publicEventsQuery.data?.pages ?? 1;
+    const total = publicEventsQuery.data?.total ?? events.length;
+    const pages = publicEventsQuery.data?.pages ?? 1;
 
     const handleSearch = (nextQ: string, nextCity: string) => {
         setQ(nextQ.trim());
@@ -91,6 +66,9 @@ export default function DiscoverPage() {
         setQ("");
         setCity("");
         setCategory("");
+        setDateFilter("");
+        setMaxPrice(undefined);
+        setDistance(10);
         setPage(1);
     };
 
@@ -116,6 +94,21 @@ export default function DiscoverPage() {
                             setCategory(value);
                             setPage(1);
                         }}
+                        selectedDateFilter={dateFilter}
+                        onDateFilterChange={(value) => {
+                            setDateFilter(value);
+                            setPage(1);
+                        }}
+                        maxPrice={maxPrice}
+                        onMaxPriceChange={(value) => {
+                            setMaxPrice(value);
+                            setPage(1);
+                        }}
+                        distance={distance}
+                        onDistanceChange={(value) => {
+                            setDistance(value);
+                            setPage(1);
+                        }}
                         onReset={resetFilters}
                     />
 
@@ -133,7 +126,7 @@ export default function DiscoverPage() {
                         </div>
 
                         <DiscoverEventsGrid
-                            events={filteredEvents}
+                            events={events}
                             isLoading={isLoading}
                             isError={isError}
                         />
