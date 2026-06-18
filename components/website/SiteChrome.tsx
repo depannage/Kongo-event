@@ -8,6 +8,7 @@ import {
 import { useTranslations } from "next-intl";
 import { LocalizedLink } from "./LocalizedLink";
 import { BrandLogo } from "./BrandLogo";
+import { LanguageToggle } from "./LanguageToggle";
 
 type NavTone = "light" | "transparent";
 
@@ -70,14 +71,15 @@ export function WebsiteNav({
                 : "text-slate-700 hover:bg-slate-100"
             }`}
           >
-            Log In
+            {t("login")}
           </LocalizedLink>
           <LocalizedLink
             href="/auth?mode=register"
             className="rounded-lg bg-[#005995] px-6 py-3 text-sm font-bold text-white shadow-sm hover:bg-[#004b7d]"
           >
-            Sign up
+            {t("signup")}
           </LocalizedLink>
+          <LanguageToggle tone={transparent ? "light" : "dark"} />
           <button className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 md:hidden">
             <Menu className="h-5 w-5" />
           </button>
@@ -88,14 +90,14 @@ export function WebsiteNav({
 }
 
 export function WebsiteFooter() {
+  const t = useTranslations("footer");
   return (
     <footer className="border-t border-slate-200 bg-white">
       <div className="mx-auto grid max-w-7xl gap-12 px-6 py-20 md:grid-cols-[1.3fr_1fr_1fr_1fr] md:px-10">
         <div>
           <BrandLogo />
           <p className="mt-5 max-w-xs text-lg leading-8 text-slate-600">
-            Discover, book, and organize extraordinary live events across the
-            globe with our premium marketplace platform.
+            {t("description")}
           </p>
           <div className="mt-7 flex gap-3 text-slate-500">
             <Globe2 className="h-5 w-5" />
@@ -104,37 +106,37 @@ export function WebsiteFooter() {
           </div>
         </div>
         <FooterColumn
-          title="Company"
+          title={t("company.title")}
           links={[
-            ["About Us", "/about"],
-            ["Careers", "/careers"],
-            ["Contact", "/contact"],
+            [t("company.about"), "/about"],
+            [t("company.careers"), "/careers"],
+            [t("company.contact"), "/contact"],
           ]}
         />
         <FooterColumn
-          title="Explore"
+          title={t("explore.title")}
           links={[
-            ["Popular Events", "/discover"],
-            ["Marketplace", "/marketplace"],
-            ["Buses", "/buses"],
-            ["Flights", "/flights"],
-            ["Vouchers", "/vouchers"],
-            ["Stay", "/stay"],
-            ["Organizers", "/organizers/vanguard-productions"],
-            ["Cities", "/city/london"],
+            [t("explore.events"), "/discover"],
+            [t("explore.marketplace"), "/marketplace"],
+            [t("explore.buses"), "/buses"],
+            [t("explore.flights"), "/flights"],
+            [t("explore.vouchers"), "/vouchers"],
+            [t("explore.stay"), "/stay"],
+            [t("explore.organizers"), "/organizers/vanguard-productions"],
+            [t("explore.cities"), "/city/london"],
           ]}
         />
         <FooterColumn
-          title="Legal"
+          title={t("resources.title")}
           links={[
-            ["Terms", "/terms"],
-            ["Privacy", "/privacy"],
-            ["Help Center", "/help"],
+            [t("resources.terms"), "/terms"],
+            [t("resources.privacy"), "/privacy"],
+            [t("resources.help"), "/help"],
           ]}
         />
       </div>
       <div className="border-t border-slate-100 px-6 py-8 text-center text-sm text-slate-500">
-        © 2024 Kongo Event. All rights reserved.
+        {t("copyright")}
       </div>
     </footer>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
     Bell,
     CheckCircle2,
@@ -20,6 +20,7 @@ import { useTranslations } from "next-intl";
 import { useSidebar } from "@/contexts/SidebarContext";
 import DashboardNavbar from "@/components/dashboard/DashboardNavbar";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
+import { api } from "@/shared/lib/http/api";
 
 type SettingsTab =
     | "general"
@@ -187,10 +188,12 @@ function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
 
 function Select({
                     defaultValue,
+                    value,
                     children,
                     onChange,
                 }: {
     defaultValue?: string;
+    value?: string;
     children: React.ReactNode;
     onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }) {
@@ -198,6 +201,7 @@ function Select({
         <div className="relative">
             <select
                 defaultValue={defaultValue}
+                value={value}
                 onChange={onChange}
                 className="h-11 w-full appearance-none rounded border border-slate-200 bg-white px-4 pr-10 text-sm font-medium text-slate-800 outline-none transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-100 hover:border-slate-300"
             >
@@ -433,7 +437,84 @@ function AccountSection({ t }: { t: any }) {
 }
 
 // ==================== Billing Section ====================
+type PayoutAccountForm = {
+    preferredMethod: "BANK_TRANSFER" | "MOBILE_MONEY";
+    accountHolderName: string;
+    bankName: string;
+    bankAccountNumber: string;
+    bankRoutingNumber: string;
+    bankSwiftCode: string;
+    bankIban: string;
+    mobileProvider: string;
+    mobileNumber: string;
+    country: string;
+    currency: string;
+    status?: string;
+};
+
+const emptyPayoutForm: PayoutAccountForm = {
+    preferredMethod: "MOBILE_MONEY",
+    accountHolderName: "",
+    bankName: "",
+    bankAccountNumber: "",
+    bankRoutingNumber: "",
+    bankSwiftCode: "",
+    bankIban: "",
+    mobileProvider: "MAXICASH",
+    mobileNumber: "",
+    country: "CD",
+    currency: "USD",
+    status: "PENDING",
+};
+
 function BillingSection({ t }: { t: any }) {
+    const [form, setForm] = useState<PayoutAccountForm>(emptyPayoutForm);
+    const [loading, setLoading] = useState(true);
+    const [saving, setSaving] = useState(false);
+    const [message, setMessage] = useState("");
+    const [error, setError] = useState("");
+
+    useEffect(() => {
+        let mounted = true;
+        api.get("/settings/me/payout-account")
+            .then((response) => {
+                if (!mounted) return;
+                setForm({ ...emptyPayoutForm, ...normalizePayoutAccount(response.data) });
+            })
+            .catch(() => {
+                if (mounted) setError(t("billing.loadError"));
+            })
+            .finally(() => {
+                if (mounted) setLoading(false);
+            });
+
+        return () => {
+            mounted = false;
+        };
+    }, [t]);
+
+    const update = (name: keyof PayoutAccountForm, value: string) => {
+        setMessage("");
+        setError("");
+        setForm((current) => ({ ...current, [name]: value }));
+    };
+
+    const save = async () => {
+        setSaving(true);
+        setMessage("");
+        setError("");
+        try {
+            const payload = cleanPayoutPayload(form);
+            const response = await api.patch("/settings/me/payout-account", payload);
+            setForm({ ...emptyPayoutForm, ...normalizePayoutAccount(response.data) });
+            setMessage(t("billing.saveSuccess"));
+        } catch {
+            setError(t("billing.saveError"));
+        } finally {
+            setSaving(false);
+        }
+    };
+
     return (
         <div>
             <SectionHeader
@@ -443,36 +524,145 @@ function BillingSection({ t }: { t: any }) {
             />
 
             <div className="space-y-6">
+                {loading && (
+                    <div className="rounded border border-slate-200 bg-slate-50 p-4 text-sm font-semibold text-slate-600">
+                        {t("billing.loading")}
+                    </div>
+                )}
+
+                {message && (
+                    <div className="rounded border border-emerald-200 bg-emerald-50 p-4 text-sm font-semibold text-emerald-700">
+                        {message}
+                    </div>
+                )}
+
+                {error && (
+                    <div className="rounded border border-rose-200 bg-rose-50 p-4 text-sm font-semibold text-rose-700">
+                        {error}
+                    </div>
+                )}
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <Field label={t("billing.cardName")} required>
-                        <Input defaultValue="Robert Johnson" />
+                    <Field label={t("billing.preferredMethod")} required>
+                        <Select value={form.preferredMethod} onChange={(event) => update("preferredMethod", event.target.value as PayoutAccountForm["preferredMethod"])}>
+                            <option value="MOBILE_MONEY">{t("billing.mobileMoney")}</option>
+                            <option value="BANK_TRANSFER">{t("billing.bankTransfer")}</option>
+                        </Select>
                     </Field>
 
-                    <Field label={t("billing.cardNumber")} required>
-                        <Input defaultValue="4242 4242 4242 4242" />
+                    <Field label={t("billing.status")}>
+                        <Input value={t(`billing.statuses.${form.status ?? "PENDING"}`)} readOnly />
                     </Field>
 
-                    <Field label={t("billing.expiry")} required>
-                        <Input defaultValue="12/2028" />
+                    <Field label={t("billing.accountHolderName")} required>
+                        <Input value={form.accountHolderName} onChange={(event) => update("accountHolderName", event.target.value)} />
                     </Field>
 
-                    <Field label={t("billing.cvc")} required>
-                        <Input type="password" defaultValue="123" />
+                    <Field label={t("billing.country")}>
+                        <Input value={form.country} onChange={(event) => update("country", event.target.value.toUpperCase())} placeholder="CD" />
                     </Field>
+
+                    <Field label={t("billing.currency")}>
+                        <Input value={form.currency} onChange={(event) => update("currency", event.target.value.toUpperCase())} placeholder="USD" />
+                    </Field>
+
+                    {form.preferredMethod === "MOBILE_MONEY" ? (
+                        <>
+                            <Field label={t("billing.mobileProvider")} required>
+                                <Select value={form.mobileProvider} onChange={(event) => update("mobileProvider", event.target.value)}>
+                                    <option value="MAXICASH">Maxicash</option>
+                                    <option value="MPESA">M-Pesa</option>
+                                    <option value="AIRTEL_MONEY">Airtel Money</option>
+                                    <option value="ORANGE_MONEY">Orange Money</option>
+                                </Select>
+                            </Field>
+
+                            <Field label={t("billing.mobileNumber")} required>
+                                <Input value={form.mobileNumber} onChange={(event) => update("mobileNumber", event.target.value)} placeholder="+243810000000" />
+                            </Field>
+                        </>
+                    ) : (
+                        <>
+                            <Field label={t("billing.bankName")} required>
+                                <Input value={form.bankName} onChange={(event) => update("bankName", event.target.value)} />
+                            </Field>
+
+                            <Field label={t("billing.bankAccountNumber")} required>
+                                <Input value={form.bankAccountNumber} onChange={(event) => update("bankAccountNumber", event.target.value)} />
+                            </Field>
+
+                            <Field label={t("billing.bankRoutingNumber")}>
+                                <Input value={form.bankRoutingNumber} onChange={(event) => update("bankRoutingNumber", event.target.value)} />
+                            </Field>
+
+                            <Field label={t("billing.bankSwiftCode")}>
+                                <Input value={form.bankSwiftCode} onChange={(event) => update("bankSwiftCode", event.target.value)} />
+                            </Field>
+
+                            <Field label={t("billing.bankIban")}>
+                                <Input value={form.bankIban} onChange={(event) => update("bankIban", event.target.value)} />
+                            </Field>
+                        </>
+                    )}
                 </div>
 
                 <div className="bg-blue-50 rounded p-4">
                     <p className="text-sm text-blue-800">
-                        💡 Your payment information is encrypted and secure. We use industry-standard SSL encryption.
+                        {t("billing.securityNotice")}
                     </p>
                 </div>
 
-                <button className="text-blue-600 text-sm font-semibold hover:text-blue-700">
-                    + Add backup payment method
+                <button
+                    type="button"
+                    onClick={save}
+                    disabled={saving || loading}
+                    className="inline-flex items-center gap-2 rounded bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition-all hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                    <Save className="size-4" />
+                    {saving ? t("billing.saving") : t("billing.savePayout")}
                 </button>
             </div>
         </div>
     );
+}
+
+function normalizePayoutAccount(data: any): Partial<PayoutAccountForm> {
+    return {
+        preferredMethod: data?.preferredMethod ?? "MOBILE_MONEY",
+        accountHolderName: data?.accountHolderName ?? "",
+        bankName: data?.bankName ?? "",
+        bankAccountNumber: data?.bankAccountNumber ?? "",
+        bankRoutingNumber: data?.bankRoutingNumber ?? "",
+        bankSwiftCode: data?.bankSwiftCode ?? "",
+        bankIban: data?.bankIban ?? "",
+        mobileProvider: data?.mobileProvider ?? "MAXICASH",
+        mobileNumber: data?.mobileNumber ?? "",
+        country: data?.country ?? "CD",
+        currency: data?.currency ?? "USD",
+        status: data?.status ?? "PENDING",
+    };
+}
+
+function cleanPayoutPayload(form: PayoutAccountForm) {
+    const payload: Record<string, string> = {
+        preferredMethod: form.preferredMethod,
+        accountHolderName: form.accountHolderName,
+        country: form.country,
+        currency: form.currency,
+    };
+
+    if (form.preferredMethod === "MOBILE_MONEY") {
+        payload.mobileProvider = form.mobileProvider;
+        payload.mobileNumber = form.mobileNumber;
+    } else {
+        payload.bankName = form.bankName;
+        payload.bankAccountNumber = form.bankAccountNumber;
+        payload.bankRoutingNumber = form.bankRoutingNumber;
+        payload.bankSwiftCode = form.bankSwiftCode;
+        payload.bankIban = form.bankIban;
+    }
+
+    return Object.fromEntries(Object.entries(payload).filter(([, value]) => value !== ""));
 }
 
 // ==================== Tax Section ====================

@@ -1,18 +1,14 @@
 "use client";
 
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { usePathname } from "next/navigation"
 import { useLocalizedPath } from "@/shared/hooks/useLocalizedPath";
 import { BrandLogo } from "@/components/website/BrandLogo";
+import { LanguageToggle } from "@/components/website/LanguageToggle";
 
 export default function Navbar() {
     const t = useTranslations("navigation");
-    const locale = useLocale();
-    const pathname = usePathname();
     const { getLocalizedHref } = useLocalizedPath();
-
-    const nextLocale = locale === "en" ? "fr" : "en";
 
     return (
         <header className="absolute left-0 top-0 z-50 w-full">
@@ -32,13 +28,7 @@ export default function Navbar() {
                 </nav>
 
                 <div className="flex items-center gap-3">
-                    {/*<Link*/}
-                    {/*    href={pathname}*/}
-                    {/*    locale={nextLocale}*/}
-                    {/*    className="rounded-xl border border-white/30 px-4 py-2 text-sm font-bold text-white"*/}
-                    {/*>*/}
-                    {/*    {nextLocale.toUpperCase()}*/}
-                    {/*</Link>*/}
+                    <LanguageToggle tone="light" />
 
                     <Link
                         href={getLocalizedHref("/auth?mode=login")}

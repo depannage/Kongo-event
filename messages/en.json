@@ -273,12 +273,34 @@
       "memberSince": "Member Since"
     },
     "billing": {
-      "title": "Payment & Billing",
-      "description": "Manage your payment and billing information.",
-      "cardName": "Cardholder Name",
-      "cardNumber": "Card Number",
-      "expiry": "Expiry Date",
-      "cvc": "CVC"
+      "title": "Payout Account",
+      "description": "Configure the bank or mobile money account used to receive your revenue.",
+      "loading": "Loading payout account...",
+      "loadError": "Unable to load payout account.",
+      "saveSuccess": "Payout account saved. It will be verified before payouts.",
+      "saveError": "Unable to save payout account.",
+      "saving": "Saving...",
+      "savePayout": "Save payout account",
+      "preferredMethod": "Payout method",
+      "mobileMoney": "Mobile money",
+      "bankTransfer": "Bank transfer",
+      "status": "Status",
+      "statuses": {
+        "PENDING": "Pending verification",
+        "VERIFIED": "Verified",
+        "REJECTED": "Rejected"
+      },
+      "accountHolderName": "Account holder name",
+      "country": "Country",
+      "currency": "Currency",
+      "mobileProvider": "Mobile money provider",
+      "mobileNumber": "Mobile money number",
+      "bankName": "Bank name",
+      "bankAccountNumber": "Account number",
+      "bankRoutingNumber": "Bank/routing code",
+      "bankSwiftCode": "SWIFT code",
+      "bankIban": "IBAN",
+      "securityNotice": "Your payout details are protected and used only to process organizer payouts."
     },
     "tax": {
       "title": "Tax & Duties",
@@ -1027,11 +1049,20 @@
       "title": "Company",
       "about": "About Us",
       "careers": "Careers",
+      "contact": "Contact",
       "press": "Press",
       "partners": "Partners"
     },
     "explore": {
       "title": "Explore",
+      "events": "Popular Events",
+      "marketplace": "Marketplace",
+      "buses": "Buses",
+      "flights": "Flights",
+      "vouchers": "Vouchers",
+      "stay": "Stay",
+      "organizers": "Organizers",
+      "cities": "Cities",
       "music": "Music Events",
       "art": "Art Shows",
       "tech": "Tech Summits",
@@ -1045,6 +1076,85 @@
       "cookies": "Cookie Settings"
     },
     "copyright": "© 2024 Kongo Event. All rights reserved."
+  },
+  "marketplace": {
+    "title": "Marketplace",
+    "eyebrow": "Kongo Event",
+    "loadingTitle": "Loading marketplace",
+    "resultsTitle": "Results for \"{query}\"",
+    "searchPlaceholder": "Search product, pack, or event",
+    "search": "Search",
+    "loadError": "Unable to load marketplace.",
+    "empty": "No real item is available yet.",
+    "stock": "Stock",
+    "viewEvent": "View event",
+    "viewItem": "View item",
+    "viewEvents": "View events",
+    "loadingItem": "Loading item...",
+    "itemNotFound": "Marketplace item not found."
+  },
+  "publicServices": {
+    "common": {
+      "search": "Search",
+      "featured": "Featured",
+      "popularOptions": "Popular options",
+      "loading": "Loading public offers...",
+      "demoNotice": "Demo content is shown until active offers are added in admin.",
+      "benefits": {
+        "secure": {
+          "title": "Secure booking",
+          "text": "Designed for protected checkout and account access."
+        },
+        "partners": {
+          "title": "Verified partners",
+          "text": "Ready for integration with approved providers."
+        },
+        "unified": {
+          "title": "Unified experience",
+          "text": "Same account for tickets, services, orders, and tracking."
+        }
+      }
+    },
+    "buses": {
+      "title": "Bus Tickets",
+      "eyebrow": "Travel",
+      "subtitle": "Compare routes, departure times, and fares for intercity trips.",
+      "search": {
+        "first": "From",
+        "second": "To",
+        "third": "Travel date"
+      }
+    },
+    "flights": {
+      "title": "Flights",
+      "eyebrow": "Air travel",
+      "subtitle": "Find flight options for local and regional journeys.",
+      "search": {
+        "first": "Departure",
+        "second": "Destination",
+        "third": "Flight date"
+      }
+    },
+    "vouchers": {
+      "title": "Vouchers",
+      "eyebrow": "Deals",
+      "subtitle": "Discover curated deals for food, lifestyle, travel, and entertainment.",
+      "search": {
+        "first": "Category",
+        "second": "City",
+        "third": "Valid until"
+      }
+    },
+    "stay": {
+      "title": "Stay",
+      "eyebrow": "Hotels",
+      "subtitle": "Explore accommodation options near your destination and events.",
+      "search": {
+        "first": "Destination",
+        "second": "Check-in",
+        "third": "Guests"
+      }
+    }
   },
   "discover": {
     "title": "Discover Extraordinary Events",

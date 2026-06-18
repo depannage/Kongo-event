@@ -271,12 +271,34 @@
       "memberSince": "Membre depuis"
     },
     "billing": {
-      "title": "Paiement & Facturation",
-      "description": "Gérez vos informations de paiement et de facturation.",
-      "cardName": "Nom sur la carte",
-      "cardNumber": "Numéro de carte",
-      "expiry": "Date d’expiration",
-      "cvc": "CVC"
+      "title": "Compte de réception",
+      "description": "Configurez le compte bancaire ou mobile money utilisé pour recevoir vos revenus.",
+      "loading": "Chargement du compte de réception...",
+      "loadError": "Impossible de charger le compte de réception.",
+      "saveSuccess": "Compte de réception enregistré. Il sera vérifié avant les paiements.",
+      "saveError": "Impossible d’enregistrer le compte de réception.",
+      "saving": "Enregistrement...",
+      "savePayout": "Enregistrer le compte",
+      "preferredMethod": "Méthode de réception",
+      "mobileMoney": "Mobile money",
+      "bankTransfer": "Virement bancaire",
+      "status": "Statut",
+      "statuses": {
+        "PENDING": "En attente de vérification",
+        "VERIFIED": "Vérifié",
+        "REJECTED": "Rejeté"
+      },
+      "accountHolderName": "Nom du bénéficiaire",
+      "country": "Pays",
+      "currency": "Devise",
+      "mobileProvider": "Fournisseur mobile money",
+      "mobileNumber": "Numéro mobile money",
+      "bankName": "Nom de la banque",
+      "bankAccountNumber": "Numéro de compte",
+      "bankRoutingNumber": "Code banque / routing",
+      "bankSwiftCode": "Code SWIFT",
+      "bankIban": "IBAN",
+      "securityNotice": "Vos informations de réception sont protégées et utilisées uniquement pour traiter les paiements organisateur."
     },
     "tax": {
       "title": "Taxes & Droits",
@@ -404,7 +426,8 @@
       "ticketsSold": "Tickets vendus",
       "revenueGenerated": "Revenu généré",
       "ticketsRemaining": "Tickets restants",
-      "checkinsCompleted": "Check-ins effectués"
+      "checkinsCompleted": "Check-ins effectués",
+      "checkinsRemaining": "Check-ins restants"
     },
     "table": {
       "no": "N°",
@@ -1023,11 +1046,20 @@
       "title": "Entreprise",
       "about": "À propos",
       "careers": "Carrières",
+      "contact": "Contact",
       "press": "Presse",
       "partners": "Partenaires"
     },
     "explore": {
       "title": "Explorer",
+      "events": "Événements populaires",
+      "marketplace": "Marketplace",
+      "buses": "Bus",
+      "flights": "Vols",
+      "vouchers": "Vouchers",
+      "stay": "Séjours",
+      "organizers": "Organisateurs",
+      "cities": "Villes",
       "music": "Événements musicaux",
       "art": "Expositions d'art",
       "tech": "Sommets tech",
@@ -1041,6 +1073,85 @@
       "cookies": "Paramètres des cookies"
     },
     "copyright": "© 2024 Kongo Event. Tous droits réservés."
+  },
+  "marketplace": {
+    "title": "Marketplace",
+    "eyebrow": "Kongo Event",
+    "loadingTitle": "Chargement du marketplace",
+    "resultsTitle": "Résultats pour \"{query}\"",
+    "searchPlaceholder": "Rechercher un produit, pack ou événement",
+    "search": "Rechercher",
+    "loadError": "Impossible de charger le marketplace.",
+    "empty": "Aucun article réel disponible pour le moment.",
+    "stock": "Stock",
+    "viewEvent": "Voir l'événement",
+    "viewItem": "Voir l'article",
+    "viewEvents": "Voir les événements",
+    "loadingItem": "Chargement de l'article...",
+    "itemNotFound": "Article marketplace introuvable."
+  },
+  "publicServices": {
+    "common": {
+      "search": "Rechercher",
+      "featured": "À la une",
+      "popularOptions": "Options populaires",
+      "loading": "Chargement des offres publiques...",
+      "demoNotice": "Du contenu de démonstration est affiché jusqu'à l'ajout d'offres actives dans l'admin.",
+      "benefits": {
+        "secure": {
+          "title": "Réservation sécurisée",
+          "text": "Pensé pour un paiement protégé et un accès compte sécurisé."
+        },
+        "partners": {
+          "title": "Partenaires vérifiés",
+          "text": "Prêt pour l'intégration avec des fournisseurs approuvés."
+        },
+        "unified": {
+          "title": "Expérience unifiée",
+          "text": "Un même compte pour billets, services, commandes et suivi."
+        }
+      }
+    },
+    "buses": {
+      "title": "Tickets de bus",
+      "eyebrow": "Transport",
+      "subtitle": "Comparez les trajets, horaires de départ et tarifs interurbains.",
+      "search": {
+        "first": "Départ",
+        "second": "Destination",
+        "third": "Date de voyage"
+      }
+    },
+    "flights": {
+      "title": "Vols",
+      "eyebrow": "Transport aérien",
+      "subtitle": "Trouvez des options de vols pour vos voyages locaux et régionaux.",
+      "search": {
+        "first": "Départ",
+        "second": "Destination",
+        "third": "Date du vol"
+      }
+    },
+    "vouchers": {
+      "title": "Vouchers",
+      "eyebrow": "Offres",
+      "subtitle": "Découvrez des offres pour la restauration, le lifestyle, le voyage et le divertissement.",
+      "search": {
+        "first": "Catégorie",
+        "second": "Ville",
+        "third": "Valide jusqu'au"
+      }
+    },
+    "stay": {
+      "title": "Séjours",
+      "eyebrow": "Hôtels",
+      "subtitle": "Explorez les hébergements proches de votre destination et de vos événements.",
+      "search": {
+        "first": "Destination",
+        "second": "Arrivée",
+        "third": "Voyageurs"
+      }
+    }
   },
   "discover": {
     "title": "Découvrez des événements extraordinaires",
