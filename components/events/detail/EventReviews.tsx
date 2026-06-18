@@ -8,9 +8,11 @@ import { useGetPublicEventReviews } from "@/shared/hooks/public-event.hooks";
 import { portalService } from "@/shared/services/portal.service";
 import { tokenStore } from "@/shared/lib/tokenStore";
 import { useLocalizedPath } from "@/shared/hooks/useLocalizedPath";
+import { useTranslations } from "next-intl";
 
 export default function EventReviews({ slug }: { slug: string }) {
     const router = useRouter();
+    const t = useTranslations("eventDetail");
     const { getLocalizedHref } = useLocalizedPath();
     const { data, isLoading, refetch } = useGetPublicEventReviews(slug);
     const reviews = data?.data ?? [];
@@ -28,7 +30,7 @@ export default function EventReviews({ slug }: { slug: string }) {
         }
 
         if (!comment.trim()) {
-            toast.warning("Veuillez écrire votre avis.");
+            toast.warning(t("reviewRequired"));
             return;
         }
 
@@ -43,9 +45,9 @@ export default function EventReviews({ slug }: { slug: string }) {
             setComment("");
             setRating(5);
             await refetch();
-            toast.success("Merci, votre avis est publié.");
+            toast.success(t("reviewPublished"));
         } catch (error: any) {
-            toast.error(error?.response?.data?.message || "Impossible d’envoyer votre avis.");
+            toast.error(error?.response?.data?.message || t("reviewError"));
         } finally {
             setSaving(false);
         }
@@ -53,7 +55,7 @@ export default function EventReviews({ slug }: { slug: string }) {
 
     const form = (
         <form onSubmit={submitReview} className="mb-6 rounded-lg border border-slate-200 bg-white p-5">
-            <h3 className="font-bold text-slate-900">Donner votre avis</h3>
+            <h3 className="font-bold text-slate-900">{t("reviewFormTitle")}</h3>
             <div className="mt-4 flex items-center gap-2">
                 {Array.from({ length: 5 }).map((_, index) => (
                     <button
@@ -69,13 +71,13 @@ export default function EventReviews({ slug }: { slug: string }) {
             <input
                 value={title}
                 onChange={(event) => setTitle(event.target.value)}
-                placeholder="Titre de votre avis"
+                placeholder={t("reviewTitlePlaceholder")}
                 className="mt-4 h-11 w-full rounded-lg border border-slate-200 px-3 text-sm outline-none focus:border-[#0067A8]"
             />
             <textarea
                 value={comment}
                 onChange={(event) => setComment(event.target.value)}
-                placeholder="Partagez votre expérience..."
+                placeholder={t("reviewCommentPlaceholder")}
                 rows={4}
                 className="mt-3 w-full rounded-lg border border-slate-200 p-3 text-sm outline-none focus:border-[#0067A8]"
             />
@@ -83,7 +85,7 @@ export default function EventReviews({ slug }: { slug: string }) {
                 disabled={saving}
                 className="mt-3 rounded-lg bg-[#0067A8] px-5 py-3 text-sm font-bold text-white disabled:opacity-60"
             >
-                {saving ? "Publication..." : "Publier l’avis"}
+                {saving ? t("publishing") : t("publishReview")}
             </button>
         </form>
     );
@@ -91,9 +93,9 @@ export default function EventReviews({ slug }: { slug: string }) {
     if (isLoading) {
         return (
             <section className="py-8">
-                <h2 className="mb-4 font-bold text-[#131827]">Reviews</h2>
+                <h2 className="mb-4 font-bold text-[#131827]">{t("reviews")}</h2>
                 {form}
-                <p className="text-sm text-slate-500">Loading reviews...</p>
+                <p className="text-sm text-slate-500">{t("loadingReviews")}</p>
             </section>
         );
     }
@@ -101,10 +103,10 @@ export default function EventReviews({ slug }: { slug: string }) {
     if (!reviews.length) {
         return (
             <section className="py-8">
-                <h2 className="mb-4 font-bold text-[#131827]">Reviews</h2>
+                <h2 className="mb-4 font-bold text-[#131827]">{t("reviews")}</h2>
                 {form}
                 <div className="rounded-lg border border-slate-200 bg-white p-5 text-sm text-slate-500">
-                    No public reviews yet.
+                    {t("noReviews")}
                 </div>
             </section>
         );
@@ -115,7 +117,7 @@ export default function EventReviews({ slug }: { slug: string }) {
     return (
         <section className="py-8">
             <div className="mb-5 flex items-center justify-between gap-4">
-                <h2 className="font-bold text-[#131827]">Reviews</h2>
+                <h2 className="font-bold text-[#131827]">{t("reviews")}</h2>
                 <div className="flex items-center gap-2 text-sm font-bold text-[#0067A8]">
                     <Star className="size-4 fill-[#0067A8]" />
                     {average.toFixed(1)} / 5

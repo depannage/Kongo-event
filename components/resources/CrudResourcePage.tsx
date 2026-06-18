@@ -23,7 +23,7 @@ export type ResourceOption = { id: string; name: string };
 export type ResourceField = {
   name: string;
   label: string;
-  type?: "text" | "number" | "url" | "select" | "cloudinary" | "checkbox";
+  type?: "text" | "number" | "url" | "select" | "cloudinary" | "checkbox" | "datetime";
   required?: boolean;
   placeholder?: string;
   endpoint?: string;
@@ -266,7 +266,7 @@ export default function CrudResourcePage({
                       <Input value={form[field.name] ?? ""} onChange={(event) => setForm({ ...form, [field.name]: event.target.value })} placeholder={field.placeholder} />
                     </div>
                   ) : (
-                    <Input type={field.type === "number" ? "number" : "text"} value={form[field.name] ?? ""} onChange={(event) => setForm({ ...form, [field.name]: event.target.value })} placeholder={field.placeholder} />
+                    <Input type={field.type === "number" ? "number" : field.type === "datetime" ? "datetime-local" : "text"} value={form[field.name] ?? ""} onChange={(event) => setForm({ ...form, [field.name]: event.target.value })} placeholder={field.placeholder} />
                   )}
                 </Field>
               ))}
@@ -302,16 +302,33 @@ function resourcePath(endpoint: string, row: any, idFields: string[]) {
 }
 
 function defaultForm(fields: ResourceField[], row: any = {}) {
-  return Object.fromEntries(fields.map((field) => [field.name, row[field.name] ?? ""]));
+  return Object.fromEntries(fields.map((field) => {
+    const value = row[field.name] ?? "";
+    return [field.name, field.type === "datetime" ? toDateTimeLocalValue(value) : value];
+  }));
 }
 
 function cleanPayload(form: Record<string, any>, fields: ResourceField[]) {
   const numericFields = new Set(fields.filter((field) => field.type === "number").map((field) => field.name));
+  const dateTimeFields = new Set(fields.filter((field) => field.type === "datetime").map((field) => field.name));
   return Object.fromEntries(
     Object.entries(form)
       .filter(([, value]) => value !== "")
-      .map(([key, value]) => [key, numericFields.has(key) ? Number(value) : value])
+      .map(([key, value]) => {
+        if (numericFields.has(key)) return [key, Number(value)];
+        if (dateTimeFields.has(key)) return [key, new Date(String(value)).toISOString()];
+        return [key, value];
+      })
   );
+}
+
+function toDateTimeLocalValue(value: unknown) {
+  if (!value) return "";
+  const date = new Date(String(value));
+  if (Number.isNaN(date.getTime())) return "";
+  const offset = date.getTimezoneOffset();
+  const local = new Date(date.getTime() - offset * 60 * 1000);
+  return local.toISOString().slice(0, 16);
 }
 
 function formatValue(value: any) {

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import {PublicEvent} from "@/shared/types/public-event.types";
+import { useTranslations } from "next-intl";
 
 
 type Props = {
@@ -16,13 +17,14 @@ function getGalleryImages(event: PublicEvent) {
 }
 
 export default function EventGallery({ event }: Props) {
+    const t = useTranslations("eventDetail");
     const images = getGalleryImages(event);
 
     if (!images.length) return null;
 
     return (
         <section className="py-12">
-            <h2 className="mb-6 font-bold text-[#131827]">Event Gallery</h2>
+            <h2 className="mb-6 font-bold text-[#131827]">{t("gallery")}</h2>
 
             <div className="grid h-[390px] grid-cols-3 gap-4">
                 <div className="relative col-span-2 row-span-2 overflow-hidden rounded-2xl bg-gray-200">
@@ -48,7 +50,7 @@ export default function EventGallery({ event }: Props) {
 
                         {index === 3 && (
                             <div className="absolute inset-0 flex items-center justify-center bg-black/50 text-xl font-bold text-white">
-                                +12 More
+                                +12 {t("more")}
                             </div>
                         )}
                     </div>
