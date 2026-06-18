@@ -7,6 +7,7 @@ import type {
     LoginPayload,
     MessageResponse,
     RefreshTokenPayload,
+    RegisterOrganizerPayload,
     RegisterPayload,
     ResendSmsPayload,
     ResetPasswordPayload,
@@ -28,6 +29,12 @@ function saveAuthTokens(data: AuthResponse) {
 export const authService = {
     async register(payload: RegisterPayload): Promise<AuthResponse> {
         const res = await api.post("/auth/register", payload, { skipAuth: true } as any);
+        saveAuthTokens(res.data);
+        return res.data;
+    },
+
+    async registerOrganizer(payload: RegisterOrganizerPayload): Promise<AuthResponse> {
+        const res = await api.post("/auth/register-organizer", payload, { skipAuth: true } as any);
         saveAuthTokens(res.data);
         return res.data;
     },

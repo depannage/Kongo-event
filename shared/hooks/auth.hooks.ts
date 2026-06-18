@@ -4,6 +4,7 @@ import type {
     ForgotPasswordPayload,
     LoginPayload,
     RefreshTokenPayload,
+    RegisterOrganizerPayload,
     RegisterPayload,
     ResendSmsPayload,
     ResetPasswordPayload,
@@ -14,6 +15,12 @@ import type {
 export function useRegister() {
     return useMutation({
         mutationFn: (payload: RegisterPayload) => authService.register(payload),
+    });
+}
+
+export function useRegisterOrganizer() {
+    return useMutation({
+        mutationFn: (payload: RegisterOrganizerPayload) => authService.registerOrganizer(payload),
     });
 }
 

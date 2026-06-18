@@ -2,87 +2,119 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useTranslations , useLocale} from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { toast } from "sonner";
-import { Eye, EyeOff, UserRound } from "lucide-react";
+import { Building2, CheckCircle2, Eye, EyeOff, Ticket, UserRound } from "lucide-react";
 import AuthShell from "@/components/auth/AuthShell";
-import { useRegister } from "@/shared/hooks/auth.hooks";
+import { useRegister, useRegisterOrganizer } from "@/shared/hooks/auth.hooks";
+import type { OrganizerBusinessType } from "@/shared/types/auth.types";
 import Image from "next/image";
+
+type AccountType = "ATTENDEE" | OrganizerBusinessType;
+
+const accountTypes: Array<{
+    value: AccountType;
+    icon: typeof UserRound;
+}> = [
+    { value: "ATTENDEE", icon: UserRound },
+    { value: "EVENT_ORGANIZER", icon: Building2 },
+    { value: "TICKETING_SELLER", icon: Ticket },
+    { value: "TRAVEL_SELLER", icon: Building2 },
+    { value: "HOTEL_SELLER", icon: Building2 },
+    { value: "VOUCHER_SELLER", icon: Ticket },
+    { value: "FULL_PLATFORM", icon: CheckCircle2 },
+];
 
 export default function RegisterPage() {
     const t = useTranslations("auth.register");
     const router = useRouter();
-    const local=useLocale()
+    const locale = useLocale();
     const [showPassword, setShowPassword] = useState(false);
     const [fullName, setFullName] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
+    const [businessName, setBusinessName] = useState("");
+    const [accountType, setAccountType] = useState<AccountType>("EVENT_ORGANIZER");
 
-    const { mutate, isPending } = useRegister();
+    const register = useRegister();
+    const registerOrganizer = useRegisterOrganizer();
+    const isOrganizerAccount = accountType !== "ATTENDEE";
+    const isPending = register.isPending || registerOrganizer.isPending;
 
     const canSubmit =
-        fullName.trim() && email.trim() && phone.trim() && password.trim() && !isPending;
+        fullName.trim() &&
+        email.trim() &&
+        phone.trim() &&
+        password.trim() &&
+        (!isOrganizerAccount || businessName.trim()) &&
+        !isPending;
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if (!fullName.trim()) {
-            toast.warning("Champ obligatoire", {
-                description: "Veuillez saisir votre nom complet.",
-            });
+            toast.warning(t("requiredTitle"), { description: t("fullNameRequired") });
             return;
         }
 
         if (!email.trim()) {
-            toast.warning("Champ obligatoire", {
-                description: "Veuillez saisir votre adresse email.",
-            });
+            toast.warning(t("requiredTitle"), { description: t("emailRequired") });
             return;
         }
 
         if (!phone.trim()) {
-            toast.warning("Champ obligatoire", {
-                description: "Veuillez saisir votre numéro de téléphone.",
-            });
+            toast.warning(t("requiredTitle"), { description: t("phoneRequired") });
             return;
         }
 
         if (!password.trim()) {
-            toast.warning("Champ obligatoire", {
-                description: "Veuillez saisir votre mot de passe.",
-            });
+            toast.warning(t("requiredTitle"), { description: t("passwordRequired") });
             return;
         }
 
-        mutate(
-            {
-                fullName: fullName.trim(),
-                email: email.trim(),
-                phone: phone.trim(),
-                password,
-            },
-            {
-                onSuccess: () => {
-                    toast.success("Compte créé avec succès", {
-                        description: "Redirection vers votre espace...",
-                    });
+        if (isOrganizerAccount && !businessName.trim()) {
+            toast.warning(t("requiredTitle"), { description: t("businessNameRequired") });
+            return;
+        }
 
-                    router.push(`/${local}overview`);
-                },
-                onError: (error: any) => {
-                    const message =
-                        error?.response?.data?.message ||
-                        error?.response?.data?.error ||
-                        error?.message ||
-                        "Une erreur est survenue. Veuillez réessayer.";
+        const onSuccess = () => {
+            toast.success(t("successTitle"), { description: t("successDescription") });
+            router.push(isOrganizerAccount ? `/${locale}/overview` : `/${locale}/account/tickets`);
+        };
 
-                    toast.error("Inscription échouée", {
-                        description: Array.isArray(message) ? message.join(", ") : message,
-                    });
+        const onError = (error: any) => {
+            const message =
+                error?.response?.data?.message ||
+                error?.response?.data?.error ||
+                error?.message ||
+                t("errorDescription");
+
+            toast.error(t("errorTitle"), {
+                description: Array.isArray(message) ? message.join(", ") : message,
+            });
+        };
+
+        const payload = {
+            fullName: fullName.trim(),
+            email: email.trim(),
+            phone: phone.trim(),
+            password,
+        };
+
+        if (isOrganizerAccount) {
+            registerOrganizer.mutate(
+                {
+                    ...payload,
+                    businessName: businessName.trim(),
+                    businessType: accountType,
                 },
-            }
-        );
+                { onSuccess, onError }
+            );
+            return;
+        }
+
+        register.mutate(payload, { onSuccess, onError });
     };
 
     return (
@@ -100,6 +132,42 @@ export default function RegisterPage() {
                 </div>
 
                 <form onSubmit={handleSubmit} className="mt-7 space-y-4">
+                    <div>
+                        <label className="mb-2 block text-xs font-semibold text-slate-700">
+                            {t("accountType")} <span className="text-red-500">*</span>
+                        </label>
+                        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                            {accountTypes.map((type) => {
+                                const Icon = type.icon;
+                                const active = accountType === type.value;
+                                return (
+                                    <button
+                                        key={type.value}
+                                        type="button"
+                                        onClick={() => setAccountType(type.value)}
+                                        className={`flex min-h-14 items-center gap-3 rounded border px-3 text-left text-sm transition ${
+                                            active
+                                                ? "border-blue-600 bg-blue-50 text-blue-700"
+                                                : "border-slate-200 bg-white text-slate-600 hover:border-blue-200"
+                                        }`}
+                                    >
+                                        <Icon className="size-4 shrink-0" />
+                                        <span className="font-semibold">{t(`accountTypes.${type.value}`)}</span>
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    </div>
+
+                    {isOrganizerAccount ? (
+                        <Field
+                            label={t("businessName")}
+                            value={businessName}
+                            onChange={setBusinessName}
+                            placeholder={t("businessNamePlaceholder")}
+                        />
+                    ) : null}
+
                     <Field
                         label={t("fullName")}
                         value={fullName}
@@ -159,7 +227,7 @@ export default function RegisterPage() {
                         {isPending ? (
                             <span className="size-5 animate-spin rounded border-2 border-white/40 border-t-white" />
                         ) : (
-                            t("submit")
+                            isOrganizerAccount ? t("submitOrganizer") : t("submit")
                         )}
                     </button>
                 </form>

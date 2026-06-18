@@ -141,15 +141,36 @@
       "fullNamePlaceholder": "Enter your full name",
       "email": "Email Address",
       "emailPlaceholder": "Enter your email",
+      "accountType": "Account type",
+      "businessName": "Business name",
+      "businessNamePlaceholder": "Ex: Kongo Live Productions",
       "password": "Password",
       "passwordPlaceholder": "Enter your password",
       "submit": "Register",
+      "submitOrganizer": "Create workspace",
       "hasAccount": "Already have an account?",
       "login": "Login",
-
       "phone": "Phone",
-      "phonePlaceholder": "Ex: +243810000000"
-
+      "phonePlaceholder": "Ex: +243810000000",
+      "requiredTitle": "Required field",
+      "fullNameRequired": "Please enter your full name.",
+      "emailRequired": "Please enter your email address.",
+      "phoneRequired": "Please enter your phone number.",
+      "passwordRequired": "Please enter your password.",
+      "businessNameRequired": "Please enter your business name.",
+      "successTitle": "Account created successfully",
+      "successDescription": "Redirecting to your workspace...",
+      "errorTitle": "Registration failed",
+      "errorDescription": "Something went wrong. Please try again.",
+      "accountTypes": {
+        "ATTENDEE": "Ticket buyer",
+        "EVENT_ORGANIZER": "Organizer",
+        "TICKETING_SELLER": "Ticket seller",
+        "TRAVEL_SELLER": "Transport and flights",
+        "HOTEL_SELLER": "Hotels and stays",
+        "VOUCHER_SELLER": "Vouchers and offers",
+        "FULL_PLATFORM": "Full platform"
+      }
     },
     "forgot": {
       "title": "Forgot Password",
@@ -201,6 +222,10 @@
       "sponsors": "Sponsors",
       "eventSponsors": "Event sponsors",
       "ticketTypes": "Ticket types",
+      "busRoutes": "Bus routes",
+      "flightOffers": "Flight offers",
+      "voucherOffers": "Voucher offers",
+      "stayOffers": "Stay offers",
       "manageTickets": "Manage tickets",
       "earnings": "Earnings",
       "reviews": "Reviews",
@@ -232,6 +257,7 @@
     "save": "Save Change",
     "tabs": {
       "general": "General",
+      "modules": "Modules",
       "plan": "Plan & Pricing",
       "account": "My Account",
       "billing": "Payment & Billing",
@@ -240,6 +266,62 @@
       "language": "Time & Language",
       "password": "Password",
       "notifications": "Notifications"
+    },
+    "modules": {
+      "title": "Company modules",
+      "description": "Choose only the features your business needs. The admin menu and experience adapt automatically.",
+      "loading": "Loading modules...",
+      "loadError": "Unable to load modules.",
+      "save": "Save modules",
+      "saving": "Saving...",
+      "saveSuccess": "Modules saved.",
+      "saveError": "Unable to save modules.",
+      "items": {
+        "events": {
+          "title": "Events",
+          "description": "Create and manage events, venues, rooms, and categories."
+        },
+        "ticketing": {
+          "title": "Ticketing",
+          "description": "Ticket types, sales, customer tickets, and availability control."
+        },
+        "marketplace": {
+          "title": "Marketplace",
+          "description": "Items, packs, and products associated with events."
+        },
+        "buses": {
+          "title": "Buses",
+          "description": "Manage bus routes and transport offers."
+        },
+        "flights": {
+          "title": "Flights",
+          "description": "Manage flight ticket offers and provider integrations."
+        },
+        "vouchers": {
+          "title": "Vouchers",
+          "description": "Manage coupons, deals, and partner offers."
+        },
+        "stay": {
+          "title": "Stay",
+          "description": "Manage hotels, rooms, and accommodation offers."
+        },
+        "sponsors": {
+          "title": "Sponsors",
+          "description": "Sponsors and event sponsor associations."
+        },
+        "reports": {
+          "title": "Reports",
+          "description": "Statistics, financial reports, and data exports."
+        },
+        "payouts": {
+          "title": "Payouts",
+          "description": "Revenue, withdrawals, and payout account."
+        },
+        "reviews": {
+          "title": "Reviews",
+          "description": "Customer feedback, ratings, and quality tracking."
+        }
+      }
     },
     "general": {
       "title": "General",
