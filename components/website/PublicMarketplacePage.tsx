@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { ArrowLeft, Search, ShoppingBag, Ticket, MapPin } from "lucide-react";
 import { useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 import { WebsiteFooter, WebsiteNav } from "@/components/website/SiteChrome";
 import { LocalizedLink } from "@/components/website/LocalizedLink";
 import { useGetPublicMarketplaceItem, useGetPublicMarketplaceItems } from "@/shared/hooks/public-marketplace.hooks";
@@ -13,6 +14,7 @@ function formatMoney(amount: number, currency: string) {
 }
 
 export function PublicMarketplacePage() {
+  const t = useTranslations("marketplace");
   const [query, setQuery] = useState("");
   const [submittedQuery, setSubmittedQuery] = useState("");
   const marketplaceQuery = useGetPublicMarketplaceItems({
@@ -23,10 +25,10 @@ export function PublicMarketplacePage() {
 
   const items = marketplaceQuery.data?.items ?? [];
   const title = useMemo(() => {
-    if (marketplaceQuery.isLoading) return "Chargement du marketplace";
-    if (submittedQuery) return `Résultats pour "${submittedQuery}"`;
-    return "Marketplace";
-  }, [marketplaceQuery.isLoading, submittedQuery]);
+    if (marketplaceQuery.isLoading) return t("loadingTitle");
+    if (submittedQuery) return t("resultsTitle", { query: submittedQuery });
+    return t("title");
+  }, [marketplaceQuery.isLoading, submittedQuery, t]);
 
   const submitSearch = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -35,10 +37,10 @@ export function PublicMarketplacePage() {
 
   return (
     <main className="min-h-screen bg-[#F5F7FC]">
-      <WebsiteNav active="Marketplace" />
+      <WebsiteNav active={t("title")} />
       <section className="border-b bg-white">
         <div className="mx-auto max-w-7xl px-6 py-14 md:px-10">
-          <p className="text-sm font-extrabold uppercase tracking-widest text-[#005995]">Kongo Event</p>
+          <p className="text-sm font-extrabold uppercase tracking-widest text-[#005995]">{t("eyebrow")}</p>
           <h1 className="mt-4 text-5xl font-extrabold tracking-tight text-[#131827] md:text-6xl">
             {title}
           </h1>
@@ -48,12 +50,12 @@ export function PublicMarketplacePage() {
               <input
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
-                placeholder="Rechercher un produit, pack ou événement"
+                placeholder={t("searchPlaceholder")}
                 className="min-h-14 flex-1 bg-transparent text-base outline-none"
               />
             </div>
             <button className="bg-[#005995] px-7 font-extrabold text-white hover:bg-[#004b7d]">
-              Search
+              {t("search")}
             </button>
           </form>
         </div>
@@ -61,10 +63,10 @@ export function PublicMarketplacePage() {
 
       <section className="mx-auto max-w-7xl px-6 py-14 md:px-10">
         {marketplaceQuery.isError && (
-          <MarketplaceEmpty title="Impossible de charger le marketplace." />
+          <MarketplaceEmpty title={t("loadError")} />
         )}
         {!marketplaceQuery.isLoading && !marketplaceQuery.isError && items.length === 0 && (
-          <MarketplaceEmpty title="Aucun article réel disponible pour le moment." />
+          <MarketplaceEmpty title={t("empty")} />
         )}
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {items.map((item) => (
@@ -78,6 +80,7 @@ export function PublicMarketplacePage() {
 }
 
 function MarketplaceCard({ item }: { item: PublicMarketplaceItem }) {
+  const t = useTranslations("marketplace");
   const venue = [item.event?.venue?.city, item.event?.venue?.name].filter(Boolean).join(", ");
 
   return (
@@ -103,7 +106,7 @@ function MarketplaceCard({ item }: { item: PublicMarketplaceItem }) {
         </div>
         {item.stock !== null && item.stock !== undefined && (
           <p className="text-sm font-bold text-slate-500">
-            Stock: {item.stock.toLocaleString("fr-FR")}
+            {t("stock")}: {item.stock.toLocaleString("fr-FR")}
           </p>
         )}
         {item.event && (
@@ -122,14 +125,14 @@ function MarketplaceCard({ item }: { item: PublicMarketplaceItem }) {
         )}
         {item.event?.slug && (
           <LocalizedLink href={`/events/${item.event.slug}`} className="text-sm font-extrabold text-[#005995]">
-            Voir l'événement
+            {t("viewEvent")}
           </LocalizedLink>
         )}
         <LocalizedLink
           href={`/marketplace/${item.id}`}
           className="inline-flex w-full justify-center rounded-lg bg-[#005995] px-5 py-3 font-extrabold text-white"
         >
-          Voir l'article
+          {t("viewItem")}
         </LocalizedLink>
       </div>
     </article>
@@ -137,27 +140,28 @@ function MarketplaceCard({ item }: { item: PublicMarketplaceItem }) {
 }
 
 export function PublicMarketplaceItemPage({ id }: { id: string }) {
+  const t = useTranslations("marketplace");
   const query = useGetPublicMarketplaceItem(id);
   const item = query.data;
   const venue = [item?.event?.venue?.city, item?.event?.venue?.name].filter(Boolean).join(", ");
 
   return (
     <main className="min-h-screen bg-[#F5F7FC]">
-      <WebsiteNav active="Marketplace" />
+      <WebsiteNav active={t("title")} />
       <section className="mx-auto max-w-7xl px-6 py-12 md:px-10">
         <LocalizedLink href="/marketplace" className="inline-flex items-center gap-2 font-extrabold text-[#005995]">
           <ArrowLeft className="h-4 w-4" />
-          Marketplace
+          {t("title")}
         </LocalizedLink>
 
         {query.isLoading && (
           <div className="mt-10 rounded-xl border bg-white p-10 text-center shadow-sm">
-            Chargement de l'article...
+            {t("loadingItem")}
           </div>
         )}
 
         {query.isError && (
-          <MarketplaceEmpty title="Article marketplace introuvable." />
+          <MarketplaceEmpty title={t("itemNotFound")} />
         )}
 
         {item && (
@@ -182,7 +186,7 @@ export function PublicMarketplaceItemPage({ id }: { id: string }) {
               </p>
               {item.stock !== null && item.stock !== undefined && (
                 <p className="mt-3 font-bold text-slate-500">
-                  Stock: {item.stock.toLocaleString("fr-FR")}
+                  {t("stock")}: {item.stock.toLocaleString("fr-FR")}
                 </p>
               )}
               {item.description && (
@@ -205,7 +209,7 @@ export function PublicMarketplaceItemPage({ id }: { id: string }) {
                     href={`/events/${item.event.slug}`}
                     className="mt-5 inline-flex rounded-lg bg-white px-5 py-3 font-extrabold text-[#005995]"
                   >
-                    Voir l'événement
+                    {t("viewEvent")}
                   </LocalizedLink>
                 </div>
               )}
@@ -219,12 +223,13 @@ export function PublicMarketplaceItemPage({ id }: { id: string }) {
 }
 
 function MarketplaceEmpty({ title }: { title: string }) {
+  const t = useTranslations("marketplace");
   return (
     <div className="rounded-xl border bg-white p-10 text-center shadow-sm">
       <ShoppingBag className="mx-auto h-12 w-12 text-slate-300" />
       <h2 className="mt-4 text-2xl font-extrabold text-[#131827]">{title}</h2>
       <LocalizedLink href="/discover" className="mt-6 inline-flex rounded-lg bg-[#005995] px-6 py-3 font-bold text-white">
-        Voir les événements
+        {t("viewEvents")}
       </LocalizedLink>
     </div>
   );
