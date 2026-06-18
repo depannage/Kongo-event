@@ -11,6 +11,7 @@ import EventTicketCard from "./EventTicketCard";
 import RelatedEvents from "./RelatedEvents";
 import EventMarketplace from "./EventMarketplace";
 import EventReviews from "./EventReviews";
+import EventPublicActions from "./EventPublicActions";
 import {useGetPublicEventBySlug, useGetUpcomingPublicEvents} from "@/shared/hooks/public-event.hooks";
 import Nav from "@/components/home/Nav";
 
@@ -60,6 +61,11 @@ export default function EventDetailPage({ slug }: Props) {
 
             <section className="mx-auto grid max-w-7xl gap-12 px-6 py-16 lg:grid-cols-[1fr_360px]">
                 <div>
+                    <EventPublicActions
+                        slug={event.slug}
+                        initialLikeCount={event.likeCount ?? 0}
+                        initialReviewCount={event.reviewCount ?? 0}
+                    />
                     <EventOrganizer event={event} />
                     <EventGallery event={event} />
                     <EventAbout event={event} />

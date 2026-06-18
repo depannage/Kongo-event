@@ -49,6 +49,8 @@ export type PublicEvent = {
     ticketTypes: PublicTicketType[];
     mediaFiles: unknown[];
     marketplaceItems?: PublicMarketplaceItem[];
+    likeCount?: number;
+    reviewCount?: number;
     minPrice: number;
     currency: string;
 };
