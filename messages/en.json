@@ -141,15 +141,36 @@
       "fullNamePlaceholder": "Enter your full name",
       "email": "Email Address",
       "emailPlaceholder": "Enter your email",
+      "accountType": "Account type",
+      "businessName": "Business name",
+      "businessNamePlaceholder": "Ex: Kongo Live Productions",
       "password": "Password",
       "passwordPlaceholder": "Enter your password",
       "submit": "Register",
+      "submitOrganizer": "Create workspace",
       "hasAccount": "Already have an account?",
       "login": "Login",
-
       "phone": "Phone",
-      "phonePlaceholder": "Ex: +243810000000"
-
+      "phonePlaceholder": "Ex: +243810000000",
+      "requiredTitle": "Required field",
+      "fullNameRequired": "Please enter your full name.",
+      "emailRequired": "Please enter your email address.",
+      "phoneRequired": "Please enter your phone number.",
+      "passwordRequired": "Please enter your password.",
+      "businessNameRequired": "Please enter your business name.",
+      "successTitle": "Account created successfully",
+      "successDescription": "Redirecting to your workspace...",
+      "errorTitle": "Registration failed",
+      "errorDescription": "Something went wrong. Please try again.",
+      "accountTypes": {
+        "ATTENDEE": "Ticket buyer",
+        "EVENT_ORGANIZER": "Organizer",
+        "TICKETING_SELLER": "Ticket seller",
+        "TRAVEL_SELLER": "Transport and flights",
+        "HOTEL_SELLER": "Hotels and stays",
+        "VOUCHER_SELLER": "Vouchers and offers",
+        "FULL_PLATFORM": "Full platform"
+      }
     },
     "forgot": {
       "title": "Forgot Password",
