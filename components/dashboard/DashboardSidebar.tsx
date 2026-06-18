@@ -25,6 +25,10 @@ import {
     Users,
     UserCheck,
     Wallet,
+    Bus,
+    Plane,
+    BadgePercent,
+    Hotel,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useSidebar } from "@/contexts/SidebarContext";
@@ -64,6 +68,10 @@ export default function DashboardSidebar() {
                 { icon: Link2, label: t("menu.eventSponsors"), href: "event-sponsors" },
                 { icon: ImageIcon, label: t("menu.media"), href: "media" },
                 { icon: Ticket, label: t("menu.ticketTypes"), href: "ticket-types" },
+                { icon: Bus, label: "Bus routes", href: "bus-routes" },
+                { icon: Plane, label: "Flight offers", href: "flight-offers" },
+                { icon: BadgePercent, label: "Voucher offers", href: "voucher-offers" },
+                { icon: Hotel, label: "Stay offers", href: "stay-offers" },
                 { icon: Ticket, label: t("menu.manageTickets"), href: "tickets/manage" },
                 { icon: CreditCard, label: t("menu.earnings"), href: "earnings" },
                 { icon: MessageCircle, label: t("menu.reviews"), href: "reviews" },

@@ -5,28 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28296e1f-50b8-4e57-8839-054940480073" name="Changes" comment="fix editor event">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/[locale]/(website)/account/profile/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/[locale]/(website)/account/profile/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/[locale]/(website)/account/tickets/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/[locale]/(website)/account/tickets/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/[locale]/(website)/auth/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/[locale]/(website)/auth/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/[locale]/(website)/category/[slug]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/[locale]/(website)/category/[slug]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/[locale]/(website)/checkout/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/[locale]/(website)/checkout/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/[locale]/(website)/city/[slug]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/[locale]/(website)/city/[slug]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/[locale]/(website)/order-success/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/[locale]/(website)/order-success/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/[locale]/(website)/organizers/[slug]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/[locale]/(website)/organizers/[slug]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/events/detail/EventTicketCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/events/detail/EventTicketCard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/home/EventsNearYou.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/home/EventsNearYou.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/home/FeaturedHighlights.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/home/FeaturedHighlights.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/events/detail/EventDetailPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/events/detail/EventDetailPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/home/Footer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/home/Footer.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/home/Nav.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/home/Nav.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/home/Navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/home/Navbar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/home/TopCities.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/home/TopCities.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/home/TrendingEvents.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/home/TrendingEvents.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/website/EventCards.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/website/EventCards.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/website/PageSections.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/website/PageSections.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/website/SiteChrome.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/website/SiteChrome.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/website/website-data.ts" beforeDir="false" afterPath="$PROJECT_DIR$/components/website/website-data.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messages/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/messages/en.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messages/fr.json" beforeDir="false" afterPath="$PROJECT_DIR$/messages/fr.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/types/public-event.types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/shared/types/public-event.types.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,7 +111,7 @@
       <updated>1780789971050</updated>
       <workItem from="1780789973368" duration="2143000" />
       <workItem from="1781686010932" duration="7152000" />
-      <workItem from="1781693912101" duration="3284000" />
+      <workItem from="1781693912101" duration="4487000" />
     </task>
     <task id="LOCAL-00001" summary="fix editor event">
       <option name="closed" value="true" />

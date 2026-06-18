@@ -961,6 +961,13 @@
 
   "navigation": {
     "brand": "Kongo Event",
+    "home": "Home",
+    "events": "Events",
+    "marketplace": "Marketplace",
+    "buses": "Buses",
+    "flights": "Flights",
+    "vouchers": "Vouchers",
+    "stay": "Stay",
     "discover": "Discover",
     "help": "Help",
     "organizer": "Organizer",

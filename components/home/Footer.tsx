@@ -41,10 +41,12 @@ export default function Footer() {
                     getHref={getLocalizedHref}
                     title={t("explore.title")}
                     links={[
-                        [t("explore.music"), "/category/music"],
-                        [t("explore.art"), "/category/art"],
-                        [t("explore.tech"), "/category/tech"],
-                        [t("explore.nightlife"), "/category/nightlife"],
+                        ["Events", "/discover"],
+                        ["Marketplace", "/marketplace"],
+                        ["Buses", "/buses"],
+                        ["Flights", "/flights"],
+                        ["Vouchers", "/vouchers"],
+                        ["Stay", "/stay"],
                     ]}
                 />
 

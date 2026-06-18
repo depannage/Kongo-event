@@ -9,6 +9,7 @@ import EventAbout from "./EventAbout";
 import EventLocation from "./EventLocation";
 import EventTicketCard from "./EventTicketCard";
 import RelatedEvents from "./RelatedEvents";
+import EventMarketplace from "./EventMarketplace";
 import {useGetPublicEventBySlug, useGetUpcomingPublicEvents} from "@/shared/hooks/public-event.hooks";
 import Nav from "@/components/home/Nav";
 
@@ -62,6 +63,7 @@ export default function EventDetailPage({ slug }: Props) {
                     <EventGallery event={event} />
                     <EventAbout event={event} />
                     <EventLocation event={event} />
+                    <EventMarketplace event={event} />
                 </div>
 
                 <EventTicketCard event={event} />

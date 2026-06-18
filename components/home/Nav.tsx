@@ -21,10 +21,14 @@ export default function Navbar() {
                     <BrandLogo size="sm" />
                 </Link>
 
-                <nav className="hidden items-center gap-8 text-sm font-semibold text-gray-800 md:flex">
-                    <Link href={getLocalizedHref("/discover")}>{t("discover")}</Link>
-                    <Link href={getLocalizedHref("/help")}>{t("help")}</Link>
-                    <Link href={getLocalizedHref("/organizers/vanguard-productions")}>{t("organizer")}</Link>
+                <nav className="hidden items-center gap-6 text-sm font-semibold text-gray-800 md:flex">
+                    <Link href={getLocalizedHref("/")}>{t("home")}</Link>
+                    <Link href={getLocalizedHref("/discover")}>{t("events")}</Link>
+                    <Link href={getLocalizedHref("/marketplace")}>{t("marketplace")}</Link>
+                    <Link href={getLocalizedHref("/buses")}>{t("buses")}</Link>
+                    <Link href={getLocalizedHref("/flights")}>{t("flights")}</Link>
+                    <Link href={getLocalizedHref("/vouchers")}>{t("vouchers")}</Link>
+                    <Link href={getLocalizedHref("/stay")}>{t("stay")}</Link>
                 </nav>
 
                 <div className="flex items-center gap-3">

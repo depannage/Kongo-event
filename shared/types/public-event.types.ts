@@ -1,3 +1,5 @@
+import type { PublicMarketplaceItem } from "@/shared/types/marketplace.types";
+
 export type PublicCategory = {
     id: string;
     name: string;
@@ -46,6 +48,7 @@ export type PublicEvent = {
     organizer: PublicOrganizer;
     ticketTypes: PublicTicketType[];
     mediaFiles: unknown[];
+    marketplaceItems?: PublicMarketplaceItem[];
     minPrice: number;
     currency: string;
 };
