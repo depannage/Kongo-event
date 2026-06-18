@@ -48,6 +48,14 @@ export type PortalListResponse<T> = {
     pages?: number;
 };
 
+export type PortalEventReaction = {
+    eventId: string;
+    liked: boolean;
+    likeCount: number;
+    reviewCount: number;
+    myReview?: unknown;
+};
+
 export const portalService = {
     async register(payload: RegisterPayload): Promise<AuthResponse> {
         const res = await api.post<AuthResponse>("/portal/auth/register", payload, { skipAuth: true } as any);
@@ -93,6 +101,26 @@ export const portalService = {
 
     async overview() {
         const res = await api.get("/portal/me/overview");
+        return res.data;
+    },
+
+    async eventReaction(slug: string): Promise<PortalEventReaction> {
+        const res = await api.get<PortalEventReaction>(`/portal/events/${encodeURIComponent(slug)}/reaction`);
+        return res.data;
+    },
+
+    async likeEvent(slug: string): Promise<PortalEventReaction> {
+        const res = await api.post<PortalEventReaction>(`/portal/events/${encodeURIComponent(slug)}/like`);
+        return res.data;
+    },
+
+    async unlikeEvent(slug: string): Promise<PortalEventReaction> {
+        const res = await api.delete<PortalEventReaction>(`/portal/events/${encodeURIComponent(slug)}/like`);
+        return res.data;
+    },
+
+    async reviewEvent(slug: string, payload: { rating: number; title?: string; comment: string }) {
+        const res = await api.post(`/portal/events/${encodeURIComponent(slug)}/reviews`, payload);
         return res.data;
     },
 
