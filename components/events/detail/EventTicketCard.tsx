@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Calendar, Heart, Info, MapPin, Share2 } from "lucide-react";
 import {PublicEvent, PublicTicketType} from "@/shared/types/public-event.types";
 import { useLocalizedPath } from "@/shared/hooks/useLocalizedPath";
+import { useTranslations } from "next-intl";
 
 
 type Props = {
@@ -34,6 +35,7 @@ function formatDateRange(startAt: string, endAt: string) {
 }
 
 export default function EventTicketCard({ event }: Props) {
+    const t = useTranslations("eventDetail");
     const { getLocalizedHref } = useLocalizedPath();
     const tickets = event.ticketTypes ?? [];
 
@@ -45,33 +47,33 @@ export default function EventTicketCard({ event }: Props) {
     return (
         <aside className="sticky top-28 h-fit rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
             <p className="text-xs font-bold uppercase tracking-widest text-gray-500">
-                Price starting from
+                {t("priceStartingFrom")}
             </p>
 
             <div className="mt-3 text-4xl font-extrabold text-[#0067A8]">
                 {event.minPrice ?? lowestTicket?.price ?? 0}{" "}
                 <span className="text-base font-medium text-gray-500">
-          {event.currency} / person
+          {event.currency} / {t("perPerson")}
         </span>
             </div>
 
             <div className="mt-8 space-y-6">
                 <InfoItem
                     icon={<Calendar className="h-5 w-5" />}
-                    title="Date & Time"
+                    title={t("dateTime")}
                     value={formatDateRange(event.startAt, event.endAt)}
                 />
 
                 <InfoItem
                     icon={<MapPin className="h-5 w-5" />}
-                    title="Venue"
+                    title={t("venue")}
                     value={`${event.venue?.name}, ${event.venue?.city}`}
                 />
             </div>
 
             <div className="mt-8">
                 <h3 className="mb-4 text-sm font-bold text-[#131827]">
-                    Select Tickets
+                    {t("selectTickets")}
                 </h3>
 
                 <div className="space-y-3">
@@ -84,7 +86,7 @@ export default function EventTicketCard({ event }: Props) {
                                 <div>
                                     <h4 className="font-bold text-[#131827]">{ticket.name}</h4>
                                     <p className="text-xs text-gray-500">
-                                        {ticket.quantity} available
+                                        {ticket.quantity} {t("available")}
                                     </p>
                                 </div>
 
@@ -98,11 +100,11 @@ export default function EventTicketCard({ event }: Props) {
             </div>
 
             <Link href={getLocalizedHref(`/checkout?event=${event.slug}`)} className="mt-8 block w-full rounded-xl bg-[#B55A00] px-6 py-4 text-center font-bold text-white transition hover:bg-[#944900]">
-                Buy Tickets Now
+                {t("buyTicketsNow")}
             </Link>
 
             <p className="mt-5 text-center text-xs text-gray-500">
-                No booking fees. Cancel up to 48h before.
+                {t("bookingNote")}
             </p>
 
             <div className="mt-8 flex justify-center gap-8 border-t pt-6 text-gray-600">

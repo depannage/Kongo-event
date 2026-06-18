@@ -1,34 +1,38 @@
 import CrudResourcePage from "@/components/resources/CrudResourcePage";
+import { getTranslations } from "next-intl/server";
 
-export default function VoucherOffersPage() {
+export default async function VoucherOffersPage() {
+  const t = await getTranslations("resourcePages");
+  const c = (key: string) => t(`common.${key}`);
+
   return (
     <CrudResourcePage
-      title="Voucher offers"
-      description="Create and manage public voucher offers shown on the website."
+      title={t("voucherOffers.title")}
+      description={t("voucherOffers.description")}
       endpoint="/voucher-offers"
-      createLabel="Add voucher"
+      createLabel={t("voucherOffers.create")}
       fields={[
-        { name: "title", label: "Title", required: true },
-        { name: "category", label: "Category" },
-        { name: "city", label: "City" },
-        { name: "description", label: "Description" },
-        { name: "price", label: "Price", type: "number", required: true },
-        { name: "currency", label: "Currency", placeholder: "USD" },
-        { name: "discount", label: "Discount", type: "number" },
-        { name: "imageUrl", label: "Image", type: "cloudinary" },
-        { name: "validUntil", label: "Valid until", placeholder: "2026-12-31T23:59:59.000Z" },
-        { name: "stock", label: "Stock", type: "number" },
-        { name: "isActive", label: "Active", type: "checkbox" },
+        { name: "title", label: c("title"), required: true },
+        { name: "category", label: c("category") },
+        { name: "city", label: c("city") },
+        { name: "description", label: c("description") },
+        { name: "price", label: c("price"), type: "number", required: true },
+        { name: "currency", label: c("currency"), placeholder: "USD" },
+        { name: "discount", label: c("discount"), type: "number" },
+        { name: "imageUrl", label: c("image"), type: "cloudinary" },
+        { name: "validUntil", label: c("validUntil"), type: "datetime" },
+        { name: "stock", label: c("stock"), type: "number" },
+        { name: "isActive", label: c("active"), type: "checkbox" },
       ]}
       columns={[
-        { key: "title", label: "Title" },
-        { key: "category", label: "Category" },
-        { key: "city", label: "City" },
-        { key: "price", label: "Price" },
-        { key: "discount", label: "Discount" },
-        { key: "currency", label: "Currency" },
-        { key: "stock", label: "Stock" },
-        { key: "isActive", label: "Active" },
+        { key: "title", label: c("title") },
+        { key: "category", label: c("category") },
+        { key: "city", label: c("city") },
+        { key: "price", label: c("price") },
+        { key: "discount", label: c("discount") },
+        { key: "currency", label: c("currency") },
+        { key: "stock", label: c("stock") },
+        { key: "isActive", label: c("active") },
       ]}
     />
   );

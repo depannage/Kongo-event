@@ -5,7 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28296e1f-50b8-4e57-8839-054940480073" name="Changes" comment="fix editor event">
-      <change beforePath="$PROJECT_DIR$/app/[locale]/reviews/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/[locale]/reviews/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/[locale]/bus-routes/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/[locale]/bus-routes/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/[locale]/flight-offers/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/[locale]/flight-offers/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/[locale]/voucher-offers/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/[locale]/voucher-offers/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/resources/CrudResourcePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/resources/CrudResourcePage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messages/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/messages/en.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messages/fr.json" beforeDir="false" afterPath="$PROJECT_DIR$/messages/fr.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,6 +110,7 @@
       <workItem from="1781686010932" duration="7152000" />
       <workItem from="1781693912101" duration="4487000" />
       <workItem from="1781789265539" duration="1000" />
+      <workItem from="1781792565208" duration="2000" />
     </task>
     <task id="LOCAL-00001" summary="fix editor event">
       <option name="closed" value="true" />

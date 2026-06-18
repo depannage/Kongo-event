@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { portalService, type PortalEventReaction } from "@/shared/services/portal.service";
 import { tokenStore } from "@/shared/lib/tokenStore";
 import { useLocalizedPath } from "@/shared/hooks/useLocalizedPath";
+import { useTranslations } from "next-intl";
 
 export default function EventPublicActions({
     slug,
@@ -18,6 +19,7 @@ export default function EventPublicActions({
     initialReviewCount?: number;
 }) {
     const router = useRouter();
+    const t = useTranslations("eventDetail");
     const { getLocalizedHref } = useLocalizedPath();
     const [reaction, setReaction] = useState<PortalEventReaction>({
         eventId: "",
@@ -52,9 +54,9 @@ export default function EventPublicActions({
                 ? await portalService.unlikeEvent(slug)
                 : await portalService.likeEvent(slug);
             setReaction(next);
-            toast.success(next.liked ? "Événement ajouté à vos favoris." : "Événement retiré de vos favoris.");
+            toast.success(next.liked ? t("likedAdded") : t("likedRemoved"));
         } catch (error: any) {
-            toast.error(error?.response?.data?.message || "Impossible de mettre à jour votre réaction.");
+            toast.error(error?.response?.data?.message || t("reactionError"));
         } finally {
             setLoading(false);
         }
@@ -73,11 +75,11 @@ export default function EventPublicActions({
                 }`}
             >
                 {loading ? <Loader2 className="size-4 animate-spin" /> : <Heart className={`size-4 ${reaction.liked ? "fill-[#0067A8]" : ""}`} />}
-                {reaction.likeCount} J’aime
+                {reaction.likeCount} {t("likes")}
             </button>
 
             <span className="text-sm font-semibold text-slate-500">
-                {reaction.reviewCount} avis
+                {t("reviewsCount", { count: reaction.reviewCount })}
             </span>
         </div>
     );

@@ -1,33 +1,37 @@
 import CrudResourcePage from "@/components/resources/CrudResourcePage";
+import { getTranslations } from "next-intl/server";
 
-export default function BusRoutesPage() {
+export default async function BusRoutesPage() {
+  const t = await getTranslations("resourcePages");
+  const c = (key: string) => t(`common.${key}`);
+
   return (
     <CrudResourcePage
-      title="Bus routes"
-      description="Create and manage public bus routes shown on the website."
+      title={t("busRoutes.title")}
+      description={t("busRoutes.description")}
       endpoint="/bus-routes"
-      createLabel="Add route"
+      createLabel={t("busRoutes.create")}
       fields={[
-        { name: "origin", label: "Origin", required: true },
-        { name: "destination", label: "Destination", required: true },
-        { name: "operatorName", label: "Operator" },
-        { name: "departureAt", label: "Departure at", placeholder: "2026-07-12T08:00:00.000Z" },
-        { name: "arrivalAt", label: "Arrival at", placeholder: "2026-07-12T18:00:00.000Z" },
-        { name: "price", label: "Price", type: "number", required: true },
-        { name: "currency", label: "Currency", placeholder: "USD" },
-        { name: "imageUrl", label: "Image", type: "cloudinary" },
-        { name: "seatsAvailable", label: "Seats available", type: "number" },
-        { name: "isActive", label: "Active", type: "checkbox" },
+        { name: "origin", label: c("origin"), required: true },
+        { name: "destination", label: c("destination"), required: true },
+        { name: "operatorName", label: c("operator") },
+        { name: "departureAt", label: c("departureAt"), type: "datetime" },
+        { name: "arrivalAt", label: c("arrivalAt"), type: "datetime" },
+        { name: "price", label: c("price"), type: "number", required: true },
+        { name: "currency", label: c("currency"), placeholder: "USD" },
+        { name: "imageUrl", label: c("image"), type: "cloudinary" },
+        { name: "seatsAvailable", label: c("seatsAvailable"), type: "number" },
+        { name: "isActive", label: c("active"), type: "checkbox" },
       ]}
       columns={[
-        { key: "origin", label: "Origin" },
-        { key: "destination", label: "Destination" },
-        { key: "operatorName", label: "Operator" },
-        { key: "departureAt", label: "Departure" },
-        { key: "price", label: "Price" },
-        { key: "currency", label: "Currency" },
-        { key: "seatsAvailable", label: "Seats" },
-        { key: "isActive", label: "Active" },
+        { key: "origin", label: c("origin") },
+        { key: "destination", label: c("destination") },
+        { key: "operatorName", label: c("operator") },
+        { key: "departureAt", label: c("departure") },
+        { key: "price", label: c("price") },
+        { key: "currency", label: c("currency") },
+        { key: "seatsAvailable", label: c("seats") },
+        { key: "isActive", label: c("active") },
       ]}
     />
   );

@@ -1,5 +1,6 @@
 import { ExternalLink } from "lucide-react";
 import {PublicEvent} from "@/shared/types/public-event.types";
+import { useTranslations } from "next-intl";
 
 
 type Props = {
@@ -7,6 +8,7 @@ type Props = {
 };
 
 export default function EventLocation({ event }: Props) {
+    const t = useTranslations("eventDetail");
     const venue = event.venue;
 
     if (!venue) return null;
@@ -18,14 +20,14 @@ export default function EventLocation({ event }: Props) {
     return (
         <section className="py-12">
             <div className="mb-6 flex items-center justify-between">
-                <h2 className="font-bold text-[#131827]">Location</h2>
+                <h2 className="font-bold text-[#131827]">{t("location")}</h2>
 
                 <a
                     href={`https://www.google.com/maps/search/?api=1&query=${mapQuery}`}
                     target="_blank"
                     className="flex items-center gap-1 text-sm font-bold text-[#0067A8]"
                 >
-                    Get Directions <ExternalLink className="h-4 w-4" />
+                    {t("getDirections")} <ExternalLink className="h-4 w-4" />
                 </a>
             </div>
 

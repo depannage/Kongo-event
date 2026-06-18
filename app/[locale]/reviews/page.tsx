@@ -1,29 +1,33 @@
 import CrudResourcePage from "@/components/resources/CrudResourcePage";
+import { getTranslations } from "next-intl/server";
 
-export default function ReviewsPage() {
+export default async function ReviewsPage() {
+  const t = await getTranslations("resourcePages");
+  const c = (key: string) => t(`common.${key}`);
+
   return (
     <CrudResourcePage
-      title="Reviews"
-      description="Moderate real attendee reviews for your events."
+      title={t("reviews.title")}
+      description={t("reviews.description")}
       endpoint="/reviews"
-      createLabel="Add review"
+      createLabel={t("reviews.create")}
       fields={[
-        { name: "eventId", label: "Event", type: "select", endpoint: "/events", nameKey: "title", required: true },
-        { name: "attendeeName", label: "Attendee name" },
-        { name: "attendeeEmail", label: "Attendee email" },
-        { name: "rating", label: "Rating", type: "number", required: true },
-        { name: "title", label: "Title" },
-        { name: "comment", label: "Review text", required: true },
-        { name: "visibility", label: "Visibility", placeholder: "PUBLIC or HIDDEN" },
+        { name: "eventId", label: c("event"), type: "select", endpoint: "/events", nameKey: "title", required: true },
+        { name: "attendeeName", label: c("attendeeName") },
+        { name: "attendeeEmail", label: c("attendeeEmail") },
+        { name: "rating", label: c("rating"), type: "number", required: true },
+        { name: "title", label: c("title") },
+        { name: "comment", label: c("reviewText"), required: true },
+        { name: "visibility", label: c("visibility"), placeholder: "PUBLIC or HIDDEN" },
       ]}
       columns={[
-        { key: "attendeeName", label: "Attendee" },
-        { key: "eventName", label: "Event" },
-        { key: "rating", label: "Rating" },
-        { key: "reviewText", label: "Review" },
-        { key: "visibility", label: "Visibility" },
-        { key: "helpful", label: "Helpful" },
-        { key: "date", label: "Date" },
+        { key: "attendeeName", label: c("attendee") },
+        { key: "eventName", label: c("event") },
+        { key: "rating", label: c("rating") },
+        { key: "reviewText", label: c("review") },
+        { key: "visibility", label: c("visibility") },
+        { key: "helpful", label: c("helpful") },
+        { key: "date", label: c("date") },
       ]}
     />
   );
