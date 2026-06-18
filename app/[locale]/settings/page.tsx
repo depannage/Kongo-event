@@ -897,9 +897,49 @@ function NotificationsSection({ t }: { t: any }) {
         marketingEmails: false,
         weeklyDigest: true,
     });
+    const [loading, setLoading] = useState(true);
+    const [saving, setSaving] = useState(false);
+    const [message, setMessage] = useState("");
+    const [error, setError] = useState("");
+
+    useEffect(() => {
+        let mounted = true;
+        api.get("/settings/me/notification-preferences")
+            .then((response) => {
+                if (!mounted) return;
+                setNotifications((current) => ({ ...current, ...normalizeNotificationPreferences(response.data) }));
+            })
+            .catch(() => {
+                if (mounted) setError(t("notifications.loadError"));
+            })
+            .finally(() => {
+                if (mounted) setLoading(false);
+            });
+
+        return () => {
+            mounted = false;
+        };
+    }, [t]);
 
     const toggleNotification = (key: keyof typeof notifications) => {
+        setMessage("");
+        setError("");
         setNotifications(prev => ({ ...prev, [key]: !prev[key] }));
+    };
+
+    const save = async () => {
+        setSaving(true);
+        setMessage("");
+        setError("");
+        try {
+            const response = await api.patch("/settings/me/notification-preferences", notifications);
+            setNotifications((current) => ({ ...current, ...normalizeNotificationPreferences(response.data) }));
+            setMessage(t("notifications.saveSuccess"));
+        } catch {
+            setError(t("notifications.saveError"));
+        } finally {
+            setSaving(false);
+        }
     };
 
     const notificationItems = [
@@ -920,6 +960,22 @@ function NotificationsSection({ t }: { t: any }) {
             />
 
             <div className="space-y-6">
+                {loading && (
+                    <div className="rounded border border-slate-200 bg-slate-50 p-4 text-sm font-semibold text-slate-600">
+                        {t("notifications.loading")}
+                    </div>
+                )}
+                {message && (
+                    <div className="rounded border border-emerald-200 bg-emerald-50 p-4 text-sm font-semibold text-emerald-700">
+                        {message}
+                    </div>
+                )}
+                {error && (
+                    <div className="rounded border border-rose-200 bg-rose-50 p-4 text-sm font-semibold text-rose-700">
+                        {error}
+                    </div>
+                )}
+
                 {notificationItems.map((item) => (
                     <div
                         key={item.key}
@@ -938,29 +994,52 @@ function NotificationsSection({ t }: { t: any }) {
                 ))}
 
                 <div className="pt-4">
-                    <h3 className="font-semibold text-slate-900 mb-4">Email Preferences</h3>
+                    <h3 className="font-semibold text-slate-900 mb-4">{t("notifications.emailPreferences")}</h3>
 
                     <div className="space-y-4">
                         <div className="flex items-start justify-between gap-5">
                             <div>
-                                <h4 className="font-medium text-slate-800">Marketing emails</h4>
-                                <p className="text-sm text-slate-500">Receive updates about new features and promotions</p>
+                                <h4 className="font-medium text-slate-800">{t("notifications.items.marketingEmails.title")}</h4>
+                                <p className="text-sm text-slate-500">{t("notifications.items.marketingEmails.description")}</p>
                             </div>
                             <Toggle enabled={notifications.marketingEmails} onChange={() => toggleNotification("marketingEmails")} />
                         </div>
 
                         <div className="flex items-start justify-between gap-5">
                             <div>
-                                <h4 className="font-medium text-slate-800">Weekly digest</h4>
-                                <p className="text-sm text-slate-500">Get a summary of your event activity every week</p>
+                                <h4 className="font-medium text-slate-800">{t("notifications.items.weeklyDigest.title")}</h4>
+                                <p className="text-sm text-slate-500">{t("notifications.items.weeklyDigest.description")}</p>
                             </div>
                             <Toggle enabled={notifications.weeklyDigest} onChange={() => toggleNotification("weeklyDigest")} />
                         </div>
                     </div>
                 </div>
+
+                <button
+                    type="button"
+                    onClick={save}
+                    disabled={loading || saving}
+                    className="inline-flex items-center gap-2 rounded bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition-all hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                    <Save className="size-4" />
+                    {saving ? t("notifications.saving") : t("notifications.save")}
+                </button>
             </div>
         </div>
     );
+}
+
+function normalizeNotificationPreferences(data: any) {
+    return {
+        transactionConfirmation: Boolean(data?.transactionConfirmation ?? true),
+        transactionEdited: Boolean(data?.transactionEdited ?? false),
+        transactionInvoice: Boolean(data?.transactionInvoice ?? true),
+        transactionCancelled: Boolean(data?.transactionCancelled ?? true),
+        transactionRefund: Boolean(data?.transactionRefund ?? true),
+        paymentError: Boolean(data?.paymentError ?? true),
+        marketingEmails: Boolean(data?.marketingEmails ?? false),
+        weeklyDigest: Boolean(data?.weeklyDigest ?? true),
+    };
 }
 
 function Toggle({ enabled, onChange }: { enabled: boolean; onChange: () => void }) {

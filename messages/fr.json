@@ -337,6 +337,13 @@
     "notifications": {
       "title": "Notifications push",
       "description": "Recevez des alertes pour les nouvelles commandes, les mises à jour de traitement et les commandes terminées ou annulées.",
+      "loading": "Chargement des préférences de notification...",
+      "loadError": "Impossible de charger les préférences de notification.",
+      "save": "Enregistrer les préférences",
+      "saving": "Enregistrement...",
+      "saveSuccess": "Préférences de notification enregistrées.",
+      "saveError": "Impossible d’enregistrer les préférences de notification.",
+      "emailPreferences": "Préférences email",
       "items": {
         "transactionConfirmation": {
           "title": "Confirmation de transaction",
@@ -361,6 +368,14 @@
         "paymentError": {
           "title": "Erreur de paiement",
           "description": "Envoyée automatiquement au client si son paiement ne peut pas être traité."
+        },
+        "marketingEmails": {
+          "title": "Emails marketing",
+          "description": "Recevoir les nouveautés, fonctionnalités et promotions."
+        },
+        "weeklyDigest": {
+          "title": "Résumé hebdomadaire",
+          "description": "Recevoir chaque semaine un résumé de votre activité événementielle."
         }
       }
     }

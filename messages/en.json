@@ -339,6 +339,13 @@
     "notifications": {
       "title": "Push Notifications",
       "description": "Get alerts for new orders, order processing updates, and when orders are completed or canceled.",
+      "loading": "Loading notification preferences...",
+      "loadError": "Unable to load notification preferences.",
+      "save": "Save preferences",
+      "saving": "Saving...",
+      "saveSuccess": "Notification preferences saved.",
+      "saveError": "Unable to save notification preferences.",
+      "emailPreferences": "Email Preferences",
       "items": {
         "transactionConfirmation": {
           "title": "Transaction Confirmation",
@@ -363,6 +370,14 @@
         "paymentError": {
           "title": "Payment Error",
           "description": "Sent automatically to the customer if their payment can’t be processed."
+        },
+        "marketingEmails": {
+          "title": "Marketing emails",
+          "description": "Receive updates about new features and promotions."
+        },
+        "weeklyDigest": {
+          "title": "Weekly digest",
+          "description": "Get a summary of your event activity every week."
         }
       }
     }
