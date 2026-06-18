@@ -85,4 +85,7 @@ export type GetPublicEventsParams = {
     q?: string;
     category?: string;
     city?: string;
+    dateFilter?: "today" | "weekend" | "next-week";
+    maxPrice?: number;
+    distance?: number;
 };

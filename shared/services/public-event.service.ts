@@ -15,6 +15,9 @@ function buildQuery(params?: GetPublicEventsParams) {
     if (params?.q) searchParams.set("q", params.q);
     if (params?.category) searchParams.set("category", params.category);
     if (params?.city) searchParams.set("city", params.city);
+    if (params?.dateFilter) searchParams.set("dateFilter", params.dateFilter);
+    if (typeof params?.maxPrice === "number") searchParams.set("maxPrice", String(params.maxPrice));
+    if (typeof params?.distance === "number") searchParams.set("distance", String(params.distance));
 
     const query = searchParams.toString();
     return query ? `?${query}` : "";
